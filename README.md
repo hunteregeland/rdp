@@ -1,2 +1,2 @@
 # files
-- cobolLex.l is the COBOL Lexer
+- *cobolLex.l* is the COBOL Lexer
