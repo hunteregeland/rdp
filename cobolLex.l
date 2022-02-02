@@ -16,6 +16,11 @@ ID [A-Z][A-Z0-9]*
 
 %%
 
+
+{DIGIT}     {printf("%s : DIGIT\n", yytext);}
+
+{ID}        {printf("%s : ID\n", yytext);}   
+
 "+"  {printf("%s : OPERATOR\n", yytext);}
 
 "-"  {printf("%s : OPERATOR\n", yytext);}
