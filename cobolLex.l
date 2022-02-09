@@ -12,11 +12,11 @@
 %option yylineno
 
 DELIM   [ \t\n]
-WS      {delim}+
+WS      {DELIM}+
 LETTER  [A-za-z]
 DIGIT   [0-9]
-ID      {letter}({letter}|{digit})*
-NUMBER  {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
+ID      {LETTER}({LETTER}|{DIGIT})*
+NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 
 %%
 
@@ -92,187 +92,187 @@ NUMBER  {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
     return RIGHT-PARENTHESES-OP;
 }
 
-"ACCEPT"  {printf("%s : KEYWORD\n", yytext), 
+"ACCEPT"  {printf("%s : KEYWORD\n", yytext); 
     return ACCEPT;
 }
 
-"ACCESS"  {printf("%s : KEYWORD\n", yytext), 
+"ACCESS"  {printf("%s : KEYWORD\n", yytext); 
     return ACCESS;
 }
 
-"ADD"  {printf("%s : KEYWORD\n", yytext), 
+"ADD"  {printf("%s : KEYWORD\n", yytext); 
     return ADD;
 }
 
-"ADDRESS"  {printf("%s : KEYWORD\n", yytext), 
+"ADDRESS"  {printf("%s : KEYWORD\n", yytext); 
     return ADDRESS;
 }
 
-"ADVANCING"  {printf("%s : KEYWORD\n", yytext), 
+"ADVANCING"  {printf("%s : KEYWORD\n", yytext); 
     return ADVANCING;
 }
 
-"AFTER"  {printf("%s : KEYWORD\n", yytext), 
+"AFTER"  {printf("%s : KEYWORD\n", yytext); 
     return AFTER;
 }
 
-"ALL"  {printf("%s : KEYWORD\n", yytext), 
+"ALL"  {printf("%s : KEYWORD\n", yytext); 
     return ALL;
 }
 
-"ALLOCATE"  {printf("%s : KEYWORD\n", yytext), 
+"ALLOCATE"  {printf("%s : KEYWORD\n", yytext); 
     return ALLOCATE;
 }
 
-"ALPHABET"  {printf("%s : KEYWORD\n", yytext), 
+"ALPHABET"  {printf("%s : KEYWORD\n", yytext); 
     return ALPHABET;
 }
 
-"ALPHABETIC"  {printf("%s : KEYWORD\n", yytext), 
+"ALPHABETIC"  {printf("%s : KEYWORD\n", yytext); 
     return ALPHABETIC;
 }
 
-"ALPHABETIC-LOWER"  {printf("%s : KEYWORD\n", yytext), 
+"ALPHABETIC-LOWER"  {printf("%s : KEYWORD\n", yytext); 
     return ALPHABETIC-LOWER;
 }
 
-"ALPHABETIC-UPPER"  {printf("%s : KEYWORD\n", yytext), return 
-    ALPHABETIC-UPPER;
+"ALPHABETIC-UPPER"  {printf("%s : KEYWORD\n", yytext); 
+    return ALPHABETIC-UPPER;
 }
 
-"ALPHANUMERIC"  {printf("%s : KEYWORD\n", yytext), 
+"ALPHANUMERIC"  {printf("%s : KEYWORD\n", yytext); 
     return ALPHANUMERIC;
 }
 
-"ALPHANUMERIC-EDITED"  {printf("%s : KEYWORD\n", yytext), 
+"ALPHANUMERIC-EDITED"  {printf("%s : KEYWORD\n", yytext); 
     return ALPHANUMERIC-EDITED;
 }
 
-"ALSO"  {printf("%s : KEYWORD\n", yytext), 
+"ALSO"  {printf("%s : KEYWORD\n", yytext); 
     return ALSO;
 }
 
-"ALTER"  {printf("%s : KEYWORD\n", yytext), 
+"ALTER"  {printf("%s : KEYWORD\n", yytext); 
     return ALTER;
 }
 
-"ALTERNATIVE"  {printf("%s : KEYWORD\n", yytext), 
+"ALTERNATIVE"  {printf("%s : KEYWORD\n", yytext); 
     return ALTERNATIVE;
 }
 
-"AND"  {printf("%s : KEYWORD\n", yytext), 
+"AND"  {printf("%s : KEYWORD\n", yytext); 
     return AND;
 }
 
-"ANY"  {printf("%s : KEYWORD\n", yytext), 
+"ANY"  {printf("%s : KEYWORD\n", yytext); 
     return ANY;
 }
 
-"APPLY"  {printf("%s : KEYWORD\n", yytext), 
+"APPLY"  {printf("%s : KEYWORD\n", yytext); 
     return APPLY;
 }
 
-"ARE"  {printf("%s : KEYWORD\n", yytext),
+"ARE"  {printf("%s : KEYWORD\n", yytext);
     return ARE;
 }
 
-"AREA"  {printf("%s : KEYWORD\n", yytext),
+"AREA"  {printf("%s : KEYWORD\n", yytext);
     return AREA;
 }
 
-"AREAS"  {printf("%s : KEYWORD\n", yytext),
+"AREAS"  {printf("%s : KEYWORD\n", yytext);
     return AREAS;
 }
 
-"ASCENDING"  {printf("%s : KEYWORD\n", yytext),
+"ASCENDING"  {printf("%s : KEYWORD\n", yytext);
     return ASCENDING;
 }
 
-"ASSIGN"  {printf("%s : KEYWORD\n", yytext),
+"ASSIGN"  {printf("%s : KEYWORD\n", yytext);
     return ASSIGN;
 }
 
-"AT"  {printf("%s : KEYWORD\n", yytext),
+"AT"  {printf("%s : KEYWORD\n", yytext);
     return AT;
 }
 
-"AUTHOR"  {printf("%s : KEYWORD\n", yytext),
+"AUTHOR"  {printf("%s : KEYWORD\n", yytext);
     return AUTHOR;
 }
 
-"BASIS"  {printf("%s : KEYWORD\n", yytext),
+"BASIS"  {printf("%s : KEYWORD\n", yytext);
     return BASIS;
 }
 
-"BEFORE"  {printf("%s : KEYWORD\n", yytext),
+"BEFORE"  {printf("%s : KEYWORD\n", yytext);
     return BEFORE;
 }
 
-"BEGINNING"  {printf("%s : KEYWORD\n", yytext),
+"BEGINNING"  {printf("%s : KEYWORD\n", yytext);
     return BEGINNING;
 }
 
-"BINARY"  {printf("%s : KEYWORD\n", yytext),
+"BINARY"  {printf("%s : KEYWORD\n", yytext);
     return BINARY;
 }
 
-"BLANK"  {printf("%s : KEYWORD\n", yytext),
+"BLANK"  {printf("%s : KEYWORD\n", yytext);
     return BLANK;
 }
 
-"BLOCK"  {printf("%s : KEYWORD\n", yytext),
+"BLOCK"  {printf("%s : KEYWORD\n", yytext);
     return BLOCK;
 }
 
-"BOTTOM"  {printf("%s : KEYWORD\n", yytext),
+"BOTTOM"  {printf("%s : KEYWORD\n", yytext);
     return BOTTOM;
 }
 
-"BY"  {printf("%s : KEYWORD\n", yytext),
+"BY"  {printf("%s : KEYWORD\n", yytext);
     return BY;
 }
 
-"BYTE-LENGTH"  {printf("%s : KEYWORD\n", yytext),
+"BYTE-LENGTH"  {printf("%s : KEYWORD\n", yytext);
     return BYTE-LENGTH;
 }
 
-"CALL"  {printf("%s : KEYWORD\n", yytext),
+"CALL"  {printf("%s : KEYWORD\n", yytext);
     return CALL;
 }
 
-"CANCEL"  {printf("%s : KEYWORD\n", yytext),
+"CANCEL"  {printf("%s : KEYWORD\n", yytext);
     return CANCEL;
 }
 
-"CBL"  {printf("%s : KEYWORD\n", yytext),
+"CBL"  {printf("%s : KEYWORD\n", yytext);
     return CBL;
 }
 
-"CD"  {printf("%s : KEYWORD\n", yytext),
+"CD"  {printf("%s : KEYWORD\n", yytext);
     return CD;
 }
 
-"CF"  {printf("%s : KEYWORD\n", yytext),
+"CF"  {printf("%s : KEYWORD\n", yytext);
     return CF;
 }
 
-"CH"  {printf("%s : KEYWORD\n", yytext),
+"CH"  {printf("%s : KEYWORD\n", yytext);
     return CH;
 }
 
-"CHARACTER"  {printf("%s : KEYWORD\n", yytext),
+"CHARACTER"  {printf("%s : KEYWORD\n", yytext);
     return CHARACTER;
 }
 
-"CHARACTERS"  {printf("%s : KEYWORD\n", yytext),
+"CHARACTERS"  {printf("%s : KEYWORD\n", yytext);
     return CHARACTERS;
 }
 
-"CLASS"  {printf("%s : KEYWORD\n", yytext),
+"CLASS"  {printf("%s : KEYWORD\n", yytext);
     return CLASS;
 }
 
-"CLASS-ID"  {printf("%s : KEYWORD\n", yytext),
+"CLASS-ID"  {printf("%s : KEYWORD\n", yytext);
     return CLASS-ID;
 }
 
@@ -280,459 +280,459 @@ NUMBER  {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
     return CLOCK-UNITS;
 }
 
-"CLOSE"  {printf("%s : KEYWORD\n", yytext),
+"CLOSE"  {printf("%s : KEYWORD\n", yytext);
     return CLOSE;
 }
 
-"COBOL"  {printf("%s : KEYWORD\n", yytext),
+"COBOL"  {printf("%s : KEYWORD\n", yytext);
     return COBOL;
 }
 
-"CODE"  {printf("%s : KEYWORD\n", yytext),
+"CODE"  {printf("%s : KEYWORD\n", yytext);
     return CODE;
 }
 
-"CODE-SET"  {printf("%s : KEYWORD\n", yytext),
+"CODE-SET"  {printf("%s : KEYWORD\n", yytext);
     return CODE-SET;
 }
 
-"COLLATING"  {printf("%s : KEYWORD\n", yytext),
+"COLLATING"  {printf("%s : KEYWORD\n", yytext);
     return COLLATING;
 }
 
-"COLUMN"  {printf("%s : KEYWORD\n", yytext),
+"COLUMN"  {printf("%s : KEYWORD\n", yytext);
     return COLUMN;
 }
 
-"COM-REG"  {printf("%s : KEYWORD\n", yytext),
+"COM-REG"  {printf("%s : KEYWORD\n", yytext);
     return COM-REG;
 }
 
-"COMMA"  {printf("%s : KEYWORD\n", yytext),
+"COMMA"  {printf("%s : KEYWORD\n", yytext);
     return COMMA;
 }
 
-"COMMON"  {printf("%s : KEYWORD\n", yytext),
+"COMMON"  {printf("%s : KEYWORD\n", yytext);
     return COMMON;
 }
 
-"COMMUNICATION"  {printf("%s : KEYWORD\n", yytext),
+"COMMUNICATION"  {printf("%s : KEYWORD\n", yytext);
     return COMMUNICATION;
 }
 
-"COMP"  {printf("%s : KEYWORD\n", yytext),
+"COMP"  {printf("%s : KEYWORD\n", yytext);
     return COMP;
 }
 
-"COMP-1"  {printf("%s : KEYWORD\n", yytext),
+"COMP-1"  {printf("%s : KEYWORD\n", yytext);
     return COMP-1;
 }
 
-"COMP-2"  {printf("%s : KEYWORD\n", yytext),
+"COMP-2"  {printf("%s : KEYWORD\n", yytext);
     return COMP-2;
 }
 
-"COMP-3"  {printf("%s : KEYWORD\n", yytext),
+"COMP-3"  {printf("%s : KEYWORD\n", yytext);
     return COMP-3;
 }
 
-"COMP-4"  {printf("%s : KEYWORD\n", yytext),
+"COMP-4"  {printf("%s : KEYWORD\n", yytext);
     return COMP-4;
 }
 
-"COMP-5"  {printf("%s : KEYWORD\n", yytext),
+"COMP-5"  {printf("%s : KEYWORD\n", yytext);
     return COMP-5;
 }
 
-"COMPUTATIONAL"  {printf("%s : KEYWORD\n", yytext),
+"COMPUTATIONAL"  {printf("%s : KEYWORD\n", yytext);
     return COMPUTATIONAL;
 }
 
-"COMPUTATIONAL-1"  {printf("%s : KEYWORD\n", yytext),
+"COMPUTATIONAL-1"  {printf("%s : KEYWORD\n", yytext);
     return COMPUTATIONAL-1;
 }
 
-"COMPUTATIONAL-2"  {printf("%s : KEYWORD\n", yytext),
+"COMPUTATIONAL-2"  {printf("%s : KEYWORD\n", yytext);
     return COMPUTATIONAL-2;
 }
 
-"COMPUTATIONAL-3"  {printf("%s : KEYWORD\n", yytext),
+"COMPUTATIONAL-3"  {printf("%s : KEYWORD\n", yytext);
     return COMPUTATIONAL-3;
 }
 
-"COMPUTATIONAL-4"  {printf("%s : KEYWORD\n", yytext),
+"COMPUTATIONAL-4"  {printf("%s : KEYWORD\n", yytext);
     return COMPUTATIONAL-4;
 }
 
-"COMPUTATIONAL-5"  {printf("%s : KEYWORD\n", yytext),
+"COMPUTATIONAL-5"  {printf("%s : KEYWORD\n", yytext);
     return COMPUTATIONAL-5;
 }
 
-"COMPUTE"  {printf("%s : KEYWORD\n", yytext),
+"COMPUTE"  {printf("%s : KEYWORD\n", yytext);
     return COMPUTE;
 }
 
-"CONFIGURATION"  {printf("%s : KEYWORD\n", yytext),
+"CONFIGURATION"  {printf("%s : KEYWORD\n", yytext);
     return CONFIGURATION;
 }
 
-"CONTAINS"  {printf("%s : KEYWORD\n", yytext),
+"CONTAINS"  {printf("%s : KEYWORD\n", yytext);
     return CONTAINS;
 }
 
-"CONTENT"  {printf("%s : KEYWORD\n", yytext),
+"CONTENT"  {printf("%s : KEYWORD\n", yytext);
     return CONTENT;
 }
 
-"CONTINUE"  {printf("%s : KEYWORD\n", yytext),
+"CONTINUE"  {printf("%s : KEYWORD\n", yytext);
     return CONTINUE;
 }
 
-"CONTROL"  {printf("%s : KEYWORD\n", yytext),
+"CONTROL"  {printf("%s : KEYWORD\n", yytext);
     return CONTROL;
 }
 
-"CONTROLS"  {printf("%s : KEYWORD\n", yytext),
+"CONTROLS"  {printf("%s : KEYWORD\n", yytext);
     return CONTROLS;
 }
 
-"CONVERTING"  {printf("%s : KEYWORD\n", yytext),
+"CONVERTING"  {printf("%s : KEYWORD\n", yytext);
     return CONVERTING;
 }
 
-"COPY"  {printf("%s : KEYWORD\n", yytext),
+"COPY"  {printf("%s : KEYWORD\n", yytext);
     return COPY;
 }
 
-"CORR"  {printf("%s : KEYWORD\n", yytext),
+"CORR"  {printf("%s : KEYWORD\n", yytext);
     return CORR;
 }
 
-"CORRESPONDING"  {printf("%s : KEYWORD\n", yytext),
+"CORRESPONDING"  {printf("%s : KEYWORD\n", yytext);
     return CORRESPONDING;
 }
 
-"COUNT"  {printf("%s : KEYWORD\n", yytext),
+"COUNT"  {printf("%s : KEYWORD\n", yytext);
     return COUNT;
 }
 
-"CURRENCY"  {printf("%s : KEYWORD\n", yytext),
+"CURRENCY"  {printf("%s : KEYWORD\n", yytext);
     return CURRENCY;
 }
 
-"DATA"  {printf("%s : KEYWORD\n", yytext),
+"DATA"  {printf("%s : KEYWORD\n", yytext);
     return DATA;
 }
 
-"DATE"  {printf("%s : KEYWORD\n", yytext),
+"DATE"  {printf("%s : KEYWORD\n", yytext);
     return DATE;
 }
 
-"DATE-COMPILED"  {printf("%s : KEYWORD\n", yytext),
+"DATE-COMPILED"  {printf("%s : KEYWORD\n", yytext);
     return DATE-COMPILED;
 }
 
-"DATE-WRITTEN"  {printf("%s : KEYWORD\n", yytext),
+"DATE-WRITTEN"  {printf("%s : KEYWORD\n", yytext);
     return DATE-WRITTEN;
 }
 
-"DAY"  {printf("%s : KEYWORD\n", yytext),
+"DAY"  {printf("%s : KEYWORD\n", yytext);
     return DAY;
 }
 
-"DAY-OF-WEEK"  {printf("%s : KEYWORD\n", yytext),
+"DAY-OF-WEEK"  {printf("%s : KEYWORD\n", yytext);
     return DAY-OF-WEEK;
 }
 
-"DBCS"  {printf("%s : KEYWORD\n", yytext),
+"DBCS"  {printf("%s : KEYWORD\n", yytext);
     return DBCS;
 }
 
-"DE"  {printf("%s : KEYWORD\n", yytext),
+"DE"  {printf("%s : KEYWORD\n", yytext);
     return DE;
 }
 
-"DEBUG-CONTENTS"  {printf("%s : KEYWORD\n", yytext),
+"DEBUG-CONTENTS"  {printf("%s : KEYWORD\n", yytext);
     return DEBUG-CONTENTS;
 }
 
-"DEBUG-ITEM"  {printf("%s : KEYWORD\n", yytext),
+"DEBUG-ITEM"  {printf("%s : KEYWORD\n", yytext);
     return DEBUG-ITEM;
 }
 
-"DEBUG-LINE"  {printf("%s : KEYWORD\n", yytext),
+"DEBUG-LINE"  {printf("%s : KEYWORD\n", yytext);
     return DEBUG-LINE;
 }
 
-"DEBUG-NAME"  {printf("%s : KEYWORD\n", yytext),
+"DEBUG-NAME"  {printf("%s : KEYWORD\n", yytext);
     return DEBUG-NAME;
 }
 
-"DEBUG-SUB-1"  {printf("%s : KEYWORD\n", yytext),
+"DEBUG-SUB-1"  {printf("%s : KEYWORD\n", yytext);
     return DEBUG-SUB-1;
 }
 
-"DEBUG-SUB-2"  {printf("%s : KEYWORD\n", yytext),
+"DEBUG-SUB-2"  {printf("%s : KEYWORD\n", yytext);
     return DEBUG-SUB-2;
     }
 
-"DEBUG-SUB-3"  {printf("%s : KEYWORD\n", yytext),
+"DEBUG-SUB-3"  {printf("%s : KEYWORD\n", yytext);
     return DEBUG-SUB-3;
 }
 
-"DEBUGGING"  {printf("%s : KEYWORD\n", yytext),
+"DEBUGGING"  {printf("%s : KEYWORD\n", yytext);
     return DEBUGGING;
 }
 
-"DECIMAL-POINT"  {printf("%s : KEYWORD\n", yytext),
+"DECIMAL-POINT"  {printf("%s : KEYWORD\n", yytext);
     return DECIMAL-POINT;
 }
 
-"DECLARATIVES"  {printf("%s : KEYWORD\n", yytext),
+"DECLARATIVES"  {printf("%s : KEYWORD\n", yytext);
     return DECLARATIVES;
 }
 
-"DEFAULT"  {printf("%s : KEYWORD\n", yytext),
+"DEFAULT"  {printf("%s : KEYWORD\n", yytext);
     return DEFAULT;
 }
 
-"DELETE"  {printf("%s : KEYWORD\n", yytext),
+"DELETE"  {printf("%s : KEYWORD\n", yytext);
     return DELETE;
 }
 
-"DELIMITED"  {printf("%s : KEYWORD\n", yytext),
+"DELIMITED"  {printf("%s : KEYWORD\n", yytext);
     return DELIMITED;
 }
 
-"DELIMITER"  {printf("%s : KEYWORD\n", yytext),
+"DELIMITER"  {printf("%s : KEYWORD\n", yytext);
     return DELIMITER;
 }
 
-"DEPENDING"  {printf("%s : KEYWORD\n", yytext),
+"DEPENDING"  {printf("%s : KEYWORD\n", yytext);
     return DEPENDING;
 }
 
-"DESCENDING"  {printf("%s : KEYWORD\n", yytext),
+"DESCENDING"  {printf("%s : KEYWORD\n", yytext);
     return DESCENDING;
 }
 
-"DESTINATION"  {printf("%s : KEYWORD\n", yytext),
+"DESTINATION"  {printf("%s : KEYWORD\n", yytext);
     return DESTINATION;
 }
 
-"DETAIL"  {printf("%s : KEYWORD\n", yytext),
+"DETAIL"  {printf("%s : KEYWORD\n", yytext);
     return DETAIL;
 }
 
-"DISABLE"  {printf("%s : KEYWORD\n", yytext),
+"DISABLE"  {printf("%s : KEYWORD\n", yytext);
     return DISABLE;
 }
 
-"DISPLAY"  {printf("%s : KEYWORD\n", yytext),
+"DISPLAY"  {printf("%s : KEYWORD\n", yytext);
     return DISPLAY;
 }
 
-"DISPLAY-1"  {printf("%s : KEYWORD\n", yytext),
+"DISPLAY-1"  {printf("%s : KEYWORD\n", yytext);
     return DISPLAY-1;
 }
 
-"DIVIDE"  {printf("%s : KEYWORD\n", yytext),
+"DIVIDE"  {printf("%s : KEYWORD\n", yytext);
     return DIVIDE;
 }
 
-"DIVISION"  {printf("%s : KEYWORD\n", yytext),
+"DIVISION"  {printf("%s : KEYWORD\n", yytext);
     return DIVISION;
 }
 
-"DOWN"  {printf("%s : KEYWORD\n", yytext),
+"DOWN"  {printf("%s : KEYWORD\n", yytext);
     return DOWN;
 }
 
-"DUPLICATES"  {printf("%s : KEYWORD\n", yytext),
+"DUPLICATES"  {printf("%s : KEYWORD\n", yytext);
     return DUPLICATES;
 }
 
-"DYNAMIC"  {printf("%s : KEYWORD\n", yytext),
+"DYNAMIC"  {printf("%s : KEYWORD\n", yytext);
     return DYNAMIC;
 }
 
-"EGCS"  {printf("%s : KEYWORD\n", yytext),
+"EGCS"  {printf("%s : KEYWORD\n", yytext);
     return EGCS;
 }
 
-"EGI"  {printf("%s : KEYWORD\n", yytext),
+"EGI"  {printf("%s : KEYWORD\n", yytext);
     return EGI;
 }
 
-"EJECT"  {printf("%s : KEYWORD\n", yytext),
+"EJECT"  {printf("%s : KEYWORD\n", yytext);
     return EJECT;
 }
 
-"ELSE"  {printf("%s : KEYWORD\n", yytext),
+"ELSE"  {printf("%s : KEYWORD\n", yytext);
     return ELSE;
 }
 
-"EMI"  {printf("%s : KEYWORD\n", yytext),
+"EMI"  {printf("%s : KEYWORD\n", yytext);
     return EMI;
 }
 
-"ENABLE"  {printf("%s : KEYWORD\n", yytext),
+"ENABLE"  {printf("%s : KEYWORD\n", yytext);
     return ENABLE;
 }
 
-"END"  {printf("%s : KEYWORD\n", yytext),
+"END"  {printf("%s : KEYWORD\n", yytext);
     return END;
 }
 
-"END-ADD"  {printf("%s : KEYWORD\n", yytext),
+"END-ADD"  {printf("%s : KEYWORD\n", yytext);
     return END-ADD;
 }
 
-"END-CALL"  {printf("%s : KEYWORD\n", yytext),
+"END-CALL"  {printf("%s : KEYWORD\n", yytext);
     return END-CALL;
 }
 
-"END-COMPUTE"  {printf("%s : KEYWORD\n", yytext),
+"END-COMPUTE"  {printf("%s : KEYWORD\n", yytext);
     return END-COMPUTE;
 }
 
-"END-DELETE"  {printf("%s : KEYWORD\n", yytext),
+"END-DELETE"  {printf("%s : KEYWORD\n", yytext);
     return END-DELETE;
 }
 
-"END-DIVIDE"  {printf("%s : KEYWORD\n", yytext),
+"END-DIVIDE"  {printf("%s : KEYWORD\n", yytext);
     return END-DIVIDE;
 }
 
-"END-EVALUATE"  {printf("%s : KEYWORD\n", yytext),
+"END-EVALUATE"  {printf("%s : KEYWORD\n", yytext);
     return END-EVALUATE;
 }
 
-"END-EXEC"  {printf("%s : KEYWORD\n", yytext),
+"END-EXEC"  {printf("%s : KEYWORD\n", yytext);
     return END-EXEC;
 }
 
-"END-IF"  {printf("%s : KEYWORD\n", yytext),
+"END-IF"  {printf("%s : KEYWORD\n", yytext);
     return END-IF;
 }
 
-"END-INVOKE"  {printf("%s : KEYWORD\n", yytext),
+"END-INVOKE"  {printf("%s : KEYWORD\n", yytext);
     return END-INVOKE;
 }
 
-"END-JSON"  {printf("%s : KEYWORD\n", yytext),
+"END-JSON"  {printf("%s : KEYWORD\n", yytext);
     return END-JSON;
 }
 
-"END-MULTIPLY"  {printf("%s : KEYWORD\n", yytext),
+"END-MULTIPLY"  {printf("%s : KEYWORD\n", yytext);
     return END-MULTIPLY;
 }
 
-"END-OF-PAGE"  {printf("%s : KEYWORD\n", yytext),
+"END-OF-PAGE"  {printf("%s : KEYWORD\n", yytext);
     return END-OF-PAGE;
 }
 
-"END-PERFORM"  {printf("%s : KEYWORD\n", yytext),
+"END-PERFORM"  {printf("%s : KEYWORD\n", yytext);
     return END-PERFORM;
 }
 
-"END-READ"  {printf("%s : KEYWORD\n", yytext),
+"END-READ"  {printf("%s : KEYWORD\n", yytext);
     return END-READ;
 }
 
-"END-RECEIVE"  {printf("%s : KEYWORD\n", yytext),
+"END-RECEIVE"  {printf("%s : KEYWORD\n", yytext);
     return END-RECEIVE;
 }
 
-"END-RETURN"  {printf("%s : KEYWORD\n", yytext),
+"END-RETURN"  {printf("%s : KEYWORD\n", yytext);
     return END-RETURN;
 }
 
-"END-REWRITE"  {printf("%s : KEYWORD\n", yytext),
+"END-REWRITE"  {printf("%s : KEYWORD\n", yytext);
     return END-REWRITE;
 }
 
-"END-SEARCH"  {printf("%s : KEYWORD\n", yytext),
+"END-SEARCH"  {printf("%s : KEYWORD\n", yytext);
     return END-SEARCH;
 }
 
-"END-START"  {printf("%s : KEYWORD\n", yytext),
+"END-START"  {printf("%s : KEYWORD\n", yytext);
     return END-START;
 }
 
-"END-STRING"  {printf("%s : KEYWORD\n", yytext),
+"END-STRING"  {printf("%s : KEYWORD\n", yytext);
     return END-STRING;
 }
 
-"END-SUBTRACT"  {printf("%s : KEYWORD\n", yytext),
+"END-SUBTRACT"  {printf("%s : KEYWORD\n", yytext);
     return END-SUBTRACT;
 }
 
-"END-UNSTRING"  {printf("%s : KEYWORD\n", yytext),
+"END-UNSTRING"  {printf("%s : KEYWORD\n", yytext);
     return END-UNSTRING;
 }
 
-"END-WRITE"  {printf("%s : KEYWORD\n", yytext),
+"END-WRITE"  {printf("%s : KEYWORD\n", yytext);
     return END-WRITE;
 }
 
-"END-XML"  {printf("%s : KEYWORD\n", yytext),
+"END-XML"  {printf("%s : KEYWORD\n", yytext);
     return END-XML;
 }
 
-"ENDING"  {printf("%s : KEYWORD\n", yytext),
+"ENDING"  {printf("%s : KEYWORD\n", yytext);
     return ENDING;
 }
 
-"ENTER"  {printf("%s : KEYWORD\n", yytext),
+"ENTER"  {printf("%s : KEYWORD\n", yytext);
     return ENTER;
 }
 
-"ENTRY"  {printf("%s : KEYWORD\n", yytext),
+"ENTRY"  {printf("%s : KEYWORD\n", yytext);
     return ENTRY;
 }
 
-"ENVIRONMENT"  {printf("%s : KEYWORD\n", yytext),
+"ENVIRONMENT"  {printf("%s : KEYWORD\n", yytext);
     return ENVIRONMENT;
 }
 
-"EOP"  {printf("%s : KEYWORD\n", yytext),
+"EOP"  {printf("%s : KEYWORD\n", yytext);
     return EOP;
 }
 
-"EQUAL"  {printf("%s : KEYWORD\n", yytext),
+"EQUAL"  {printf("%s : KEYWORD\n", yytext);
     return EQUAL;
 }
 
-"ERROR"  {printf("%s : KEYWORD\n", yytext),
+"ERROR"  {printf("%s : KEYWORD\n", yytext);
     return ERROR;
 }
 
-"ESI"  {printf("%s : KEYWORD\n", yytext),
+"ESI"  {printf("%s : KEYWORD\n", yytext);
     return ESI;
 }
 
-"EVALUATE"  {printf("%s : KEYWORD\n", yytext),
+"EVALUATE"  {printf("%s : KEYWORD\n", yytext);
     return EVALUATE;
 }
 
-"EVERY"  {printf("%s : KEYWORD\n", yytext),
+"EVERY"  {printf("%s : KEYWORD\n", yytext);
     return EVERY;
 }
 
-"EXCEPTION"  {printf("%s : KEYWORD\n", yytext),
+"EXCEPTION"  {printf("%s : KEYWORD\n", yytext);
     return EXCEPTION;
 }
 
-"EXEC"  {printf("%s : KEYWORD\n", yytext),
+"EXEC"  {printf("%s : KEYWORD\n", yytext);
     return EXEC;
 }
 
-"EXECUTE"  {printf("%s : KEYWORD\n", yytext),
+"EXECUTE"  {printf("%s : KEYWORD\n", yytext);
     return EXECUTE;
 }
 
-"EXIT"  {printf("%s : KEYWORD\n", yytext),
+"EXIT"  {printf("%s : KEYWORD\n", yytext);
     return EXIT;
 }
 
@@ -740,383 +740,383 @@ NUMBER  {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
     return EXTEND;
 }
 
-"EXTERNAL"  {printf("%s : KEYWORD\n", yytext),
+"EXTERNAL"  {printf("%s : KEYWORD\n", yytext);
     return EXTERNAL;
 }
 
-"FACTORY"  {printf("%s : KEYWORD\n", yytext),
+"FACTORY"  {printf("%s : KEYWORD\n", yytext);
     return FACTORY;
 }
 
-"FALSE"  {printf("%s : KEYWORD\n", yytext),
+"FALSE"  {printf("%s : KEYWORD\n", yytext);
     return FALSE;
 }
 
-"FD"  {printf("%s : KEYWORD\n", yytext),
+"FD"  {printf("%s : KEYWORD\n", yytext);
     return FD;
 }
 
-"FILE"  {printf("%s : KEYWORD\n", yytext),
+"FILE"  {printf("%s : KEYWORD\n", yytext);
     return FILE;
 }
 
-"FILE-CONTROL"  {printf("%s : KEYWORD\n", yytext),
+"FILE-CONTROL"  {printf("%s : KEYWORD\n", yytext);
     return FILE-CONTROL;
 }
 
-"FILLER"  {printf("%s : KEYWORD\n", yytext),
+"FILLER"  {printf("%s : KEYWORD\n", yytext);
     return FILLER;
 }
 
-"FINAL"  {printf("%s : KEYWORD\n", yytext),
+"FINAL"  {printf("%s : KEYWORD\n", yytext);
     return FINAL;
 }
 
-"FIRST"  {printf("%s : KEYWORD\n", yytext),
+"FIRST"  {printf("%s : KEYWORD\n", yytext);
     return FIRST;
 }
 
-"FOOTING"  {printf("%s : KEYWORD\n", yytext),
+"FOOTING"  {printf("%s : KEYWORD\n", yytext);
     return FOOTING;
 }
 
-"FOR"  {printf("%s : KEYWORD\n", yytext),
+"FOR"  {printf("%s : KEYWORD\n", yytext);
     return FOR;
 }
 
-"FREE"  {printf("%s : KEYWORD\n", yytext),
+"FREE"  {printf("%s : KEYWORD\n", yytext);
     return FREE;
 }
 
-"FROM"  {printf("%s : KEYWORD\n", yytext),
+"FROM"  {printf("%s : KEYWORD\n", yytext);
     return FROM;
 }
 
-"FUNCTION"  {printf("%s : KEYWORD\n", yytext),
+"FUNCTION"  {printf("%s : KEYWORD\n", yytext);
     return FUNCTION;
 }
 
-"FUNCTION-POINTER"  {printf("%s : KEYWORD\n", yytext),
+"FUNCTION-POINTER"  {printf("%s : KEYWORD\n", yytext);
     return FUNCTION-POINTER;
 }
 
-"GENERATE"  {printf("%s : KEYWORD\n", yytext),
+"GENERATE"  {printf("%s : KEYWORD\n", yytext);
     return GENERATE;
 }
 
-"GIVING"  {printf("%s : KEYWORD\n", yytext),
+"GIVING"  {printf("%s : KEYWORD\n", yytext);
     return GIVING;
 }
 
-"GLOBAL"  {printf("%s : KEYWORD\n", yytext),
+"GLOBAL"  {printf("%s : KEYWORD\n", yytext);
     return GLOBAL;
 }
 
-"GO"  {printf("%s : KEYWORD\n", yytext),
+"GO"  {printf("%s : KEYWORD\n", yytext);
     return GO;
 }
 
-"GOBACK"  {printf("%s : KEYWORD\n", yytext),
+"GOBACK"  {printf("%s : KEYWORD\n", yytext);
     return GOBACK;
 }
 
-"GREATER"  {printf("%s : KEYWORD\n", yytext),
+"GREATER"  {printf("%s : KEYWORD\n", yytext);
     return GREATER;
 }
 
-"GROUP"  {printf("%s : KEYWORD\n", yytext),
+"GROUP"  {printf("%s : KEYWORD\n", yytext);
     return GROUP;
 }
 
-"GROUP-USAGE"  {printf("%s : KEYWORD\n", yytext),
+"GROUP-USAGE"  {printf("%s : KEYWORD\n", yytext);
     return GROUP-USAGE;
 }
 
-"HEADING"  {printf("%s : KEYWORD\n", yytext),
+"HEADING"  {printf("%s : KEYWORD\n", yytext);
     return HEADING;
 }
 
-"HIGH-VALUE"  {printf("%s : KEYWORD\n", yytext),
+"HIGH-VALUE"  {printf("%s : KEYWORD\n", yytext);
     return HIGH-VALUE;
 }
 
-"HGIH-VALUES"  {printf("%s : KEYWORD\n", yytext),
+"HGIH-VALUES"  {printf("%s : KEYWORD\n", yytext);
     return HIGH-VALUES;
 }
 
-"I-O"  {printf("%s : KEYWORD\n", yytext),
+"I-O"  {printf("%s : KEYWORD\n", yytext);
     return I-O;
 }
 
-"I-O-CONTROL"  {printf("%s : KEYWORD\n", yytext),
+"I-O-CONTROL"  {printf("%s : KEYWORD\n", yytext);
     return I-O-CONTROL;
 }
 
-"ID"  {printf("%s : KEYWORD\n", yytext),
+"ID"  {printf("%s : KEYWORD\n", yytext);
     return ID;
 }
 
-"IDENTIFICATION"  {printf("%s : KEYWORD\n", yytext),
+"IDENTIFICATION"  {printf("%s : KEYWORD\n", yytext);
     return IDENTIFICATION;
 }
 
-"IF"  {printf("%s : KEYWORD\n", yytext),
+"IF"  {printf("%s : KEYWORD\n", yytext);
     return IF;
 }
 
-"IN"  {printf("%s : KEYWORD\n", yytext),
+"IN"  {printf("%s : KEYWORD\n", yytext);
     return IN;
 }
 
-"INDEX"  {printf("%s : KEYWORD\n", yytext),
+"INDEX"  {printf("%s : KEYWORD\n", yytext);
     return INDEX;
 }
 
-"INDEXED"  {printf("%s : KEYWORD\n", yytext),
+"INDEXED"  {printf("%s : KEYWORD\n", yytext);
     return INDEXED;
 }
 
-"INDICATE"  {printf("%s : KEYWORD\n", yytext),
+"INDICATE"  {printf("%s : KEYWORD\n", yytext);
     return INDICATE;
 }
 
-"INHERITS"  {printf("%s : KEYWORD\n", yytext),
+"INHERITS"  {printf("%s : KEYWORD\n", yytext);
     return INHERITS;
 }
 
-"INITIAL"  {printf("%s : KEYWORD\n", yytext),
+"INITIAL"  {printf("%s : KEYWORD\n", yytext);
     return INITIAL;
 }
 
-"INITIALIZE"  {printf("%s : KEYWORD\n", yytext),
+"INITIALIZE"  {printf("%s : KEYWORD\n", yytext);
     return INITIALIZE;
 }
 
-"INITIATE"  {printf("%s : KEYWORD\n", yytext),
+"INITIATE"  {printf("%s : KEYWORD\n", yytext);
     return INITIATE;
 }
 
-"INPUT"  {printf("%s : KEYWORD\n", yytext),
+"INPUT"  {printf("%s : KEYWORD\n", yytext);
     return INPUT;
 }
 
-"INPUT-OUTPUT"  {printf("%s : KEYWORD\n", yytext),
+"INPUT-OUTPUT"  {printf("%s : KEYWORD\n", yytext);
     return INPUT-OUTPUT;
 }
 
-"INSERT"  {printf("%s : KEYWORD\n", yytext),
+"INSERT"  {printf("%s : KEYWORD\n", yytext);
     return INSERT;
 }
 
-"INSPECT"  {printf("%s : KEYWORD\n", yytext),
+"INSPECT"  {printf("%s : KEYWORD\n", yytext);
     return INSPECT;
 }
 
-"INSTALLATION"  {printf("%s : KEYWORD\n", yytext),
+"INSTALLATION"  {printf("%s : KEYWORD\n", yytext);
     return INSTALLATION;
 }
 
-"INTO"  {printf("%s : KEYWORD\n", yytext),
+"INTO"  {printf("%s : KEYWORD\n", yytext);
     return INTO;
 }
 
-"INVALID"  {printf("%s : KEYWORD\n", yytext),
+"INVALID"  {printf("%s : KEYWORD\n", yytext);
     return INVALID;
 }
 
-"INVOKE"  {printf("%s : KEYWORD\n", yytext),
+"INVOKE"  {printf("%s : KEYWORD\n", yytext);
     return INVOKE;
 }
 
-"IS"  {printf("%s : KEYWORD\n", yytext),
+"IS"  {printf("%s : KEYWORD\n", yytext);
     return IS;
 }
 
-"JAVA"  {printf("%s : KEYWORD\n", yytext),
+"JAVA"  {printf("%s : KEYWORD\n", yytext);
     return JAVA;
 }
 
-"JNIENVPTR"  {printf("%s : KEYWORD\n", yytext),
+"JNIENVPTR"  {printf("%s : KEYWORD\n", yytext);
     return JNIENVPTR;
 }
 
-"JSON"  {printf("%s : KEYWORD\n", yytext),
+"JSON"  {printf("%s : KEYWORD\n", yytext);
     return JSON;
 }
 
-"JSON-CODE"  {printf("%s : KEYWORD\n", yytext),
+"JSON-CODE"  {printf("%s : KEYWORD\n", yytext);
     return JSON-CODE;
 }
 
-"JSON-STATUS"  {printf("%s : KEYWORD\n", yytext),
+"JSON-STATUS"  {printf("%s : KEYWORD\n", yytext);
     return JSON-STATUS;
 }
 
-"JUST"  {printf("%s : KEYWORD\n", yytext),
+"JUST"  {printf("%s : KEYWORD\n", yytext);
     return JUST;
 }
 
-"JUSTIFIED"  {printf("%s : KEYWORD\n", yytext),
+"JUSTIFIED"  {printf("%s : KEYWORD\n", yytext);
     return JUSTIFIED;
 }
 
-"KANJI"  {printf("%s : KEYWORD\n", yytext),
+"KANJI"  {printf("%s : KEYWORD\n", yytext);
     return KANJI;
 }
 
-"KEY"  {printf("%s : KEYWORD\n", yytext),
+"KEY"  {printf("%s : KEYWORD\n", yytext);
     return KEY;
 }
 
-"LABEL"  {printf("%s : KEYWORD\n", yytext),
+"LABEL"  {printf("%s : KEYWORD\n", yytext);
     return LABEL;
 }
 
-"LAST"  {printf("%s : KEYWORD\n", yytext),
+"LAST"  {printf("%s : KEYWORD\n", yytext);
     return LAST;
 }
 
-"LEADING"  {printf("%s : KEYWORD\n", yytext),
+"LEADING"  {printf("%s : KEYWORD\n", yytext);
     return LEADING;
 }
 
-"LEFT"  {printf("%s : KEYWORD\n", yytext),
+"LEFT"  {printf("%s : KEYWORD\n", yytext);
     return LEFT;
 }
 
-"LENGTH"  {printf("%s : KEYWORD\n", yytext),
+"LENGTH"  {printf("%s : KEYWORD\n", yytext);
     return LENGTH;
 }
 
-"LESS"  {printf("%s : KEYWORD\n", yytext),
+"LESS"  {printf("%s : KEYWORD\n", yytext);
     return LESS;
 }
 
-"LIMIT"  {printf("%s : KEYWORD\n", yytext),
+"LIMIT"  {printf("%s : KEYWORD\n", yytext);
     return LIMIT;
 }
 
-"LIMITS"  {printf("%s : KEYWORD\n", yytext),
+"LIMITS"  {printf("%s : KEYWORD\n", yytext);
     return LIMITS;
 }
 
-"LINAGE"  {printf("%s : KEYWORD\n", yytext),
+"LINAGE"  {printf("%s : KEYWORD\n", yytext);
     return LINAGE;
 }
 
-"LINAGE-COUNTER"  {printf("%s : KEYWORD\n", yytext),
+"LINAGE-COUNTER"  {printf("%s : KEYWORD\n", yytext);
     return LINAGE-COUNTER;
 }
 
-"LINE"  {printf("%s : KEYWORD\n", yytext),
+"LINE"  {printf("%s : KEYWORD\n", yytext);
     return LINE;
 }
 
-"LINE-COUNTER"  {printf("%s : KEYWORD\n", yytext),
+"LINE-COUNTER"  {printf("%s : KEYWORD\n", yytext);
     return LINE-COUNTER;
 }
 
-"LINES"  {printf("%s : KEYWORD\n", yytext),
+"LINES"  {printf("%s : KEYWORD\n", yytext);
     return LINES;
 }
 
-"LINKAGE"  {printf("%s : KEYWORD\n", yytext),
+"LINKAGE"  {printf("%s : KEYWORD\n", yytext);
     return LINKAGE;
 }
 
-"LOCAL-STORAGE"  {printf("%s : KEYWORD\n", yytext),
+"LOCAL-STORAGE"  {printf("%s : KEYWORD\n", yytext);
     return LOCAL-STORAGE;
 }
 
-"LOCK"  {printf("%s : KEYWORD\n", yytext),
+"LOCK"  {printf("%s : KEYWORD\n", yytext);
     return LOCK;
 }
 
-"LOW-VALUE"  {printf("%s : KEYWORD\n", yytext),
+"LOW-VALUE"  {printf("%s : KEYWORD\n", yytext);
     return LOW-VALUE;
 }
 
-"LOW-VALUES"  {printf("%s : KEYWORD\n", yytext),
+"LOW-VALUES"  {printf("%s : KEYWORD\n", yytext);
     return LOW-VALUES;
 }
 
-"MEMORY"  {printf("%s : KEYWORD\n", yytext),
+"MEMORY"  {printf("%s : KEYWORD\n", yytext);
     return MEMORY;
 }
 
-"MERGE"  {printf("%s : KEYWORD\n", yytext),
+"MERGE"  {printf("%s : KEYWORD\n", yytext);
     return MERGE;
 }
 
-"MESSAGE"  {printf("%s : KEYWORD\n", yytext),
+"MESSAGE"  {printf("%s : KEYWORD\n", yytext);
     return MESSAGE;
 }
 
-"METHOD"  {printf("%s : KEYWORD\n", yytext),
+"METHOD"  {printf("%s : KEYWORD\n", yytext);
     return METHOD;
 }
 
-"METHOD-ID"  {printf("%s : KEYWORD\n", yytext),
+"METHOD-ID"  {printf("%s : KEYWORD\n", yytext);
     return METHOD-ID;
 }
 
-"MODE"  {printf("%s : KEYWORD\n", yytext),
+"MODE"  {printf("%s : KEYWORD\n", yytext);
     return MODE;
 }
 
-"MODULES"  {printf("%s : KEYWORD\n", yytext),
+"MODULES"  {printf("%s : KEYWORD\n", yytext);
     return MODULES;
 }
 
-"MORE-LABELS"  {printf("%s : KEYWORD\n", yytext),
+"MORE-LABELS"  {printf("%s : KEYWORD\n", yytext);
     return MORE-LABELS;
 }
 
-"MOVE"  {printf("%s : KEYWORD\n", yytext),
+"MOVE"  {printf("%s : KEYWORD\n", yytext);
     return MOVEL
 }
 
-"MULTIPLE"  {printf("%s : KEYWORD\n", yytext),
+"MULTIPLE"  {printf("%s : KEYWORD\n", yytext);
     return MULTIPLE;
 }
 
-"MULTIPLY"  {printf("%s : KEYWORD\n", yytext),
+"MULTIPLY"  {printf("%s : KEYWORD\n", yytext);
     return MULTIPLY;
 }
 
-"NATIONAL"  {printf("%s : KEYWORD\n", yytext),
+"NATIONAL"  {printf("%s : KEYWORD\n", yytext);
     return NATIONAL;
 }
 
-"NATIONAL-EDITED"  {printf("%s : KEYWORD\n", yytext),
+"NATIONAL-EDITED"  {printf("%s : KEYWORD\n", yytext);
     return NATIONAL-EDITED;
 }
 
-"NATIVE"  {printf("%s : KEYWORD\n", yytext),
+"NATIVE"  {printf("%s : KEYWORD\n", yytext);
     return NATIVE;
 }
 
-"NEGATIVE"  {printf("%s : KEYWORD\n", yytext),
+"NEGATIVE"  {printf("%s : KEYWORD\n", yytext);
     return NEGATIVE;
 }
 
-"NEXT"  {printf("%s : KEYWORD\n", yytext),
+"NEXT"  {printf("%s : KEYWORD\n", yytext);
     return NEXT;
 }
 
-"NO"  {printf("%s : KEYWORD\n", yytext),
+"NO"  {printf("%s : KEYWORD\n", yytext);
     return NO;
 }
 
-"NOT"  {printf("%s : KEYWORD\n", yytext),
+"NOT"  {printf("%s : KEYWORD\n", yytext);
     return NOT;
 }
 
-"NULL"  {printf("%s : KEYWORD\n", yytext),
+"NULL"  {printf("%s : KEYWORD\n", yytext);
     return NULL;
 }
 
-"NULLS"  {printf("%s : KEYWORD\n", yytext),
+"NULLS"  {printf("%s : KEYWORD\n", yytext);
     return NULLS;
 }
 
@@ -1124,39 +1124,39 @@ NUMBER  {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
     return MUMBER;
 }
 
-"NUMERIC"  {printf("%s : KEYWORD\n", yytext),
+"NUMERIC"  {printf("%s : KEYWORD\n", yytext);
     return NUMERIC;
 }
 
-"NUMERIC-EDITED"  {printf("%s : KEYWORD\n", yytext),
+"NUMERIC-EDITED"  {printf("%s : KEYWORD\n", yytext);
     return NUMERIC-EDITED;
 }
 
-"OBJECT"  {printf("%s : KEYWORD\n", yytext),
+"OBJECT"  {printf("%s : KEYWORD\n", yytext);
     return OBJECT;
 }
 
-"OBJECT-COMPUTER"  {printf("%s : KEYWORD\n", yytext),
+"OBJECT-COMPUTER"  {printf("%s : KEYWORD\n", yytext);
     return OBJECT-COMPUTER;
 }
 
-"OCCURS"  {printf("%s : KEYWORD\n", yytext),
+"OCCURS"  {printf("%s : KEYWORD\n", yytext);
     return OCCURS;
 }
 
-"OF"  {printf("%s : KEYWORD\n", yytext),
+"OF"  {printf("%s : KEYWORD\n", yytext);
     return OF;
 }
 
-"OFF"  {printf("%s : KEYWORD\n", yytext),
+"OFF"  {printf("%s : KEYWORD\n", yytext);
     return OFF;
 }
 
-"OMITTED"  {printf("%s : KEYWORD\n", yytext),
+"OMITTED"  {printf("%s : KEYWORD\n", yytext);
     return OMITTED;
 }
 
-"ON"  {printf("%s : KEYWORD\n", yytext),
+"ON"  {printf("%s : KEYWORD\n", yytext);
     return ON;
 }
 
