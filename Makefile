@@ -1,9 +1,9 @@
-lexer: lexer.l
-    flex lexer.l
-    gcc -o lexer lex.yy.c
-    ./lexer readInput.COB
+lexer: cobolLexer.l
+    flex cobolLex.l
+    gcc -o Lexer lex.yy.c
+    ./Lexer readInput.COB
 
 clean:
     clear
-    rm -f lex.yy.c lexer
+    rm -f lex.yy.c Lexer
     ls -l
