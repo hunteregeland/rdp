@@ -1,4 +1,4 @@
-lexer: cobolLexer.l
+lexer: cobolLex.l
     flex cobolLex.l
     gcc -o Lexer lex.yy.c
     ./Lexer readInput.COB
