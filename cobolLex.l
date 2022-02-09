@@ -56,15 +56,9 @@ NUMBER  {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
     return LT-OP;
 }
 
-<<<<<<< HEAD
 "="  {printf("%s : OPERATOR\n", yytext); 
     return EQ-OP;
 }
-=======
-"="  {printf("%s : OPERATOR\n", yytext), 
-    return EQ;
- }
->>>>>>> 20acb9345e0e23b82c030b682f23b5eed695f8d1
 
 "=="  {printf("%s : OPERATOR\n", yytext);
     return DOUBLE-EQ-OP;
