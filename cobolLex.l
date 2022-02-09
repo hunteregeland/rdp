@@ -20,41 +20,77 @@ NUMBER  {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
 
 %%
 
-{DIGIT}     {printf("%s : DIGIT\n", yytext);}
+{DIGIT}     {printf("%s : DIGIT\n", yytext);
+    return DIGIT;
+}
 
-{ID}        {printf("%s : ID\n", yytext);}   
+{ID}        {printf("%s : ID\n", yytext);
+    return ID;
+}   
 
-"+"  {printf("%s : OPERATOR\n", yytext);}
+"+"  {printf("%s : OPERATOR\n", yytext);
+    return PLUS-OP;
+}
 
-"-"  {printf("%s : OPERATOR\n", yytext);}
+"-"  {printf("%s : OPERATOR\n", yytext);
+    return HYPHEN-OP;
+}
 
-"*"  {printf("%s : OPERATOR\n", yytext);}
+"*"  {printf("%s : OPERATOR\n", yytext);
+    return MULIPLY-OP;
+}
 
-"/"  {printf("%s : OPERATOR\n", yytext);}
+"/"  {printf("%s : OPERATOR\n", yytext);
+    return DIVIDE-OP;
+}
 
-"**" {printf("%s : OPERATOR\n", yytext);}
+"**" {printf("%s : OPERATOR\n", yytext);
+    return EXPONENT-OP;
+}
 
-">"  {printf("%s : OPERATOR\n", yytext);}
+">"  {printf("%s : OPERATOR\n", yytext);
+    return GT-OP;
+}
 
-"<"  {printf("%s : OPERATOR\n", yytext);}
+"<"  {printf("%s : OPERATOR\n", yytext);
+    return LT-OP;
+}
 
-"="  {printf("%s : OPERATOR\n", yytext), return EQ;}
+"="  {printf("%s : OPERATOR\n", yytext); 
+    return EQ-OP;
+}
 
-"=="  {printf("%s : OPERATOR\n", yytext);}
+"=="  {printf("%s : OPERATOR\n", yytext);
+    return DOUBLE-EQ-OP;
+}
 
-">="  {printf("%s : OPERATOR\n", yytext);}
+">="  {printf("%s : OPERATOR\n", yytext);
+    return GT-EQ-OP;
+}
 
-"<="  {printf("%s : OPERATOR\n", yytext);}
+"<="  {printf("%s : OPERATOR\n", yytext);
+    return LT-EQ-OP;
+}
 
-"<>"  {printf("%s : OPERATOR\n", yytext);}
+"<>"  {printf("%s : OPERATOR\n", yytext);
+    return NOT-EQ-OP;
+}
 
-"*>"  {printf("%s : OPERATOR\n", yytext);}
+"*>"  {printf("%s : OPERATOR\n", yytext);
+    return COMMENT-OP;
+}
 
-">>"  {printf("%s : OPERATOR\n", yytext);}
+">>"  {printf("%s : OPERATOR\n", yytext);
+    return COMPILER-DIRECTIVE-OP;
+}
 
-"("  {printf("%s : OPERATOR\n", yytext);}
+"("  {printf("%s : OPERATOR\n", yytext);
+    return LEFT-PARENTHESES-OP;
+}
 
-")"  {printf("%s : OPERATOR\n", yytext);}
+")"  {printf("%s : OPERATOR\n", yytext);
+    return RIGHT-PARENTHESES-OP;
+}
 
 "ACCEPT"  {printf("%s : KEYWORD\n", yytext), 
     return ACCEPT;
@@ -1864,9 +1900,13 @@ NUMBER  {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
     return ZEROS;
 }
 
-"."  {printf("%s : SEPARATOR\n", yytext);}
+"."  {printf("%s : SEPARATOR\n", yytext);
+    return PERIOD-SEP;
+}
 
-","  {printf("%s : SEPARATOR\n", yytext);}
+","  {printf("%s : SEPARATOR\n", yytext);
+    return COMMA-SEP;
+}
 
 " " ;
 
