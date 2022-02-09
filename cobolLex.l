@@ -38,7 +38,9 @@ NUMBER  {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
 
 "<"  {printf("%s : OPERATOR\n", yytext);}
 
-"="  {printf("%s : OPERATOR\n", yytext), return EQ;}
+"="  {printf("%s : OPERATOR\n", yytext), 
+    return EQ;
+ }
 
 "=="  {printf("%s : OPERATOR\n", yytext);}
 
