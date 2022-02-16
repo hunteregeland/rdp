@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "symbolTable.h"
-#include "AST.h"
+//#include "symbolTable.h"
+//#include "AST.h"
 
 extern int yylex();
 extern int yyparse();
