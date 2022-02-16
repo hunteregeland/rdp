@@ -7,4 +7,5 @@
 - *cobolLex.l* is the COBOL Lexer
 - *lex.yy.c* is the file created by flex used in the lexer
 
+- *parser.y* is the example parser given to us to build our cobol parser from
 - *cobolParser.y* is the smaller version of the parser for testing in cobol
