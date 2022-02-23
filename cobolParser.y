@@ -5,7 +5,8 @@
 #include <string.h>
 
 //#include "symbolTable.h"
-//#include "AST.h"
+#include "AST.h"
+
 
 extern int yylex();
 extern int yyparse();
@@ -15,36 +16,57 @@ void yyerror(const char* s);
 char currentScope[50]; // global or the name of the function
 %}
 
+
 %union {
 	int number;
 	char character;
 	char* string;
-	//struct AST* ast;
+	struct AST* ast;
 }
+%token PLUS_OP
+%token HYPHEN_OP
+%token MULTIPLY_OP
+%token DIVIDE_OP
+%token EXPONENT_OP
+%token GT_OP
+%token LT_OP
+%token EQ_OP
+%token DOUBLE_EQ_OP
+%token GT_EQ_OP
+%token LT_EQ_OP
+%token NOT_EQ_OP
+%token COMMENT_OP
+%token COMPILER_DIRECTIVE_OP
+%token LEFT_PARENTHESES_OP
+%token RIGHT_PARENTESES_OP
 
-%token <string> TYPE
+%token PIC
+%token VALUE
+%token SPACES
+%token ZEROES
+
 %token <string> ID
-%token <number> DIGIT
-%token <char> LETTER
-%token <number> NUMBER
-
-%token <char> PLUS-OP
-%token <char> EQ-OP
-%token <char> HYPHEN-OP
-%token <char> MULTIPLY-OP
 %token <char> SEMICOLON
-%token ACCEPT
+%token <char> EQ_OP
+%token <number> NUMBER
+%token WRITE
+%token PLUS_OP
+%token HYPHEN_OP
+%token MULTIPLY_OP
+
+
+
 
 %printer { fprintf(yyoutput, "%s", $$); } ID;
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 
-//%type <ast> Program DeclList Decl VarDecl Stmt StmtList Expr
+%type <ast> Program DeclList Decl VarDecl Stmt StmtList Expr
 
 %start Program
 
 %%
 
-Program: DeclList  { $$ = $1;
+Program: DeclList { $$ = $1;
 					 printf("\n--- Abstract Syntax Tree ---\n\n");
 					 //printAST($$,0);
 					}
@@ -61,10 +83,11 @@ Decl:	VarDecl
 ;
 
 VarDecl:	TYPE ID SEMICOLON	{ printf("\n RECOGNIZED RULE: Variable declaration %s\n", $2);
-									// Symbol Table
+									//Symbol Table
+									/*
 									symTabAccess();
 									int inSymTab = found($2, currentScope);
-									//printf("looking for %s in symtab - found: %d \n", $2, inSymTab);
+									printf("looking for %s in symtab - found: %d \n", $2, inSymTab);
 									
 									if (inSymTab == 0) 
 										addItem($2, "Var", $1,0, currentScope);
@@ -73,8 +96,9 @@ VarDecl:	TYPE ID SEMICOLON	{ printf("\n RECOGNIZED RULE: Variable declaration %s
 									showSymTable();
 									
 								  // ---- SEMANTIC ACTIONS by PARSER ----
-								    //$$ = AST_Type("Type",$1,$2);
-									//printf("-----------> %s", $$->LHS);
+								    $$ = AST_Type("Type",$1,$2);
+									printf("-----------> %s", $$->LHS);
+									*/
 								}
 ;
 
@@ -87,14 +111,14 @@ Stmt:	SEMICOLON	{}
 ;
 
 Expr:	ID { printf("\n RECOGNIZED RULE: Simplest expression\n"); }
-	| ID EQ ID 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
+	| ID EQ_OP ID 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
 					// ---- SEMANTIC ACTIONS by PARSER ----
 					  //$$ = AST_assignment("=",$1,$3);
 				}
-	| ID EQ NUMBER 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
+	| ID EQ_OP NUMBER 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
 					   // ---- SEMANTIC ACTIONS by PARSER ----
-					   char str[50];
-					   sprintf(str, "%d", $3); 
+					   //char str[50];
+					   //sprintf(str, "%d", $3); 
 					   //$$ = AST_assignment("=",$1, str);
 					}
 	| WRITE ID 	{ printf("\n RECOGNIZED RULE: WRITE statement\n");
@@ -103,7 +127,7 @@ Expr:	ID { printf("\n RECOGNIZED RULE: Simplest expression\n"); }
 
 %%
 
-int main(int argc, char**argv)
+int main(int argc, char**argv)	
 {
 /*
 	#ifdef YYDEBUG

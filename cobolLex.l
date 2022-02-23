@@ -6,6 +6,7 @@
 #include <math.h>
 
 #define YY_DECL int yylex()
+#include "parser.tab.h"
 
 %}
 
@@ -21,67 +22,67 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 %%  
 
 "+"  {printf("%s : OPERATOR\n", yytext);
-    return PLUS-OP;
+    return PLUS_OP;
 }
 
 "-"  {printf("%s : OPERATOR\n", yytext);
-    return HYPHEN-OP;
+    return HYPHEN_OP;
 }
 
 "*"  {printf("%s : OPERATOR\n", yytext);
-    return MULIPLY-OP;
+    return MULIPLY_OP;
 }
 
 "/"  {printf("%s : OPERATOR\n", yytext);
-    return DIVIDE-OP;
+    return DIVIDE_OP;
 }
 
 "**" {printf("%s : OPERATOR\n", yytext);
-    return EXPONENT-OP;
+    return EXPONENT_OP;
 }
 
 ">"  {printf("%s : OPERATOR\n", yytext);
-    return GT-OP;
+    return GT_OP;
 }
 
 "<"  {printf("%s : OPERATOR\n", yytext);
-    return LT-OP;
+    return LT_OP;
 }
 
 "="  {printf("%s : OPERATOR\n", yytext); 
-    return EQ-OP;
+    return EQ_OP;
 }
 
 "=="  {printf("%s : OPERATOR\n", yytext);
-    return DOUBLE-EQ-OP;
+    return DOUBLE_EQ_OP;
 }
 
 ">="  {printf("%s : OPERATOR\n", yytext);
-    return GT-EQ-OP;
+    return GT_EQ_OP;
 }
 
 "<="  {printf("%s : OPERATOR\n", yytext);
-    return LT-EQ-OP;
+    return LT_EQ_OP;
 }
 
 "<>"  {printf("%s : OPERATOR\n", yytext);
-    return NOT-EQ-OP;
+    return NOT_EQ_OP;
 }
 
 "*>"  {printf("%s : OPERATOR\n", yytext);
-    return COMMENT-OP;
+    return COMMENT_OP;
 }
 
 ">>"  {printf("%s : OPERATOR\n", yytext);
-    return COMPILER-DIRECTIVE-OP;
+    return COMPILER_DIRECTIVE_OP;
 }
 
 "("  {printf("%s : OPERATOR\n", yytext);
-    return LEFT-PARENTHESES-OP;
+    return LEFT_PARENTHESES_OP;
 }
 
 ")"  {printf("%s : OPERATOR\n", yytext);
-    return RIGHT-PARENTHESES-OP;
+    return RIGHT_PARENTHESES_OP;
 }
 
 "ACCEPT"  {printf("%s : KEYWORD\n", yytext); 
@@ -125,11 +126,11 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "ALPHABETIC-LOWER"  {printf("%s : KEYWORD\n", yytext); 
-    return ALPHABETIC-LOWER;
+    return ALPHABETIC_LOWER;
 }
 
 "ALPHABETIC-UPPER"  {printf("%s : KEYWORD\n", yytext); 
-    return ALPHABETIC-UPPER;
+    return ALPHABETIC_UPPER;
 }
 
 "ALPHANUMERIC"  {printf("%s : KEYWORD\n", yytext); 
@@ -137,7 +138,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "ALPHANUMERIC-EDITED"  {printf("%s : KEYWORD\n", yytext); 
-    return ALPHANUMERIC-EDITED;
+    return ALPHANUMERIC_EDITED;
 }
 
 "ALSO"  {printf("%s : KEYWORD\n", yytext); 
@@ -225,7 +226,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "BYTE-LENGTH"  {printf("%s : KEYWORD\n", yytext);
-    return BYTE-LENGTH;
+    return BYTE_LENGTH;
 }
 
 "CALL"  {printf("%s : KEYWORD\n", yytext);
@@ -265,11 +266,11 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "CLASS-ID"  {printf("%s : KEYWORD\n", yytext);
-    return CLASS-ID;
+    return CLASS_ID;
 }
 
 "CLOCK-UNITS"  {printf("%s : KEYWORD\n", yytext)
-    return CLOCK-UNITS;
+    return CLOCK_UNITS;
 }
 
 "CLOSE"  {printf("%s : KEYWORD\n", yytext);
@@ -285,7 +286,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "CODE-SET"  {printf("%s : KEYWORD\n", yytext);
-    return CODE-SET;
+    return CODE_SET;
 }
 
 "COLLATING"  {printf("%s : KEYWORD\n", yytext);
@@ -297,7 +298,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "COM-REG"  {printf("%s : KEYWORD\n", yytext);
-    return COM-REG;
+    return COM_REG;
 }
 
 "COMMA"  {printf("%s : KEYWORD\n", yytext);
@@ -317,23 +318,23 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "COMP-1"  {printf("%s : KEYWORD\n", yytext);
-    return COMP-1;
+    return COMP_1;
 }
 
 "COMP-2"  {printf("%s : KEYWORD\n", yytext);
-    return COMP-2;
+    return COMP_2;
 }
 
 "COMP-3"  {printf("%s : KEYWORD\n", yytext);
-    return COMP-3;
+    return COMP_3;
 }
 
 "COMP-4"  {printf("%s : KEYWORD\n", yytext);
-    return COMP-4;
+    return COMP_4;
 }
 
 "COMP-5"  {printf("%s : KEYWORD\n", yytext);
-    return COMP-5;
+    return COMP_5;
 }
 
 "COMPUTATIONAL"  {printf("%s : KEYWORD\n", yytext);
@@ -341,23 +342,23 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "COMPUTATIONAL-1"  {printf("%s : KEYWORD\n", yytext);
-    return COMPUTATIONAL-1;
+    return COMPUTATIONAL_1;
 }
 
 "COMPUTATIONAL-2"  {printf("%s : KEYWORD\n", yytext);
-    return COMPUTATIONAL-2;
+    return COMPUTATIONAL_2;
 }
 
 "COMPUTATIONAL-3"  {printf("%s : KEYWORD\n", yytext);
-    return COMPUTATIONAL-3;
+    return COMPUTATIONAL_3;
 }
 
 "COMPUTATIONAL-4"  {printf("%s : KEYWORD\n", yytext);
-    return COMPUTATIONAL-4;
+    return COMPUTATIONAL_4;
 }
 
 "COMPUTATIONAL-5"  {printf("%s : KEYWORD\n", yytext);
-    return COMPUTATIONAL-5;
+    return COMPUTATIONAL_5;
 }
 
 "COMPUTE"  {printf("%s : KEYWORD\n", yytext);
@@ -421,11 +422,11 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "DATE-COMPILED"  {printf("%s : KEYWORD\n", yytext);
-    return DATE-COMPILED;
+    return DATE_COMPILED;
 }
 
 "DATE-WRITTEN"  {printf("%s : KEYWORD\n", yytext);
-    return DATE-WRITTEN;
+    return DATE_WRITTEN;
 }
 
 "DAY"  {printf("%s : KEYWORD\n", yytext);
@@ -433,7 +434,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "DAY-OF-WEEK"  {printf("%s : KEYWORD\n", yytext);
-    return DAY-OF-WEEK;
+    return DAY_OF_WEEK;
 }
 
 "DBCS"  {printf("%s : KEYWORD\n", yytext);
@@ -445,31 +446,31 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "DEBUG-CONTENTS"  {printf("%s : KEYWORD\n", yytext);
-    return DEBUG-CONTENTS;
+    return DEBUG_CONTENTS;
 }
 
 "DEBUG-ITEM"  {printf("%s : KEYWORD\n", yytext);
-    return DEBUG-ITEM;
+    return DEBUG_ITEM;
 }
 
 "DEBUG-LINE"  {printf("%s : KEYWORD\n", yytext);
-    return DEBUG-LINE;
+    return DEBUG_LINE;
 }
 
 "DEBUG-NAME"  {printf("%s : KEYWORD\n", yytext);
-    return DEBUG-NAME;
+    return DEBUG_NAME;
 }
 
 "DEBUG-SUB-1"  {printf("%s : KEYWORD\n", yytext);
-    return DEBUG-SUB-1;
+    return DEBUG_SUB_1;
 }
 
 "DEBUG-SUB-2"  {printf("%s : KEYWORD\n", yytext);
-    return DEBUG-SUB-2;
+    return DEBUG_SUB_2;
     }
 
 "DEBUG-SUB-3"  {printf("%s : KEYWORD\n", yytext);
-    return DEBUG-SUB-3;
+    return DEBUG_SUB_3;
 }
 
 "DEBUGGING"  {printf("%s : KEYWORD\n", yytext);
@@ -477,7 +478,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "DECIMAL-POINT"  {printf("%s : KEYWORD\n", yytext);
-    return DECIMAL-POINT;
+    return DECIMAL_POINT;
 }
 
 "DECLARATIVES"  {printf("%s : KEYWORD\n", yytext);
@@ -525,7 +526,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "DISPLAY-1"  {printf("%s : KEYWORD\n", yytext);
-    return DISPLAY-1;
+    return DISPLAY_1;
 }
 
 "DIVIDE"  {printf("%s : KEYWORD\n", yytext);
@@ -577,99 +578,99 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "END-ADD"  {printf("%s : KEYWORD\n", yytext);
-    return END-ADD;
+    return END_ADD;
 }
 
 "END-CALL"  {printf("%s : KEYWORD\n", yytext);
-    return END-CALL;
+    return END_CALL;
 }
 
 "END-COMPUTE"  {printf("%s : KEYWORD\n", yytext);
-    return END-COMPUTE;
+    return END_COMPUTE;
 }
 
 "END-DELETE"  {printf("%s : KEYWORD\n", yytext);
-    return END-DELETE;
+    return END_DELETE;
 }
 
 "END-DIVIDE"  {printf("%s : KEYWORD\n", yytext);
-    return END-DIVIDE;
+    return END_DIVIDE;
 }
 
 "END-EVALUATE"  {printf("%s : KEYWORD\n", yytext);
-    return END-EVALUATE;
+    return END_EVALUATE;
 }
 
 "END-EXEC"  {printf("%s : KEYWORD\n", yytext);
-    return END-EXEC;
+    return END_EXEC;
 }
 
 "END-IF"  {printf("%s : KEYWORD\n", yytext);
-    return END-IF;
+    return END_IF;
 }
 
 "END-INVOKE"  {printf("%s : KEYWORD\n", yytext);
-    return END-INVOKE;
+    return END_INVOKE;
 }
 
 "END-JSON"  {printf("%s : KEYWORD\n", yytext);
-    return END-JSON;
+    return END_JSON;
 }
 
 "END-MULTIPLY"  {printf("%s : KEYWORD\n", yytext);
-    return END-MULTIPLY;
+    return END_MULTIPLY;
 }
 
 "END-OF-PAGE"  {printf("%s : KEYWORD\n", yytext);
-    return END-OF-PAGE;
+    return END_OF_PAGE;
 }
 
 "END-PERFORM"  {printf("%s : KEYWORD\n", yytext);
-    return END-PERFORM;
+    return END_PERFORM;
 }
 
 "END-READ"  {printf("%s : KEYWORD\n", yytext);
-    return END-READ;
+    return END_READ;
 }
 
 "END-RECEIVE"  {printf("%s : KEYWORD\n", yytext);
-    return END-RECEIVE;
+    return END_RECEIVE;
 }
 
 "END-RETURN"  {printf("%s : KEYWORD\n", yytext);
-    return END-RETURN;
+    return END_RETURN;
 }
 
 "END-REWRITE"  {printf("%s : KEYWORD\n", yytext);
-    return END-REWRITE;
+    return END_REWRITE;
 }
 
 "END-SEARCH"  {printf("%s : KEYWORD\n", yytext);
-    return END-SEARCH;
+    return END_SEARCH;
 }
 
 "END-START"  {printf("%s : KEYWORD\n", yytext);
-    return END-START;
+    return END_START;
 }
 
 "END-STRING"  {printf("%s : KEYWORD\n", yytext);
-    return END-STRING;
+    return END_STRING;
 }
 
 "END-SUBTRACT"  {printf("%s : KEYWORD\n", yytext);
-    return END-SUBTRACT;
+    return END_SUBTRACT;
 }
 
 "END-UNSTRING"  {printf("%s : KEYWORD\n", yytext);
-    return END-UNSTRING;
+    return END_UNSTRING;
 }
 
 "END-WRITE"  {printf("%s : KEYWORD\n", yytext);
-    return END-WRITE;
+    return END_WRITE;
 }
 
 "END-XML"  {printf("%s : KEYWORD\n", yytext);
-    return END-XML;
+    return END_XML;
 }
 
 "ENDING"  {printf("%s : KEYWORD\n", yytext);
@@ -753,7 +754,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "FILE-CONTROL"  {printf("%s : KEYWORD\n", yytext);
-    return FILE-CONTROL;
+    return FILE_CONTROL;
 }
 
 "FILLER"  {printf("%s : KEYWORD\n", yytext);
@@ -789,7 +790,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "FUNCTION-POINTER"  {printf("%s : KEYWORD\n", yytext);
-    return FUNCTION-POINTER;
+    return FUNCTION_POINTER;
 }
 
 "GENERATE"  {printf("%s : KEYWORD\n", yytext);
@@ -821,7 +822,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "GROUP-USAGE"  {printf("%s : KEYWORD\n", yytext);
-    return GROUP-USAGE;
+    return GROUP_USAGE;
 }
 
 "HEADING"  {printf("%s : KEYWORD\n", yytext);
@@ -829,19 +830,19 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "HIGH-VALUE"  {printf("%s : KEYWORD\n", yytext);
-    return HIGH-VALUE;
+    return HIGH_VALUE;
 }
 
 "HGIH-VALUES"  {printf("%s : KEYWORD\n", yytext);
-    return HIGH-VALUES;
+    return HIGH_VALUES;
 }
 
 "I-O"  {printf("%s : KEYWORD\n", yytext);
-    return I-O;
+    return I_O;
 }
 
 "I-O-CONTROL"  {printf("%s : KEYWORD\n", yytext);
-    return I-O-CONTROL;
+    return I_O_CONTROL;
 }
 
 "ID"  {printf("%s : KEYWORD\n", yytext);
@@ -893,7 +894,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "INPUT-OUTPUT"  {printf("%s : KEYWORD\n", yytext);
-    return INPUT-OUTPUT;
+    return INPUT_OUTPUT;
 }
 
 "INSERT"  {printf("%s : KEYWORD\n", yytext);
@@ -937,11 +938,11 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "JSON-CODE"  {printf("%s : KEYWORD\n", yytext);
-    return JSON-CODE;
+    return JSON_CODE;
 }
 
 "JSON-STATUS"  {printf("%s : KEYWORD\n", yytext);
-    return JSON-STATUS;
+    return JSON_STATUS;
 }
 
 "JUST"  {printf("%s : KEYWORD\n", yytext);
@@ -997,7 +998,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "LINAGE-COUNTER"  {printf("%s : KEYWORD\n", yytext);
-    return LINAGE-COUNTER;
+    return LINAGE_COUNTER;
 }
 
 "LINE"  {printf("%s : KEYWORD\n", yytext);
@@ -1005,7 +1006,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "LINE-COUNTER"  {printf("%s : KEYWORD\n", yytext);
-    return LINE-COUNTER;
+    return LINE_COUNTER;
 }
 
 "LINES"  {printf("%s : KEYWORD\n", yytext);
@@ -1017,7 +1018,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "LOCAL-STORAGE"  {printf("%s : KEYWORD\n", yytext);
-    return LOCAL-STORAGE;
+    return LOCAL_STORAGE;
 }
 
 "LOCK"  {printf("%s : KEYWORD\n", yytext);
@@ -1025,11 +1026,11 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "LOW-VALUE"  {printf("%s : KEYWORD\n", yytext);
-    return LOW-VALUE;
+    return LOW_VALUE;
 }
 
 "LOW-VALUES"  {printf("%s : KEYWORD\n", yytext);
-    return LOW-VALUES;
+    return LOW_VALUES;
 }
 
 "MEMORY"  {printf("%s : KEYWORD\n", yytext);
@@ -1049,7 +1050,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "METHOD-ID"  {printf("%s : KEYWORD\n", yytext);
-    return METHOD-ID;
+    return METHOD_ID;
 }
 
 "MODE"  {printf("%s : KEYWORD\n", yytext);
@@ -1061,7 +1062,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "MORE-LABELS"  {printf("%s : KEYWORD\n", yytext);
-    return MORE-LABELS;
+    return MORE_LABELS;
 }
 
 "MOVE"  {printf("%s : KEYWORD\n", yytext);
@@ -1081,7 +1082,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "NATIONAL-EDITED"  {printf("%s : KEYWORD\n", yytext);
-    return NATIONAL-EDITED;
+    return NATIONAL_EDITED;
 }
 
 "NATIVE"  {printf("%s : KEYWORD\n", yytext);
@@ -1121,7 +1122,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "NUMERIC-EDITED"  {printf("%s : KEYWORD\n", yytext);
-    return NUMERIC-EDITED;
+    return NUMERIC_EDITED;
 }
 
 "OBJECT"  {printf("%s : KEYWORD\n", yytext);
@@ -1129,7 +1130,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "OBJECT-COMPUTER"  {printf("%s : KEYWORD\n", yytext);
-    return OBJECT-COMPUTER;
+    return OBJECT_COMPUTER;
 }
 
 "OCCURS"  {printf("%s : KEYWORD\n", yytext);
@@ -1189,7 +1190,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "PACKED-DECIMAL"  {printf("%s : KEYWORD\n", yytext);
-    return PACKED-DECIMAL;
+    return PACKED_DECIMAL;
 }
 
 "PADDING"  {printf("%s : KEYWORD\n", yytext);
@@ -1201,7 +1202,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "PAGE-COUNTER"  {printf("%s : KEYWORD\n", yytext);
-    return PAGE-COUNTER;
+    return PAGE_COUNTER;
 }
 
 "PASSWORD"  {printf("%s : KEYWORD\n", yytext);
@@ -1237,7 +1238,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "POINTER-32"  {printf("%s : KEYWORD\n", yytext);
-    return POINTER-32;
+    return POINTER_32;
 }
 
 "POSITION"  {printf("%s : KEYWORD\n", yytext);
@@ -1257,7 +1258,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "PROCEDURE-POINTER"  {printf("%s : KEYWORD\n", yytext);
-    return PROCEDURE-POINTER;
+    return PROCEDURE_POINTER;
 }
 
 "PROCEDURES"  {printf("%s : KEYWORD\n", yytext);
@@ -1277,7 +1278,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "PROGRAM-ID"  {printf("%s : KEYWORD\n", yytext);
-    return PROGRAM-ID;
+    return PROGRAM_ID;
 }
 
 "PURGE"  {printf("%s : KEYWORD\n", yytext);
@@ -1413,7 +1414,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "RETURN-CODE"  {printf("%s : KEYWORD\n", yytext);
-    return RETURN-CODE;
+    return RETURN_CODE;
 }
 
 "RETURNING"  {printf("%s : KEYWORD\n", yytext);
@@ -1477,7 +1478,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "SEGMENT-LIMIT"  {printf("%s : KEYWORD\n", yytext);
-    return SEGMENT-LIMIT;
+    return SEGMENT_LIMIT;
 }
 
 "SELECT"  {printf("%s : KEYWORD\n", yytext);
@@ -1517,11 +1518,11 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "SHIFT-IN"  {printf("%s : KEYWORD\n", yytext);
-    return SHIFT-IN;
+    return SHIFT_IN;
 }
 
 "SHIFT-OUT"  {printf("%s : KEYWORD\n", yytext);
-    return SHIFT-OUT;
+    return SHIFT_OUT;
 }
 
 "SIGN"  {printf("%s : KEYWORD\n", yytext);
@@ -1549,31 +1550,31 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "SORT-CONTROL"  {printf("%s : KEYWORD\n", yytext);
-    return SORT-CONTROL;
+    return SORT_CONTROL;
 }
 
 "SORT-CORE-SIZE"  {printf("%s : KEYWORD\n", yytext);
-    return SORT-CORE-SIZE;
+    return SORT_CORE-SIZE;
 }
 
 "SORT-FILE-SIZE"  {printf("%s : KEYWORD\n", yytext);
-    return SORT-FILE-SIZE;
+    return SORT_FILE-SIZE;
 }
 
 "SORT-MERGE"  {printf("%s : KEYWORD\n", yytext);
-    return SORT-MERGE;
+    return SORT_MERGE;
 }
 
 "SORT-MESSAGE"  {printf("%s : KEYWORD\n", yytext);
-    return SORT-MESSAGE;
+    return SORT_MESSAGE;
 }
 
 "SORT-MODE-SIZE"  {printf("%s : KEYWORD\n", yytext);
-    return SORT-MODE-SIZE;
+    return SORT_MODE-SIZE;
 }
 
 "SORT-RETURN"  {printf("%s : KEYWORD\n", yytext);
-    return SORT-RETURN;
+    return SORT_RETURN;
 }
 
 "SOURCE"  {printf("%s : KEYWORD\n", yytext);
@@ -1581,7 +1582,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "SOURCE-COMPUTER"  {printf("%s : KEYWORD\n", yytext);
-    return SOURCE-COMPUTER;
+    return SOURCE_COMPUTER;
 }
 
 "SPACE"  {printf("%s : KEYWORD\n", yytext);
@@ -1593,7 +1594,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "SPECIAL-NAMES"  {printf("%s : KEYWORD\n", yytext);
-    return SPECIAL-NAMES;
+    return SPECIAL_NAMES;
 }
 
 "SQL"  {printf("%s : KEYWORD\n", yytext);
@@ -1609,11 +1610,11 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "STANDARD-1"  {printf("%s : KEYWORD\n", yytext);
-    return STANDARD-1;
+    return STANDARD_1;
 }
 
 "STANDARD-2"  {printf("%s : KEYWORD\n", yytext);
-    return STANDARD-2;
+    return STANDARD_2;
 }
 
 "START"  {printf("%s : KEYWORD\n", yytext);
@@ -1633,15 +1634,15 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "SUB-QUEUE-1"  {printf("%s : KEYWORD\n", yytext);
-    return sub-QUEUE-1;
+    return sub_QUEUE_1;
 }
 
 "SUB-QUEUE-2"  {printf("%s : KEYWORD\n", yytext);
-    return sub-QUEUE-2;
+    return sub_QUEUE_2;
 }
 
 "SUB-QUEUE-3"  {printf("%s : KEYWORD\n", yytext);
-    return sub-QUEUE-3;
+    return sub_QUEUE_3;
 }
 
 "SUBTRACT"  {printf("%s : KEYWORD\n", yytext);
@@ -1789,7 +1790,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "UTF-8"  {printf("%s : KEYWORD\n", yytext);
-    return UTF-8;
+    return UTF_8;
 }
 
 "VALUE"  {printf("%s : KEYWORD\n", yytext);
@@ -1813,7 +1814,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "WHEN-COMPILED"  {printf("%s : KEYWORD\n", yytext);
-    return WHEN-COMPILED;
+    return WHEN_COMPILED;
 }
 
 "WITH"  {printf("%s : KEYWORD\n", yytext);
@@ -1825,7 +1826,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "WORKING-STORAGE"  {printf("%s : KEYWORD\n", yytext);
-    return WORKDING-STORAGE;
+    return WORKDING_STORAGE;
 }
 
 "WRITE"  {printf("%s : KEYWORD\n", yytext);
@@ -1833,7 +1834,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "WRITE-ONLY"  {printf("%s : KEYWORD\n", yytext);
-    return WRITE-ONLY;
+    return WRITE_ONLY;
 }
 
 "XML"  {printf("%s : KEYWORD\n", yytext);
@@ -1841,43 +1842,43 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "XML-CODE"  {printf("%s : KEYWORD\n", yytext);
-    return XML-CODE;
+    return XML_CODE;
 }
 
 "XML-EVENT"  {printf("%s : KEYWORD\n", yytext);
-    return XML-EVENT;
+    return XML_EVENT;
 }
 
 "XML-INFORMATION"  {printf("%s : KEYWORD\n", yytext);
-    return XML-INFORMATION;
+    return XML_INFORMATION;
 }
 
 "XML-NAMESPACE"  {printf("%s : KEYWORD\n", yytext);
-    return XML-NAMEPSPACE;
+    return XML_NAMEPSPACE;
 }
 
 "XML-NAMEPSPACE-PREFIX"  {printf("%s : KEYWORD\n", yytext);
-    return XML-NAMEPSPACE-PREFIX;
+    return XML_NAMEPSPACE_PREFIX;
 }
 
 "XML-NNAMESPACE"  {printf("%s : KEYWORD\n", yytext);
-    return XML-NNAMESPACE;
+    return XML_NNAMESPACE;
 }
 
 "XML-NNAMESPACE-PREFIX"  {printf("%s : KEYWORD\n", yytext);
-    return XML-NNAMESPACE-PREFIX;
+    return XML_NNAMESPACE_PREFIX;
 }
 
 "XML-INTEXT"  {printf("%s : KEYWORD\n", yytext);
-    return XML-INTEXT;
+    return XML_INTEXT;
 }
 
 "XML-SCHEMA"  {printf("%s : KEYWORD\n", yytext);
-    return XML-SCHEMA;
+    return XML_SCHEMA;
 }
 
 "XML-TEXT"  {printf("%s : KEYWORD\n", yytext);
-    return XML-TEXT;
+    return XML_TEXT;
 }
 
 "ZERO"  {printf("%s : KEYWORD\n", yytext);
@@ -1893,11 +1894,11 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 }
 
 "."  {printf("%s : SEPARATOR\n", yytext);
-    return PERIOD-SEP;
+    return PERIOD_SEP;
 }
 
 ","  {printf("%s : SEPARATOR\n", yytext);
-    return COMMA-SEP;
+    return COMMA_SEP;
 }
 
 {DIGIT}     {printf("%s : DIGIT\n", yytext);
@@ -1910,7 +1911,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 
 " " ;
 
-[ \t\n]+ 
+{WS} {}
 
 .   {printf("%s : Unrecognized symbol.\n", yytext);}
 

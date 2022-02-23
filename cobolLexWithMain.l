@@ -1910,7 +1910,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 
 " " ;
 
-[ \t\n]+ 
+{WS} {}
 
 .   {printf("%s : Unrecognized symbol.\n", yytext);}
 
