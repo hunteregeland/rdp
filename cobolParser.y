@@ -19,7 +19,7 @@ char currentScope[50]; // global or the name of the function
 	int number;
 	char character;
 	char* string;
-	struct AST* ast;
+	//struct AST* ast;
 }
 
 %token <string> TYPE
@@ -32,12 +32,13 @@ char currentScope[50]; // global or the name of the function
 %token <char> EQ-OP
 %token <char> HYPHEN-OP
 %token <char> MULTIPLY-OP
+%token <char> SEMICOLON
 %token ACCEPT
 
 %printer { fprintf(yyoutput, "%s", $$); } ID;
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 
-%type <ast> Program DeclList Decl VarDecl Stmt StmtList Expr
+//%type <ast> Program DeclList Decl VarDecl Stmt StmtList Expr
 
 %start Program
 
@@ -45,7 +46,7 @@ char currentScope[50]; // global or the name of the function
 
 Program: DeclList  { $$ = $1;
 					 printf("\n--- Abstract Syntax Tree ---\n\n");
-					 printAST($$,0);
+					 //printAST($$,0);
 					}
 ;
 
@@ -72,8 +73,8 @@ VarDecl:	TYPE ID SEMICOLON	{ printf("\n RECOGNIZED RULE: Variable declaration %s
 									showSymTable();
 									
 								  // ---- SEMANTIC ACTIONS by PARSER ----
-								    $$ = AST_Type("Type",$1,$2);
-									printf("-----------> %s", $$->LHS);
+								    //$$ = AST_Type("Type",$1,$2);
+									//printf("-----------> %s", $$->LHS);
 								}
 ;
 
@@ -88,16 +89,16 @@ Stmt:	SEMICOLON	{}
 Expr:	ID { printf("\n RECOGNIZED RULE: Simplest expression\n"); }
 	| ID EQ ID 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
 					// ---- SEMANTIC ACTIONS by PARSER ----
-					  $$ = AST_assignment("=",$1,$3);
+					  //$$ = AST_assignment("=",$1,$3);
 				}
 	| ID EQ NUMBER 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
 					   // ---- SEMANTIC ACTIONS by PARSER ----
 					   char str[50];
 					   sprintf(str, "%d", $3); 
-					   $$ = AST_assignment("=",$1, str);
+					   //$$ = AST_assignment("=",$1, str);
 					}
 	| WRITE ID 	{ printf("\n RECOGNIZED RULE: WRITE statement\n");
-					$$ = AST_Write("write",$2,"");
+					//$$ = AST_Write("write",$2,"");
 				}
 
 %%

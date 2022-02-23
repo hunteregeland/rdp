@@ -1915,7 +1915,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 .   {printf("%s : Unrecognized symbol.\n", yytext);}
 
 %%
-/*
+
 int main(int argc, char**argv)
 {
     printf("Compiler started. \n\n");
@@ -1928,4 +1928,4 @@ int main(int argc, char**argv)
     }
     yylex();
 }
-*/
+

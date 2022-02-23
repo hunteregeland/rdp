@@ -5,7 +5,8 @@
 #include <string.h>
 
 //#include "symbolTable.h"
-//#include "AST.h"
+#include "AST.h"
+
 
 extern int yylex();
 extern int yyparse();
@@ -14,6 +15,7 @@ extern FILE* yyin;
 void yyerror(const char* s);
 char currentScope[50]; // global or the name of the function
 %}
+
 
 %union {
 	int number;
@@ -25,9 +27,15 @@ char currentScope[50]; // global or the name of the function
 %token <string> TYPE
 %token <string> ID
 %token <char> SEMICOLON
-%token <char> EQ
+%token <char> EQ_OP
 %token <number> NUMBER
 %token WRITE
+%token PLUS_OP
+%token HYPHEN_OP
+%token MULTIPLY_OP
+%token ACCEPT
+
+
 
 %printer { fprintf(yyoutput, "%s", $$); } ID;
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
@@ -38,9 +46,9 @@ char currentScope[50]; // global or the name of the function
 
 %%
 
-Program: DeclList  { $$ = $1;
+Program: DeclList { $$ = $1;
 					 printf("\n--- Abstract Syntax Tree ---\n\n");
-					 printAST($$,0);
+					 //printAST($$,0);
 					}
 ;
 
@@ -55,10 +63,11 @@ Decl:	VarDecl
 ;
 
 VarDecl:	TYPE ID SEMICOLON	{ printf("\n RECOGNIZED RULE: Variable declaration %s\n", $2);
-									// Symbol Table
+									//Symbol Table
+									/*
 									symTabAccess();
 									int inSymTab = found($2, currentScope);
-									//printf("looking for %s in symtab - found: %d \n", $2, inSymTab);
+									printf("looking for %s in symtab - found: %d \n", $2, inSymTab);
 									
 									if (inSymTab == 0) 
 										addItem($2, "Var", $1,0, currentScope);
@@ -69,6 +78,7 @@ VarDecl:	TYPE ID SEMICOLON	{ printf("\n RECOGNIZED RULE: Variable declaration %s
 								  // ---- SEMANTIC ACTIONS by PARSER ----
 								    $$ = AST_Type("Type",$1,$2);
 									printf("-----------> %s", $$->LHS);
+									*/
 								}
 ;
 
@@ -81,23 +91,23 @@ Stmt:	SEMICOLON	{}
 ;
 
 Expr:	ID { printf("\n RECOGNIZED RULE: Simplest expression\n"); }
-	| ID EQ ID 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
+	| ID EQ_OP ID 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
 					// ---- SEMANTIC ACTIONS by PARSER ----
-					  $$ = AST_assignment("=",$1,$3);
+					  //$$ = AST_assignment("=",$1,$3);
 				}
-	| ID EQ NUMBER 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
+	| ID EQ_OP NUMBER 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
 					   // ---- SEMANTIC ACTIONS by PARSER ----
-					   char str[50];
-					   sprintf(str, "%d", $3); 
-					   $$ = AST_assignment("=",$1, str);
+					   //char str[50];
+					   //sprintf(str, "%d", $3); 
+					   //$$ = AST_assignment("=",$1, str);
 					}
 	| WRITE ID 	{ printf("\n RECOGNIZED RULE: WRITE statement\n");
-					$$ = AST_Write("write",$2,"");
+					//$$ = AST_Write("write",$2,"");
 				}
 
 %%
 
-int main(int argc, char**argv)
+int main(int argc, char**argv)	
 {
 /*
 	#ifdef YYDEBUG
