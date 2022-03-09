@@ -18,32 +18,40 @@ LETTER  [A-Za-z]
 DIGIT   [0-9]
 ID      {LETTER}({LETTER}|{DIGIT})*
 NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
+STRING  ['][A-Za-z0-9]*[']
 
 %%  
 
-"IDENTIFICATION DIVISION"  {printf("%s : DIVISION\n", yytext);
-    return IDENTIFICATION_DIVISION;
+"IDENTIFICATION"  {printf("%s : IDENTIFICATION\n", yytext);
+    return IDENTIFICATION;
 }
 
 "PROGRAM-ID"  {printf("%s : PROGRAM NAME\n", yytext);
     return PROGRAM_ID;
 }
 
-
-"ENVIRONMENT DIVISION"  {printf("%s : DIVISION\n", yytext);
-    return ENVIRIONMENT_DIVISION;
+"ENVIRONMENT"  {printf("%s : ENVIRONMENT\n", yytext);
+    return ENVIRIONMENT;
 }
 
-"PROCEDURE DIVISION"  {printf("%s : DIVISION\n", yytext);
-    return PROCEDURE_DIVISION;
+"PROCEDURE"  {printf("%s : PROCEDURE\n", yytext);
+    return PROCEDURE;
+}
+
+"DIVISION"  {printf("%s : DIVISION\n", yytext);
+    return DIVISION;
 }
 
 "DISPLAY"  {printf("%s : KEYWORD\n", yytext);
     return DISPLAY;
 }
 
-"STOP RUN"  {printf("%s : KEYWORD\n", yytext);
-    return STOP_RUN;
+"STOP"  {printf("%s : KEYWORD\n", yytext);
+    return STOP;
+}
+
+"RUN"  {printf("%s : KEYWORD\n", yytext);
+    return RUN;
 }
 
 "." {printf("%s : OPERATOR\n", yytext);
@@ -52,6 +60,10 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 
 {NUMBER}     {printf("%s : NUMBER\n", yytext);
     return NUMBER;
+}
+
+{STRING}     {printf("%s : STRING\n", yytext);
+    return STRING;
 }
 
 {ID}        {printf("%s : ID\n", yytext);

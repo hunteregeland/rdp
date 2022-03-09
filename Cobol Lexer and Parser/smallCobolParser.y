@@ -27,13 +27,18 @@ char currentScope[50]; // global or the name of the function
 
 %token <number> NUMBER
 %token <string> ID
+%token <string> STRING
 
-%token <string> IDENTIFICATION_DIVISION
+%token <string> IDENTIFICATION
+%token <string> ENVIRIONMENT
+%token <string> PROCEDURE
+%token <string> DIVISION
+
 %token <string> PROGRAM_ID
-%token <string> ENVIRIONMENT_DIVISION
-%token <string> PROCEDURE_DIVISION
 %token <string> DISPLAY
-%token <string> STOP_RUN
+%token <string> STOP
+%token <string> RUN
+
 %token <char> PERIOD
 %token <char> APOSTROPHE
 
@@ -43,38 +48,27 @@ char currentScope[50]; // global or the name of the function
 %printer { fprintf(yyoutput, "%s", $$); } ID;
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 
-%type <ast> Program DeclList Decl VarDecl Stmt StmtList Expr
+%type <ast> Program 
 
 %start Program
 
 %%
 
-// display call in cobol (line 5)
-// recognize display if the line is in order:
-// DISPLAY, apostrophe, whatever needs to be diplayed, apostrophe, period
-// i think we could also maybe define a string in the parser to simplify the "APOSTROPHE ID APOSTROPHE" clause
 
-Display:	DISPLAY APOSTROPHE ID APOSTROPHE PERIOD { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
+// identification division declaration in cobol (line 1)
+// recognize an identification division declaration if line is in order:
+// IDENTIFICATION_DIVISION, period
 
-// this is where we have to actually do the display?
+IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration %s\n");
 
 
+// logic for id division declaration
 
 
-							}
 
-// stop run call in cobol (line 6)
-// recognize display if the line is in order:
-// STOP, RUN, period
+					}
 
-StopRun:	STOP_RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run \n", $2);
 
-// same thing, gotta do the logic for the stop run in here?
-
-	
-	
-
-				}
 
 // program id declaration in cobol (line 2)
 // recognize a program id declaration if line is in order:
@@ -89,18 +83,7 @@ ProgramID:	PROGRAM_ID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID 
 
 					    }
 
-// identification division declaration in cobol (line 1)
-// recognize an identification division declaration if line is in order:
-// IDENTIFICATION_DIVISION, period
 
-IDDiv:	IDENTIFICATION_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration %s\n", $2);}
-
-
-// logic for id division declaration
-
-
-
-					}
 
 // environment division declaration in cobol (line 3)
 // recognize an environment division declaration if line is in order:
@@ -114,6 +97,8 @@ EnvDiv:	ENVIRIONMENT_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment D
 
 
 				      }
+
+
 
 // procedure division declaration in cobol (line 4)
 // recognize a procedure division declaration if line is in order:
@@ -129,64 +114,37 @@ ProcDiv:	PROCEDURE_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Divis
 
 					  }
 
-Program: DeclList { $$ = $1;
-					 printf("\n--- Abstract Syntax Tree ---\n\n");
-					 //printAST($$,0);
-					}
-;
 
-DeclList:	Decl DeclList	{ $1->left = $2;
-							  $$ = $1;
+
+// display call in cobol (line 5)
+// recognize display if the line is in order:
+// DISPLAY, string, period
+
+Display:	DISPLAY STRING PERIOD { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
+
+// this is where we have to actually do the display?
+
+
+
+
 							}
-	| Decl	{ $$ = $1; }
-;
 
-Decl:	VarDecl
-	| StmtList
-;
 
-VarDecl:	TYPE ID SEMICOLON	{ printf("\n RECOGNIZED RULE: Variable declaration %s\n", $2);
-									//Symbol Table
-									/*
-									symTabAccess();
-									int inSymTab = found($2, currentScope);
-									printf("looking for %s in symtab - found: %d \n", $2, inSymTab);
-									
-									if (inSymTab == 0) 
-										addItem($2, "Var", $1,0, currentScope);
-									else
-										printf("SEMANTIC ERROR: Var %s is already in the symbol table", $2);
-									showSymTable();
-									
-								  // ---- SEMANTIC ACTIONS by PARSER ----
-								    $$ = AST_Type("Type",$1,$2);
-									printf("-----------> %s", $$->LHS);
-									*/
-								}
-;
 
-StmtList:	
-	| Stmt StmtList
-;
+// stop run call in cobol (line 6)
+// recognize display if the line is in order:
+// STOP, RUN, period
 
-Stmt:	SEMICOLON	{}
-	| Expr SEMICOLON	{$$ = $1;}
-;
+StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run \n", $2);
 
-Expr:	ID { printf("\n RECOGNIZED RULE: Simplest expression\n"); }
-	| ID EQ_OP ID 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
-					// ---- SEMANTIC ACTIONS by PARSER ----
-					  //$$ = AST_assignment("=",$1,$3);
+// same thing, gotta do the logic for the stop run in here?
+
+	
+	
+
 				}
-	| ID EQ_OP NUMBER 	{ printf("\n RECOGNIZED RULE: Assignment statement\n"); 
-					   // ---- SEMANTIC ACTIONS by PARSER ----
-					   //char str[50];
-					   //sprintf(str, "%d", $3); 
-					   //$$ = AST_assignment("=",$1, str);
-					}
-	| WRITE ID 	{ printf("\n RECOGNIZED RULE: WRITE statement\n");
-					//$$ = AST_Write("write",$2,"");
-				}
+
+
 
 %%
 
