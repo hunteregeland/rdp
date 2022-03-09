@@ -61,7 +61,7 @@ Display:	DISPLAY APOSTROPHE ID APOSTROPHE PERIOD { printf("\n RECOGNIZED RULE: D
 
 
 
-											}
+							}
 
 // stop run call in cobol (line 6)
 // recognize display if the line is in order:
@@ -74,7 +74,7 @@ StopRun:	STOP_RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run \n", $2);
 	
 	
 
-							}
+				}
 
 // program id declaration in cobol (line 2)
 // recognize a program id declaration if line is in order:
@@ -87,7 +87,7 @@ ProgramID:	PROGRAM_ID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID 
 
 
 
-										}
+					    }
 
 // identification division declaration in cobol (line 1)
 // recognize an identification division declaration if line is in order:
@@ -100,7 +100,7 @@ IDDiv:	IDENTIFICATION_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identificati
 
 
 
-										}
+					}
 
 // environment division declaration in cobol (line 3)
 // recognize an environment division declaration if line is in order:
@@ -113,7 +113,7 @@ EnvDiv:	ENVIRIONMENT_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment D
 
 
 
-										}
+				      }
 
 // procedure division declaration in cobol (line 4)
 // recognize a procedure division declaration if line is in order:
@@ -127,7 +127,7 @@ ProcDiv:	PROCEDURE_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Divis
 
 
 
-										}
+					  }
 
 Program: DeclList { $$ = $1;
 					 printf("\n--- Abstract Syntax Tree ---\n\n");
