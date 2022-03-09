@@ -14,18 +14,18 @@
 
 DELIM   [ \t\n]
 WS      {DELIM}+
-LETTER  [A-za-z]
+LETTER  [A-Za-z]
 DIGIT   [0-9]
 ID      {LETTER}({LETTER}|{DIGIT})*
 NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 
 %%  
 
-"char"  {printf("%s : OPERATOR\n", yytext);
+"char"  {printf("%s : TYPE\n", yytext);
     return TYPE;
 }
 
-"int"  {printf("%s : OPERATOR\n", yytext);
+"int"  {printf("%s : TYPE\n", yytext);
     return TYPE;
 }
 

@@ -401,7 +401,7 @@ static const YY_CHAR yy_ec[256] =
        10,    1,    1,    1,   11,   12,   13,   12,   14,   12,
        12,   12,   12,   12,   12,   12,   12,   12,   12,   15,
        12,   12,   12,   16,   12,   12,   12,   12,   12,   12,
-       12,   12,   12,   12,   12,   12,   17,   12,   18,   12,
+        1,    1,    1,    1,    1,    1,   17,   12,   18,   12,
 
        12,   12,   12,   19,   20,   12,   12,   12,   12,   21,
        12,   12,   12,   22,   12,   23,   12,   12,   12,   12,
@@ -788,14 +788,14 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 24 "smallLex.l"
-{printf("%s : OPERATOR\n", yytext);
+{printf("%s : TYPE\n", yytext);
     return TYPE;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 28 "smallLex.l"
-{printf("%s : OPERATOR\n", yytext);
+{printf("%s : TYPE\n", yytext);
     return TYPE;
 }
 	YY_BREAK

@@ -1,5 +1,11 @@
 all: parser
 
+lexerwithmain: smallLexWithMain.l
+	flex smallLexWithMain.l
+	gcc -o smallLex lex.yy.c
+	./smallLex textfile
+
+
 parser.tab.c parser.tab.h: parser.y
 	bison -t -v -d parser.y
 

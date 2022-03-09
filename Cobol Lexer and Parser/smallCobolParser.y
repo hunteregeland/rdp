@@ -23,39 +23,19 @@ char currentScope[50]; // global or the name of the function
 	char* string;
 	struct AST* ast;
 }
-%token PLUS_OP
-%token HYPHEN_OP
-%token MULTIPLY_OP
-%token DIVIDE_OP
-%token EXPONENT_OP
-%token GT_OP
-%token LT_OP
-%token EQ_OP
-%token DOUBLE_EQ_OP
-%token GT_EQ_OP
-%token LT_EQ_OP
-%token NOT_EQ_OP
-%token COMMENT_OP
-%token COMPILER_DIRECTIVE_OP
-%token LEFT_PARENTHESES_OP
-%token RIGHT_PARENTESES_OP
-%token PERIOD_SEP
 
-%token PIC
-%token VALUE
-%token SPACES
-%token ZEROES
-
-%token <string> ID
-%token <char> SEMICOLON
-%token <char> EQ_OP
 %token <number> NUMBER
-%token WRITE
-%token PLUS_OP
-%token HYPHEN_OP
-%token MULTIPLY_OP
+%token <string> ID
 
+%token <string> IDENTIFICATION_DIVISION
+%token <string> PROGRAM_ID
+%token <string> ENVIRIONMENT_DIVISION
+%token <string> PROCEDURE_DIVISION
+%token <string> DISPLAY
+%token <string> STOP_RUN
+%token <char> PERIOD
 
+//WHAT I HAVE GOTTEN TO. EVERYTHING BELOW IS COPY PASTED FROM THE PREVIOUS PARSER BUT NEEDS TO BE REIMPLEMENTED.
 
 
 %printer { fprintf(yyoutput, "%s", $$); } ID;
@@ -86,7 +66,6 @@ Decl:	VarDecl
 VarDecl:	TYPE ID SEMICOLON	{ printf("\n RECOGNIZED RULE: Variable declaration %s\n", $2);
 									//Symbol Table
 									/*
-									
 									symTabAccess();
 									int inSymTab = found($2, currentScope);
 									printf("looking for %s in symtab - found: %d \n", $2, inSymTab);
@@ -131,11 +110,11 @@ Expr:	ID { printf("\n RECOGNIZED RULE: Simplest expression\n"); }
 
 int main(int argc, char**argv)	
 {
-
+/*
 	#ifdef YYDEBUG
 		yydebug = 1;
 	#endif
-
+*/
 	printf("\n\n##### COMPILER STARTED #####\n\n");
 	
 	if (argc > 1){
