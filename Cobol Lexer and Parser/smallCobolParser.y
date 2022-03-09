@@ -42,7 +42,6 @@ char currentScope[50]; // global or the name of the function
 %token <char> PERIOD
 %token <char> APOSTROPHE
 
-//WHAT I HAVE GOTTEN TO. EVERYTHING BELOW IS COPY PASTED FROM THE PREVIOUS PARSER BUT NEEDS TO BE REIMPLEMENTED.
 
 
 %printer { fprintf(yyoutput, "%s", $$); } ID;
