@@ -14,6 +14,7 @@ extern FILE* yyin;
 
 void yyerror(const char* s);
 char currentScope[50]; // global or the name of the function
+
 %}
 
 
@@ -34,6 +35,7 @@ char currentScope[50]; // global or the name of the function
 %token <string> DISPLAY
 %token <string> STOP_RUN
 %token <char> PERIOD
+%token <char> APOSTROPHE
 
 //WHAT I HAVE GOTTEN TO. EVERYTHING BELOW IS COPY PASTED FROM THE PREVIOUS PARSER BUT NEEDS TO BE REIMPLEMENTED.
 
@@ -46,6 +48,86 @@ char currentScope[50]; // global or the name of the function
 %start Program
 
 %%
+
+// display call in cobol (line 5)
+// recognize display if the line is in order:
+// DISPLAY, apostrophe, whatever needs to be diplayed, apostrophe, period
+// i think we could also maybe define a string in the parser to simplify the "APOSTROPHE ID APOSTROPHE" clause
+
+Display:	DISPLAY APOSTROPHE ID APOSTROPHE PERIOD { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
+
+// this is where we have to actually do the display?
+
+
+
+
+											}
+
+// stop run call in cobol (line 6)
+// recognize display if the line is in order:
+// STOP, RUN, period
+
+StopRun:	STOP_RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run \n", $2);
+
+// same thing, gotta do the logic for the stop run in here?
+
+	
+	
+
+							}
+
+// program id declaration in cobol (line 2)
+// recognize a program id declaration if line is in order:
+// PROGRAM-ID, period, ID 
+
+ProgramID:	PROGRAM_ID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID %s\n", $2);
+
+
+// logic for program id
+
+
+
+										}
+
+// identification division declaration in cobol (line 1)
+// recognize an identification division declaration if line is in order:
+// IDENTIFICATION_DIVISION, period
+
+IDDiv:	IDENTIFICATION_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration %s\n", $2);}
+
+
+// logic for id division declaration
+
+
+
+										}
+
+// environment division declaration in cobol (line 3)
+// recognize an environment division declaration if line is in order:
+// ENVIRONMENT_DIVISION, period
+
+EnvDiv:	ENVIRIONMENT_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment Division Declaration %s\n", $2);}
+
+
+// logic for environment division declaration
+
+
+
+										}
+
+// procedure division declaration in cobol (line 4)
+// recognize a procedure division declaration if line is in order:
+// PROCEDURE_DIVISION, period
+
+ProcDiv:	PROCEDURE_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Division Declaration %s\n", $2);}
+
+
+// logic for procedure division declaration
+// probably also need a way to carry anything in indented lines under this under the procedure division.
+
+
+
+										}
 
 Program: DeclList { $$ = $1;
 					 printf("\n--- Abstract Syntax Tree ---\n\n");
