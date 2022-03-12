@@ -26,8 +26,8 @@ STRING  ['][A-Za-z0-9]*[']
     return IDENTIFICATION;
 }
 
-"PROGRAM-ID"  {printf("%s : PROGRAM NAME\n", yytext);
-    return PROGRAM_ID;
+"PROGRAMID"  {printf("%s : PROGRAMID\n", yytext);
+    return PROGRAMID;
 }
 
 "ENVIRONMENT"  {printf("%s : ENVIRONMENT\n", yytext);
