@@ -34,7 +34,7 @@ char currentScope[50]; // global or the name of the function
 %token <string> PROCEDURE
 %token <string> DIVISION
 
-%token <string> PROGRAM_ID
+%token <string> PROGRAMID
 %token <string> DISPLAY
 %token <string> STOP
 %token <string> RUN
@@ -58,6 +58,67 @@ char currentScope[50]; // global or the name of the function
 // recognize an identification division declaration if line is in order:
 // IDENTIFICATION_DIVISION, period
 
+Program:	Module1 Module2 Module3 { printf("\n RECOGNIZED RULE: COBOL Program Start %s\n");
+
+
+
+
+
+									}
+
+
+Module1:	IDDiv ProgID { printf("\n RECOGNIZED RULE: Module1: Identification Division %s\n"); 
+
+
+
+
+
+						}
+
+
+Module2:	EnvDiv { printf("\n RECOGNIZED RULE: Module2: Environment Division %s\n");
+
+
+
+
+
+					}
+
+
+Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Procedure Division %s\n");
+
+
+
+
+
+										}
+
+
+ProgID:		PID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start %s\n");
+
+
+
+
+
+								}
+
+
+Statements:		Statement Statements {$$ = $2}
+        		| NULL 
+;
+
+Statement:		DISPLAY STRING PERIOD {$$ = AssignmentStatement("DISP", $2);
+
+
+
+									}
+        		| ACCEPT ID PERIOD {$$ = AssignmentStatement("ACCEPT", #2)
+				
+
+				
+									}
+
+
 IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration %s\n");
 
 
@@ -65,7 +126,7 @@ IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identificati
 
 
 
-					}
+										}
 
 
 
@@ -73,7 +134,7 @@ IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identificati
 // recognize a program id declaration if line is in order:
 // PROGRAM-ID, period, ID 
 
-ProgramID:	PROGRAM_ID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID %s\n", $2);
+ProgramID:	PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID %s\n", $2);
 
 
 // logic for program id
@@ -88,7 +149,7 @@ ProgramID:	PROGRAM_ID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID 
 // recognize an environment division declaration if line is in order:
 // ENVIRONMENT_DIVISION, period
 
-EnvDiv:	ENVIRIONMENT_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment Division Declaration %s\n", $2);}
+EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment Division Declaration %s\n", $2);}
 
 
 // logic for environment division declaration
@@ -103,7 +164,7 @@ EnvDiv:	ENVIRIONMENT_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment D
 // recognize a procedure division declaration if line is in order:
 // PROCEDURE_DIVISION, period
 
-ProcDiv:	PROCEDURE_DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Division Declaration %s\n", $2);}
+ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Division Declaration %s\n", $2);}
 
 
 // logic for procedure division declaration
