@@ -57,7 +57,7 @@ char currentScope[50]; // global or the name of the function
 
 
 
-// basic structure of the current cobol test program
+/* basic structure of the current cobol test program */
 
 Program:	Module1 Module2 Module3 { printf("\n RECOGNIZED RULE: COBOL Program Start %s\n");
 
