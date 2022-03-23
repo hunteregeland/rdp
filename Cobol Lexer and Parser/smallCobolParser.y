@@ -36,6 +36,7 @@ char currentScope[50]; /* global or the name of the function */
 
 %token <string> PROGRAMID
 %token <string> DISPLAY
+%token <string> ACCEPT
 %token <string> STOP
 %token <string> RUN
 
@@ -110,8 +111,9 @@ Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Proce
 
 /* the program id syntax, this is the part of line 2 that defines the program name */
 /* line 2 */
+/* this needs to bee fixed, we cannot recognize PROGRAM-ID currently */
 
-ProgID:		PID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start %s\n");
+ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start %s\n");
 
 
 
@@ -128,7 +130,7 @@ Statements:		Statement Statements {$$ = $2}
 ;
 
 
-/* statements in cobol, currently only contains the two used in the test program */
+/* statements in cobol, currently only contains the one used in the test program and one extra */
 /* this needs to be updated to have all cobol statements */
 /* use '|' to put multiple different statements in here */
 
@@ -149,20 +151,6 @@ Statement:		DISPLAY STRING PERIOD {$$ = AssignmentStatement("DISP", $2);
 /* IDENTIFICATION, DIVISION, . */
 
 IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration %s\n");
-
-
-
-
-
-
-					}
-
-
-/* program id declaration in cobol (line 2) */
-/* recognize a program id declaration if line is in order: */
-/* PROGRAMID, ., ID, . */
-
-ProgramID:	PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID %s\n", $2);
 
 
 
