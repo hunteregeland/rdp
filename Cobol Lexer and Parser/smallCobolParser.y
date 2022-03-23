@@ -108,7 +108,7 @@ Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Proce
 					}
 
 
-// the program id syntax, this is the part of line 2 that defines the program's name
+// the program id syntax, this is the part of line 2 that defines the program name
 // line 2
 
 ProgID:		PID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start %s\n");
