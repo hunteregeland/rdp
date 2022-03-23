@@ -40,15 +40,19 @@ char currentScope[50]; /* global or the name of the function */
 %token <string> STOP
 %token <string> RUN
 
-%token <char> PERIOD
-%token <char> APOSTROPHE
+%token <character> PERIOD
+%token <character> APOSTROPHE
 
 
 
 %printer { fprintf(yyoutput, "%s", $$); } ID;
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 
+<<<<<<< HEAD
 %type <ast> Program //Module1 Module2 Module3 IDDiv ProgID
+=======
+%type <ast> Program Module1 Module2 Module3 IDDiv EnvDiv ProcDiv ProgID Statements Statement Expr Display StopRun
+>>>>>>> 78f88c1cc6389fc0b7e56225535a22a85d601375
 
 %start Program
 
@@ -62,12 +66,15 @@ char currentScope[50]; /* global or the name of the function */
 
 Program:	Module1 Module2 Module3 { printf("\n RECOGNIZED RULE: COBOL Program Start %s\n");
 };
+<<<<<<< HEAD
 
 
 
 
 Module1:	IDDiv ProgID { printf("\n RECOGNIZED RULE: Module1: Identification Division %s\n");
 }; 
+=======
+>>>>>>> 78f88c1cc6389fc0b7e56225535a22a85d601375
 
 
 /* part of the program including the identification division and the program id declaration */
@@ -84,8 +91,11 @@ Module2:	EnvDiv { printf("\n RECOGNIZED RULE: Module2: Environment Division %s\n
 };
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 78f88c1cc6389fc0b7e56225535a22a85d601375
 /* part of the program that contains the procedure division and everything that is inside it, which is statements since this is where all executable code is written */
 /* lines 4-6 */
 
@@ -93,6 +103,7 @@ Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Proce
 };
 
 
+<<<<<<< HEAD
 IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration %s\n");
 };
 
@@ -118,12 +129,19 @@ Statement:		PERIOD {} | Expr PERIOD {$$ = $1;
 };
 
 					}
+=======
+/* the program id syntax, this is the part of line 2 that defines the program name */
+/* line 2 */
+/* this needs to be fixed, we cannot recognize PROGRAM-ID currently */
+
+ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start %s\n");
+};
+>>>>>>> 78f88c1cc6389fc0b7e56225535a22a85d601375
 
 
 /* this is a recursive way to read however many statements in the procedure division */
 
-Statements:		Statement Statements {$$ = $2}
-        		| NULL 
+Statements:		| Statement Statements {$$ = $2}       		 
 ;
 
 
@@ -131,17 +149,18 @@ Statements:		Statement Statements {$$ = $2}
 /* this needs to be updated to have all cobol statements */
 /* use '|' to put multiple different statements in here */
 
-Statement:		DISPLAY STRING PERIOD {$$ = AssignmentStatement("DISP", $2);
 
+// A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into 
+Statement:        PERIOD {} | Expr PERIOD {$$ = $1; }
+							| Expr {$$ = $1; }
+;
 
+Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
+                                    printf("Printing: %s",$2);}
 
-					}
-        		| ACCEPT ID PERIOD {$$ = AssignmentStatement("ACCEPT", #2);
-				
+		| ACCEPT ID {$$ = AssignmentStatement("ACCEPT", $2);
+		};
 
-				
-					}
-									
 
 /* identification division declaration in cobol (line 2) */
 /* recognize an identification division declaration if line is in order: */
@@ -160,19 +179,14 @@ Expr:	DISPLAY STRING PERIOD { printf("\n RECOGNIZED RULE: Display Call %s\n", $2
 
 
 IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration %s\n");
-
-
-
-
-
-
-					}
+};
 
 
 /* environment division declaration in cobol (line 3) */
 /* recognize an environment division declaration if line is in order: */
 /* ENVIRONMENT, DIVISION, . */
 
+<<<<<<< HEAD
 EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment Division Declaration %s\n", $2);
 
 EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment Division Declaration %s\n", $2);
@@ -184,12 +198,17 @@ EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment D
 
 	
 					}
+=======
+EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment Division Declaration %s\n");
+};
+>>>>>>> 78f88c1cc6389fc0b7e56225535a22a85d601375
 
 
 /* procedure division declaration in cobol (line 4) */
 /* recognize a procedure division declaration if line is in order: */
 /* PROCEDURE, DIVISION, . */
 
+<<<<<<< HEAD
 ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Division Declaration %s\n", $2);
 
 ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Division Declaration %s\n", $2);
@@ -220,6 +239,11 @@ Display:	DISPLAY STRING PERIOD { printf("\n RECOGNIZED RULE: Display Call %s\n",
 
 				
 					}
+=======
+ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Division Declaration %s\n");
+/* probably also need a way to carry anything in indented lines under this under the procedure division */
+};
+>>>>>>> 78f88c1cc6389fc0b7e56225535a22a85d601375
 
 
 /* stop run call in cobol (line 6) */
@@ -227,6 +251,7 @@ Display:	DISPLAY STRING PERIOD { printf("\n RECOGNIZED RULE: Display Call %s\n",
 /* STOP, RUN, . */
 
 StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run \n");
+<<<<<<< HEAD
 							  printf("End of program.");
 StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run \n", $2);
 
@@ -237,6 +262,9 @@ StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run \n", $2);
 
 
 					}
+=======
+};
+>>>>>>> 78f88c1cc6389fc0b7e56225535a22a85d601375
 
 };
 

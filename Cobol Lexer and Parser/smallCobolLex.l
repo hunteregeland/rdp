@@ -26,7 +26,7 @@ STRING  ['][A-Za-z0-9]*[']
     return IDENTIFICATION;
 }
 
-"PROGRAMID"  {printf("%s : PROGRAMID\n", yytext);
+"PROGRAM-ID"  {printf("%s : PROGRAMID\n", yytext);
     return PROGRAMID;
 }
 
