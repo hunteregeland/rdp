@@ -141,15 +141,6 @@ ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Divis
 };
 
 
-/* display call in cobol (line 5)
-/* recognize display if the line is in order:
-/* DISPLAY, string, . */
-/* i think this is inconsequential now that we have this in the statements list above, but not 100% sure yet */
-
-Display:	DISPLAY STRING PERIOD { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
-};
-
-
 /* stop run call in cobol (line 6) */
 /* recognize display if the line is in order: */
 /* STOP, RUN, . */
