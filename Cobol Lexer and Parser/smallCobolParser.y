@@ -13,7 +13,7 @@ extern int yyparse();
 extern FILE* yyin;
 
 void yyerror(const char* s);
-char currentScope[50]; // global or the name of the function
+char currentScope[50]; /* global or the name of the function */
 
 %}
 
@@ -53,7 +53,7 @@ char currentScope[50]; // global or the name of the function
 
 %%
 
-// the test program doesn't have a data division, but we will need one as that's how you define variables in cobol
+/* the test program doesn't have a data division, but we will need one as that's how you define variables in cobol */
 
 
 
@@ -69,8 +69,8 @@ Program:	Module1 Module2 Module3 { printf("\n RECOGNIZED RULE: COBOL Program Sta
 					}
 
 
-// part of the program including the identification division and the program id declaration
-// lines 1 & 2
+/* part of the program including the identification division and the program id declaration */
+/* lines 1 & 2 */
 
 Module1:	IDDiv ProgID { printf("\n RECOGNIZED RULE: Module1: Identification Division %s\n"); 
 
@@ -82,8 +82,8 @@ Module1:	IDDiv ProgID { printf("\n RECOGNIZED RULE: Module1: Identification Divi
 					}
 
 
-// part of the program that contains the environment division
-// line 3
+/* part of the program that contains the environment division */
+/* line 3 */
 
 Module2:	EnvDiv { printf("\n RECOGNIZED RULE: Module2: Environment Division %s\n");
 
@@ -95,8 +95,8 @@ Module2:	EnvDiv { printf("\n RECOGNIZED RULE: Module2: Environment Division %s\n
 					}
 
 
-// part of the program that contains the procedure division and everything that is inside it, which is statements since this is where all executable code is written
-// lines 4-6
+/* part of the program that contains the procedure division and everything that is inside it, which is statements since this is where all executable code is written */
+/* lines 4-6 */
 
 Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Procedure Division %s\n");
 
@@ -108,8 +108,8 @@ Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Proce
 					}
 
 
-// the program id syntax, this is the part of line 2 that defines the program name
-// line 2
+/* the program id syntax, this is the part of line 2 that defines the program name */
+/* line 2 */
 
 ProgID:		PID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start %s\n");
 
@@ -121,16 +121,16 @@ ProgID:		PID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start %s\n")
 					}
 
 
-// this is a recursive way to read however many statements in the procedure division
+/* this is a recursive way to read however many statements in the procedure division */
 
 Statements:		Statement Statements {$$ = $2}
         		| NULL 
 ;
 
 
-// statements in cobol, currently only contains the two used in the test program
-// this needs to be updated to have all cobol statements
-// use '|' to put multiple different statements in here
+/* statements in cobol, currently only contains the two used in the test program */
+/* this needs to be updated to have all cobol statements */
+/* use '|' to put multiple different statements in here */
 
 Statement:		DISPLAY STRING PERIOD {$$ = AssignmentStatement("DISP", $2);
 
@@ -144,9 +144,9 @@ Statement:		DISPLAY STRING PERIOD {$$ = AssignmentStatement("DISP", $2);
 					}
 									
 
-// identification division declaration in cobol (line 2)
-// recognize an identification division declaration if line is in order:
-// IDENTIFICATION DIVISION PERIOD
+/* identification division declaration in cobol (line 2) */
+/* recognize an identification division declaration if line is in order: */
+/* IDENTIFICATION, DIVISION, . */
 
 IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration %s\n");
 
@@ -158,28 +158,28 @@ IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identificati
 					}
 
 
-// program id declaration in cobol (line 2)
-// recognize a program id declaration if line is in order:
-// PROGRAM-ID, period, ID 
+/* program id declaration in cobol (line 2) */
+/* recognize a program id declaration if line is in order: */
+/* PROGRAMID, ., ID, . */
 
 ProgramID:	PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID %s\n", $2);
 
 
-// logic for program id
+
 
 
 
 					}
 
 
-// environment division declaration in cobol (line 3)
-// recognize an environment division declaration if line is in order:
-// ENVIRONMENT_DIVISION, period
+/* environment division declaration in cobol (line 3) */
+/* recognize an environment division declaration if line is in order: */
+/* ENVIRONMENT, DIVISION, . */
 
 EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment Division Declaration %s\n", $2);
 
 
-// logic for environment division declaration
+
 
 
 
@@ -187,15 +187,15 @@ EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment D
 					}
 
 
-// procedure division declaration in cobol (line 4)
-// recognize a procedure division declaration if line is in order:
-// PROCEDURE_DIVISION, period
+/* procedure division declaration in cobol (line 4) */
+/* recognize a procedure division declaration if line is in order: */
+/* PROCEDURE, DIVISION, . */
 
 ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Division Declaration %s\n", $2);
 
 
-// logic for procedure division declaration
-// probably also need a way to carry anything in indented lines under this under the procedure division.
+
+/* probably also need a way to carry anything in indented lines under this under the procedure division */
 
 
 
@@ -203,13 +203,14 @@ ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Divis
 					}
 
 
-// display call in cobol (line 5)
-// recognize display if the line is in order:
-// DISPLAY, string, period
+/* display call in cobol (line 5)
+/* recognize display if the line is in order:
+/* DISPLAY, string, . */
+/* i think this is inconsequential now that we have this in the statements list above, but not 100% sure yet */
 
 Display:	DISPLAY STRING PERIOD { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
 
-// this is where we have to actually do the display?
+
 
 
 
@@ -218,9 +219,9 @@ Display:	DISPLAY STRING PERIOD { printf("\n RECOGNIZED RULE: Display Call %s\n",
 					}
 
 
-// stop run call in cobol (line 6)
-// recognize display if the line is in order:
-// STOP, RUN, period
+/* stop run call in cobol (line 6) */
+/* recognize display if the line is in order: */
+/* STOP, RUN, . */
 
 StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run \n", $2);
 
