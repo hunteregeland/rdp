@@ -125,7 +125,7 @@ Expr:	ID { printf("\n RECOGNIZED RULE: Simplest expression\n"); }
 					}
 	| WRITE ID 	{ printf("\n RECOGNIZED RULE: WRITE statement\n");
 					//$$ = AST_Write("write",$2,"");
-				}
+				}; //need ;?
 
 %%
 
