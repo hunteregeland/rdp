@@ -22,6 +22,30 @@ STRING  ['][A-Za-z0-9]*[']
 
 %%  
 
+">"  {printf("%s : OPERATOR\n", yytext);
+    return GT_OP;
+}
+
+"<"  {printf("%s : OPERATOR\n", yytext);
+    return LT_OP;
+}
+
+"="  {printf("%s : OPERATOR\n", yytext); 
+    return EQ_OP;
+}
+
+"=="  {printf("%s : OPERATOR\n", yytext);
+    return DOUBLE_EQ_OP;
+}
+
+">="  {printf("%s : OPERATOR\n", yytext);
+    return GT_EQ_OP;
+}
+
+"<="  {printf("%s : OPERATOR\n", yytext);
+    return LT_EQ_OP;
+}
+
 "IDENTIFICATION"  {printf("%s : IDENTIFICATION\n", yytext);
     return IDENTIFICATION;
 }
@@ -52,6 +76,18 @@ STRING  ['][A-Za-z0-9]*[']
 
 "RUN"  {printf("%s : KEYWORD\n", yytext);
     return RUN;
+}
+
+"IF"  {printf("%s : KEYWORD\n", yytext);
+    return IF;
+}
+
+"THEN"  {printf("%s : KEYWORD\n", yytext);
+    return THEN;
+}
+
+"END-IF"  {printf("%s : KEYWORD\n", yytext);
+    return ENDIF;
 }
 
 "." {printf("%s : OPERATOR\n", yytext);
