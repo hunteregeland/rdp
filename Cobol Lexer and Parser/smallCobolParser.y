@@ -40,8 +40,18 @@ char currentScope[50]; /* global or the name of the function */
 %token <string> STOP
 %token <string> RUN
 
+%token <string> IF
+%token <string> THEN
+%token <string> ENDIF
+
 %token <character> PERIOD
 %token <character> APOSTROPHE
+%token <character> GT_OP
+%token <character> LT_OP
+%token <character> EQ_OP
+%token <character> DOUBLE_EQ_OP
+%token <character> GT_EQ_OP
+%token <character> LT_EQ_OP
 
 
 
@@ -116,9 +126,17 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
 		| ACCEPT ID {$$ = AssignmentStatement("ACCEPT", $2);
 			printf("JAVA: %s = scanner();",$2);
 		}
+
+		| IF Condition THEN Expr ENDIF { printf("\n RECOGNIZED RULE: If statement");
+			printf("JAVA: if(%s) {%s}",$2,$4);
+		}
 ;
 
+//Need to figure out how to set up Condition. 
+Condition: ID Operator ID {} /* add? -> $$ = $1, $2, $3*/
 
+//Need to list all operators. Can be >, <, =, ==, >=, <=, !=
+Operator: GT_OP | LT_OP | EQ_OP | DOUBLE_EQ_OP | GT_EQ_OP | LT_EQ_OP
 /* identification division declaration in cobol (line 2) */
 /* recognize an identification division declaration if line is in order: */
 /* IDENTIFICATION, DIVISION, . */
