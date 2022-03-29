@@ -114,7 +114,7 @@ Statements:		| Statement Statements {$$ = $2}
 /* use '|' to put multiple different statements in here */
 
 
-// A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into 
+/* A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into */
 Statement:        PERIOD {} | Expr PERIOD {$$ = $1; }
 							| Expr {$$ = $1; }
 ;
@@ -132,11 +132,12 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
 		}
 ;
 
-//Need to figure out how to set up Condition. 
+/* Need to figure out how to set up Condition */
 Condition: ID Operator ID {} /* add? -> $$ = $1, $2, $3*/
 
-//Need to list all operators. Can be >, <, =, ==, >=, <=, !=
+/* Need to list all operators. Can be >, <, =, ==, >=, <=, != */
 Operator: GT_OP | LT_OP | EQ_OP | DOUBLE_EQ_OP | GT_EQ_OP | LT_EQ_OP
+
 /* identification division declaration in cobol (line 2) */
 /* recognize an identification division declaration if line is in order: */
 /* IDENTIFICATION, DIVISION, . */
