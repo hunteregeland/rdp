@@ -43,6 +43,10 @@ char currentScope[50]; /* global or the name of the function */
 %token <string> IF
 %token <string> THEN
 %token <string> ENDIF
+%token <string> PERFORM
+%token <string> UNTIL
+%token <string> COUNT
+%token <string> TIMES
 
 %token <character> PERIOD
 %token <character> APOSTROPHE
@@ -130,6 +134,14 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
 		| IF Condition THEN Expr ENDIF { printf("\n RECOGNIZED RULE: If statement");
 			printf("JAVA: if(%s) {%s}",$2,$4);
 		}
+
+		| PERFORM Expr UNTIL COUNT Operator NUMBER {printf("\n RECOGNIZED RULE: While loop");
+			printf("JAVA: while(%s %s %s) {%s}",$4,$5,$6,$2);
+			}
+		
+		| PERFORM Expr NUMBER TIMES {printf("\n RECOGNIZED RULE: For loop");
+			printf("JAVA: for(int i=0; i<%s;i++) {%s}",$3,$2);
+			}
 ;
 
 //Need to figure out how to set up Condition. 
