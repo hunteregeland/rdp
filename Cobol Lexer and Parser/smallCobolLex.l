@@ -82,8 +82,24 @@ STRING  ['][A-Za-z0-9]*[']
     return IF;
 }
 
+"PERFORM" {printf("%s : KEYWORD\n", yytext);
+    return PERFORM;
+}
+
+"UNTIL" {printf("%s : KEYWORD\n", yytext);
+    return UNTIL;
+}
+
+"COUNT" {printf("%s : KEYWORD\n", yytext);
+    return COUNT;
+}
+
 "THEN"  {printf("%s : KEYWORD\n", yytext);
     return THEN;
+}
+
+"TIMES"  {printf("%s : KEYWORD\n", yytext);
+    return TIMES;
 }
 
 "END-IF"  {printf("%s : KEYWORD\n", yytext);
