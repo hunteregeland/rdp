@@ -90,12 +90,57 @@ STRING  ['][A-Za-z0-9]*[']
     return ENDIF;
 }
 
+"PICTURE"  {printf("%s : KEYWORD\n", yytext);
+    return PICTURE;
+}
+
+"PIC"  {printf("%s : KEYWORD\n", yytext);
+    return PIC;
+}
+
+"IS"  {printf("%s : KEYWORD\n", yytext);
+    return IS;
+}
+
 "." {printf("%s : OPERATOR\n", yytext);
     return PERIOD;
 }
 
+"'" {printf("%s : OPERATOR\n", yytext);
+    return APOSTROPHE;
+}
+
+"(" {printf("%s : OPERATOR\n", yytext);
+    return OPEN_PARENTHESES;
+}
+
+")" {printf("%s : OPERATOR\n", yytext);
+    return CLOSE_PARENTHESES;
+}
+
+"9" {printf("%s : OPERATOR\n", yytext);
+    return NINE;
+}
+
+"V" {printf("%s : OPERATOR\n", yytext);
+    return LETTERV;
+}
+
+"S" {printf("%s : OPERATOR\n", yytext);
+    return LETTERS;
+}
+
+"X" {printf("%s : OPERATOR\n", yytext);
+    return LETTERX;
+}
+
+
 {NUMBER}     {printf("%s : NUMBER\n", yytext);
     return NUMBER;
+}
+
+{DIGIT}     {printf("%s : NUMBER\n", yytext);
+    return DIGIT;
 }
 
 {STRING}     {printf("%s : STRING\n", yytext);
