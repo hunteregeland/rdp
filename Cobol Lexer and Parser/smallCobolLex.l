@@ -6,7 +6,7 @@
 #include <math.h>
 
 #define YY_DECL int yylex()
-#include  "parser.tab.h"
+#include  "smallCobolParser.tab.h"
 
 %}
 
@@ -120,10 +120,6 @@ STRING  ['][A-Za-z0-9]*[']
 
 "." {printf("%s : OPERATOR\n", yytext);
     return PERIOD;
-}
-
-"'" {printf("%s : OPERATOR\n", yytext);
-    return APOSTROPHE;
 }
 
 "(" {printf("%s : OPERATOR\n", yytext);

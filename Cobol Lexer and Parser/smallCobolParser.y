@@ -53,7 +53,6 @@ char currentScope[50]; /* global or the name of the function */
 %token <string> IS
 
 %token <character> PERIOD
-%token <character> APOSTROPHE
 %token <character> GT_OP
 %token <character> LT_OP
 %token <character> EQ_OP
@@ -72,7 +71,7 @@ char currentScope[50]; /* global or the name of the function */
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 %printer { fprintf(yyoutput, "%d", $$); } DIGIT;
 
-%type <ast> Program Module1 Module2 Module3 IDDiv EnvDiv ProcDiv ProgID Statements Statement Expr Display StopRun DoubleDigit PicClause
+%type <ast> Program Module1 Module2 Module3 IDDiv EnvDiv ProcDiv ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause Xs
 
 %start Program
 
@@ -119,7 +118,8 @@ ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start 
 
 /* this is a recursive way to read however many statements in the procedure division */
 
-Statements:		| Statement Statements {$$ = $2}       		 
+Statements:	
+	| Statement Statements {$$ = $2;}
 ;
 
 
@@ -137,19 +137,20 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
             printf("JAVA: system.out.println('%s');",$2);
 		}
 
-		| ACCEPT ID {$$ = AssignmentStatement("ACCEPT", $2);
-			printf("JAVA: %s = scanner();",$2);
+		| ACCEPT ID {printf("\n RECOGNIZED RULE: Accept ID %s\n", $2);
+			printf("JAVA: %s = input.nextLine();",$2);
 		}
 
-		| IF Condition THEN Expr ENDIF { printf("\n RECOGNIZED RULE: If Statement");
+		| IF Condition THEN Statement ENDIF { printf("\n RECOGNIZED RULE: If Statement");
 			printf("JAVA: if(%s) {%s}",$2,$4);
+			//makeTree(,,)
 		}
 
-		| PERFORM Expr UNTIL COUNT Operator NUMBER {printf("\n RECOGNIZED RULE: While loop");
+		| PERFORM Statement UNTIL COUNT Operator NUMBER {printf("\n RECOGNIZED RULE: While loop");
 			printf("JAVA: while(%s %s %s) {%s}",$4,$5,$6,$2);
 			}
 		
-		| PERFORM Expr NUMBER TIMES {printf("\n RECOGNIZED RULE: For loop");
+		| PERFORM Statement NUMBER TIMES {printf("\n RECOGNIZED RULE: For loop");
 			printf("JAVA: for(int i=0; i<%s;i++) {%s}",$3,$2);
 			}
 		/* define any byte-sized integer variable in cobol */
@@ -200,7 +201,12 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
 
 
 /* Need to figure out how to set up Condition */
-Condition:	ID Operator ID {} /* add? -> $$ = $1, $2, $3*/
+Condition:	ID Operator ID {
+			//makeTree(,,)
+		} 
+		| ID Operator NUMBER {
+
+		}/* add? -> $$ = $1, $2, $3*/
 
 
 /* Need to list all operators. Can be >, <, =, ==, >=, <=, != */
