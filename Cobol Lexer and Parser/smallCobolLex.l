@@ -118,7 +118,7 @@ STRING  ['][A-Za-z0-9]*[']
     return IS;
 }
 
-"." {printf("%s : OPERATOR\n", yytext);
+"." {printf("%s : TERMINATOR\n", yytext);
     return PERIOD;
 }
 
@@ -146,6 +146,13 @@ STRING  ['][A-Za-z0-9]*[']
     return LETTERX;
 }
 
+"ADD" {printf("%s : KEYWORD\n", yytext);
+    return ADD;
+}
+
+"TO" {printf("%s : KEYWORD\n", yytext);
+    return TO;
+}
 
 {NUMBER}     {printf("%s : NUMBER\n", yytext);
     return NUMBER;

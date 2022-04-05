@@ -51,8 +51,10 @@ char currentScope[50]; /* global or the name of the function */
 %token <string> PICTURE
 %token <string> PIC
 %token <string> IS
+%token <string> TO
 
 %token <character> PERIOD
+%token <character> COMMA
 %token <character> GT_OP
 %token <character> LT_OP
 %token <character> EQ_OP
@@ -61,6 +63,7 @@ char currentScope[50]; /* global or the name of the function */
 %token <character> LT_EQ_OP
 %token <character> OPEN_PARENTHESES
 %token <character> CLOSE_PARENTHESES
+%token <character> ADD
 
 %token <character> NINE
 %token <character> LETTERV
@@ -148,11 +151,12 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
 
 		| PERFORM Statement UNTIL COUNT Operator NUMBER {printf("\n RECOGNIZED RULE: While loop");
 			printf("JAVA: while(%s %s %s) {%s}",$4,$5,$6,$2);
-			}
+		}
 		
 		| PERFORM Statement NUMBER TIMES {printf("\n RECOGNIZED RULE: For loop");
 			printf("JAVA: for(int i=0; i<%s;i++) {%s}",$3,$2);
-			}
+		}
+
 		/* define any byte-sized integer variable in cobol */
 		/* to define an integer in cobol you use 9's as how many bytes you want the integer to be in the range of, e.g. 999 means 0-999 */
 		/* only problem here is it seeing a 9 and making sure it calls it a NINE and not a NUMBER, but maybe that doesn't matter? */
@@ -197,6 +201,42 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
 		| DoubleDigit ID PIC StringPicClause { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
 			printf("JAVA: String %s = %s", $2, $4);
 		}
+
+		/* add statement */
+
+		/* using a single literal input */
+		| ADD NUMBER TO ID { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input");
+			printf("JAVA: %s = %s + %s", $2, $2, $4); /* do i save $2 twice if i need to use it twice */
+		}
+		/* using a single id input */
+		| ADD ID TO ID { printf("\n RECOGNIZED RULE: Add Statement: Single ID Input");
+			printf("JAVA: %s = %s + %s", $2, $2, $4); 
+		}
+		/* using multiple literal inputs */
+		| ADD NumberClause TO ID { printf("\n RECOGNIZED RULE: Add Statement: Multiple Literal Inputs");
+			printf("JAVA: %s = %s + %s", $2, $2, $4); 
+		}
+		/* using multiple id inputs */
+		| ADD IDClause TO ID { printf("\n RECOGNIZED RULE: Add Statement: Multiple ID Inputs");
+			printf("JAVA: %s = %s + %s", $2, $2, $4); 
+		}
+		/* using a single literal input & multiple id outputs */
+		| ADD NUMBER TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input & Multiple ID Outputs");
+			printf("JAVA: %s = %s + %s", $2, $2, $4); 
+		}
+		/* using multiple literal inputs & multiple id outputs */
+		| ADD NumberClause TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Multiple Literal Inputs & Multiple ID Outputs");
+			printf("JAVA: %s = %s + %s", $2, $2, $4); 
+		}
+		/* using a single id input & multiple id outputs */
+		| ADD ID TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Single ID Inputs & Multiple ID Outputs");
+			printf("JAVA: %s = %s + %s", $2, $2, $4); 
+		}
+		/* using multiple id inputs & multiple id outputs */
+		| ADD IDClause TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Single ID Inputs & Multiple ID Outputs");
+			printf("JAVA: %s = %s + %s", $2, $2, $4); 
+		}
+
 ;
 
 
@@ -215,10 +255,10 @@ Operator:	GT_OP | LT_OP | EQ_OP | DOUBLE_EQ_OP | GT_EQ_OP | LT_EQ_OP
 DoubleDigit:	| DIGIT DIGIT { printf("\n RECOGNIZED RULE: Double Digit %s\n");
 };
 
-Nines:	| NINE Nines { printf("\n RECOGNIZED RULE: Digits %s\n");
+Nines:	| NINE Nines { printf("\n RECOGNIZED RULE: Nines %s\n");
 };
 
-Xs:	| LETTERX Xs { printf("\n RECOGNIZED RULE: Digits %s\n");
+Xs:	| LETTERX Xs { printf("\n RECOGNIZED RULE: X's %s\n");
 };
 
 IntPicClause:	NINE OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES { printf("\n RECOGNIZED RULE: Integer Pic Clause %s\n");
@@ -232,6 +272,13 @@ UnsignedClause:	LETTERS Nines { printf("\n RECOGNIZED RULE: Un-signed Clause %s\
 
 StringPicClause:	LETTERX OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES { printf("\n RECOGNIZED RULE: String Pic Clause %s\n");
 };
+
+NumberClause:	NUMBER COMMA NumberClause { printf("\n RECOGNIZED RULE: Number Clause %s\n");
+};
+
+IDClause:	ID COMMA IDClause { printf("\n RECOGNIZED RULE: ID Clause %s\n");
+};
+
 
 /* identification division declaration in cobol (line 2) */
 /* recognize an identification division declaration if line is in order: */
