@@ -247,10 +247,11 @@ Condition:	ID Operator ID {
 		| ID Operator NUMBER {
 
 		}/* add? -> $$ = $1, $2, $3*/
-
+;
 
 /* Need to list all operators. Can be >, <, =, ==, >=, <=, != */
-Operator:	GT_OP | LT_OP | EQ_OP | DOUBLE_EQ_OP | GT_EQ_OP | LT_EQ_OP
+Operator:	GT_OP {} | LT_OP {} | EQ_OP {} | DOUBLE_EQ_OP {} | GT_EQ_OP {} | LT_EQ_OP {
+};
 
 DoubleDigit:	| DIGIT DIGIT { printf("\n RECOGNIZED RULE: Double Digit\n");
 };

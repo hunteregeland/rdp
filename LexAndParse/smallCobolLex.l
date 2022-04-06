@@ -18,7 +18,7 @@ LETTER  [A-Za-z]
 DIGIT   [0-9]
 ID      {LETTER}({LETTER}|{DIGIT})*
 NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
-STRING  ['][A-Za-z0-9]*[']
+STRING  ['][A-Za-z0-9 ]*[']
 
 %%  
 
@@ -170,7 +170,7 @@ STRING  ['][A-Za-z0-9]*[']
     return ID;
 } 
 
-{DELIM} {}
+{WS} {}
 
 .  {printf("%s: anything", yytext);}
 
