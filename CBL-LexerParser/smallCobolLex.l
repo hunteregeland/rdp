@@ -170,7 +170,7 @@ STRING  ['][A-Za-z0-9]*[']
     return ID;
 } 
 
-{DELIM} {}
+{WS} {}
 
 .  {printf("%s: anything\n", yytext);}
 
