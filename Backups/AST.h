@@ -1,4 +1,3 @@
-
 //Abstract Syntax Tree Implementation
 #include <string.h>
 
