@@ -237,8 +237,6 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
 			printf("JAVA: $4 = $4 + $2"); 
 		}
 
-		/* changes */
-
 ;
 
 
