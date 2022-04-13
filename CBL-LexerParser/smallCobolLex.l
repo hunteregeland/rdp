@@ -54,6 +54,30 @@ STRING  ['][A-Za-z0-9 ]*[']
     return PROGRAMID;
 }
 
+"DATA"  {printf("%s : DATA\n", yytext);
+    return DATA;
+}
+
+"FILE"  {printf("%s : FILE\n", yytext);
+    return FILE;
+}
+
+"WORKING-STORAGE"  {printf("%s : WORKING-STORAGE\n", yytext);
+    return WORKINGSTORAGE;
+}
+
+"LINKAGE"  {printf("%s : LINKAGE\n", yytext);
+    return LINKAGE;
+}
+
+"SCREEN"  {printf("%s : SCREEN\n", yytext);
+    return SCREEN;
+}
+
+"SECTION"  {printf("%s : SECTION\n", yytext);
+    return SECTION;
+}
+
 "ENVIRONMENT"  {printf("%s : ENVIRONMENT\n", yytext);
     return ENVIRIONMENT;
 }
@@ -158,7 +182,7 @@ STRING  ['][A-Za-z0-9 ]*[']
     return NUMBER;
 }
 
-{DIGIT}     {printf("%s : NUMBER\n", yytext);
+{DIGIT}     {printf("%s : DIGIT\n", yytext);
     return DIGIT;
 }
 

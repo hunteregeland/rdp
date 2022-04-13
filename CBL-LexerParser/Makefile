@@ -8,7 +8,7 @@ lex.yy.c: smallCobolLex.l smallCobolParser.tab.h
 
 parser: lex.yy.c smallCobolParser.tab.c smallCobolParser.tab.h
 	gcc -o parser smallCobolParser.tab.c lex.yy.c
-	./parser readInput.cob
+	./parser cobolTestFile.cob
 
 clean:
 	clear
