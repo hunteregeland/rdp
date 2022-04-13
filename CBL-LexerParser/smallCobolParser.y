@@ -32,6 +32,12 @@ char currentScope[50]; /* global or the name of the function */
 
 %token <string> IDENTIFICATION
 %token <string> ENVIRIONMENT
+%token <string> DATA
+%token <string> FILE
+%token <string> WORKINGSTORAGE
+%token <string> LINKAGE
+%token <string> SCREEN
+%token <string> SECTION
 %token <string> PROCEDURE
 %token <string> DIVISION
 
@@ -74,7 +80,7 @@ char currentScope[50]; /* global or the name of the function */
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 %printer { fprintf(yyoutput, "%d", $$); } DIGIT;
 
-%type <ast> Program Module1 Module2 Module3 IDDiv EnvDiv ProcDiv ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs
+%type <ast> Program Module1 Module2 Module3 Module4 IDDiv DataDiv EnvDiv ProcDiv ProgID FileSec WSSec LinkSec ScrSec Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs
 
 %start Program
 
@@ -86,28 +92,30 @@ char currentScope[50]; /* global or the name of the function */
 
 /* basic structure of the current cobol test program */
 
-Program:	Module1 Module2 Module3 { printf("\n RECOGNIZED RULE: COBOL Program Start\n");
+Program:	Module1 Module2 Module3 Module4 { printf("\n RECOGNIZED RULE: COBOL Program Start\n");
 };
 
 
 /* part of the program including the identification division and the program id declaration */
-/* lines 1 & 2 */
 
 Module1:	IDDiv ProgID { printf("\n RECOGNIZED RULE: Module1: Identification Division\n"); 
 };
 
+/* part of the program including the data division and underlying sections */
+/* FileSec Statements WSSec Statements LinkSec Statements ScrSec Statements */
+
+Module2:	DataDiv { printf("\n RECOGNIZED RULE: Module2: Data Division\n");
+};
 
 /* part of the program that contains the environment division */
-/* line 3 */
 
-Module2:	EnvDiv { printf("\n RECOGNIZED RULE: Module2: Environment Division\n");
+Module3:	EnvDiv { printf("\n RECOGNIZED RULE: Module3: Environment Division\n");
 };
 
 
 /* part of the program that contains the procedure division and everything that is inside it, which is statements since this is where all executable code is written */
-/* lines 4-6 */
 
-Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Procedure Division\n");
+Module4:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module4: Procedure Division\n");
 };
 
 
@@ -116,6 +124,18 @@ Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Proce
 /* this needs to be fixed, we cannot recognize PROGRAM-ID currently */
 
 ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start\n");
+};
+
+FileSec:	| FILE SECTION PERIOD { printf("\n RECOGNIZED RULE: File Section Declaration\n");
+};
+
+WSSec:	| WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED RULE: Working-Storage Section Declaration\n");
+};
+
+LinkSec:	| LINKAGE SECTION PERIOD { printf("\n RECOGNIZED RULE: Linkage Section Declaration\n");
+};
+
+ScrSec:	| SCREEN SECTION PERIOD { printf("\n RECOGNIZED RULE: Screen Section Declaration\n");
 };
 
 
@@ -288,6 +308,12 @@ IDClause:	ID COMMA IDClause { printf("\n RECOGNIZED RULE: ID Clause\n");
 IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration\n");
 };
 
+/* data division declaration in cobol (line 3) */
+/* recognize an data division declaration if line is in order: */
+/* DATA, DIVISION, . , FILE, SECTION, WORKING-STORAGE, SECTION, ETC.*/
+
+DataDiv:	DATA DIVISION PERIOD { printf("\n RECOGNIZED RULE: Data Division Declaration\n");
+};	
 
 /* environment division declaration in cobol (line 3) */
 /* recognize an environment division declaration if line is in order: */
