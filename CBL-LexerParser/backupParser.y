@@ -114,6 +114,7 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call %s\n", $2);
 
 		| ACCEPT ID {$$ = AssignmentStatement("ACCEPT", $2);
 		};
+		
 
 
 /* identification division declaration in cobol (line 2) */
