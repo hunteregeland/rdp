@@ -1,4 +1,7 @@
-all: parser
+all: 
+	make clean
+	clear
+	make parser
 
 smallCobolParser.tab.c smallCobolParser.tab.h: smallCobolParser.y
 	bison -t -v -d smallCobolParser.y
