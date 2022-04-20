@@ -95,7 +95,7 @@ ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start 
 
 /* this is a recursive way to read however many statements in the procedure division */
 
-Statements:		| Statement Statements {$$ = $2}       		 
+Statements:		| Statement Statements {$$ = $2;}       		 
 ;
 
 
