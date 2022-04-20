@@ -1,3 +1,4 @@
+
 //Abstract Syntax Tree Implementation
 #include <string.h>
 
@@ -11,4 +12,3 @@ struct AST{
 	// review pointers to structs in C 
 	// complete the tree struct with pointers
 };
-
