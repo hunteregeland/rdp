@@ -12,5 +12,5 @@ parser: lex.yy.c smallCobolParser.tab.c smallCobolParser.tab.h
 
 clean:
 	clear
-	rm -f lex.yy.c lexer smallCobolParser.tab.c lex.yy.c smallCobolParser.tab.h parser.output
+	rm -f lex.yy.c lexer smallCobolParser.tab.c lex.yy.c smallCobolParser.tab.h smallCobolParser.output
 	ls -l
