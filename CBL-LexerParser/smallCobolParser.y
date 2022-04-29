@@ -58,15 +58,15 @@ char currentScope[50]; /* global or the name of the function */
 %token <string> PIC
 %token <string> IS
 %token <string> TO
+%token <string> DOUBLE_EQ_OP
+%token <string> GT_EQ_OP
+%token <string> LT_EQ_OP
 
 %token <character> PERIOD
 %token <character> COMMA
 %token <character> GT_OP
 %token <character> LT_OP
 %token <character> EQ_OP
-%token <character> DOUBLE_EQ_OP
-%token <character> GT_EQ_OP
-%token <character> LT_EQ_OP
 %token <character> OPEN_PARENTHESES
 %token <character> CLOSE_PARENTHESES
 %token <character> ADD
@@ -92,7 +92,7 @@ char currentScope[50]; /* global or the name of the function */
 
 /* basic structure of the current cobol test program */
 
-Program:	Module1 Module2 Module3 Module4 { printf("\n RECOGNIZED RULE: COBOL Program Start\n");
+Program:	Module1 {printf("Module 1 done")} Module2 {printf("Module 2 done")} Module3 {printf("Module 2 done")} Module4 { printf("\n RECOGNIZED RULE: COBOL Program Start\n");
 };
 
 
