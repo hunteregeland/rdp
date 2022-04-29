@@ -139,39 +139,45 @@ extern int yydebug;
     STRING = 261,
     IDENTIFICATION = 262,
     ENVIRIONMENT = 263,
-    PROCEDURE = 264,
-    DIVISION = 265,
-    PROGRAMID = 266,
-    DISPLAY = 267,
-    ACCEPT = 268,
-    STOP = 269,
-    RUN = 270,
-    IF = 271,
-    THEN = 272,
-    ENDIF = 273,
-    PERFORM = 274,
-    UNTIL = 275,
-    COUNT = 276,
-    TIMES = 277,
-    PICTURE = 278,
-    PIC = 279,
-    IS = 280,
-    TO = 281,
-    PERIOD = 282,
-    COMMA = 283,
-    GT_OP = 284,
-    LT_OP = 285,
-    EQ_OP = 286,
-    DOUBLE_EQ_OP = 287,
-    GT_EQ_OP = 288,
-    LT_EQ_OP = 289,
-    OPEN_PARENTHESES = 290,
-    CLOSE_PARENTHESES = 291,
-    ADD = 292,
-    NINE = 293,
-    LETTERV = 294,
-    LETTERS = 295,
-    LETTERX = 296
+    DATA = 264,
+    FILE = 265,
+    WORKINGSTORAGE = 266,
+    LINKAGE = 267,
+    SCREEN = 268,
+    SECTION = 269,
+    PROCEDURE = 270,
+    DIVISION = 271,
+    PROGRAMID = 272,
+    DISPLAY = 273,
+    ACCEPT = 274,
+    STOP = 275,
+    RUN = 276,
+    IF = 277,
+    THEN = 278,
+    ENDIF = 279,
+    PERFORM = 280,
+    UNTIL = 281,
+    COUNT = 282,
+    TIMES = 283,
+    PICTURE = 284,
+    PIC = 285,
+    IS = 286,
+    TO = 287,
+    PERIOD = 288,
+    COMMA = 289,
+    GT_OP = 290,
+    LT_OP = 291,
+    EQ_OP = 292,
+    DOUBLE_EQ_OP = 293,
+    GT_EQ_OP = 294,
+    LT_EQ_OP = 295,
+    OPEN_PARENTHESES = 296,
+    CLOSE_PARENTHESES = 297,
+    ADD = 298,
+    NINE = 299,
+    LETTERV = 300,
+    LETTERS = 301,
+    LETTERX = 302
   };
 #endif
 
@@ -186,7 +192,7 @@ union YYSTYPE
 	char* string;
 	struct AST* ast;
 
-#line 190 "smallCobolParser.tab.c"
+#line 196 "smallCobolParser.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -508,16 +514,16 @@ union yyalloc
 #define YYLAST   99
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  42
+#define YYNTOKENS  48
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  22
+#define YYNNTS  24
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  50
+#define YYNRULES  52
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  100
+#define YYNSTATES  105
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   296
+#define YYMAXUTOK   302
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -558,19 +564,20 @@ static const yytype_int8 yytranslate[] =
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    89,    89,    96,   103,   110,   118,   124,   125,   135,
-     135,   136,   139,   143,   147,   152,   156,   164,   167,   170,
-     177,   180,   186,   189,   195,   198,   201,   208,   212,   244,
-     247,   253,   253,   253,   253,   253,   253,   256,   256,   259,
-     259,   262,   262,   265,   268,   271,   274,   288,   296,   304,
-     313
+       0,    95,    95,   101,   107,   112,   118,   126,   144,   145,
+     155,   155,   156,   159,   163,   167,   172,   176,   184,   187,
+     190,   197,   200,   206,   209,   215,   218,   221,   228,   232,
+     264,   267,   273,   273,   273,   273,   273,   273,   276,   276,
+     279,   279,   282,   282,   285,   288,   291,   294,   308,   315,
+     322,   330,   339
 };
 #endif
 
@@ -580,16 +587,17 @@ static const yytype_int16 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "NUMBER", "DIGIT", "ID", "STRING",
-  "IDENTIFICATION", "ENVIRIONMENT", "PROCEDURE", "DIVISION", "PROGRAMID",
+  "IDENTIFICATION", "ENVIRIONMENT", "DATA", "FILE", "WORKINGSTORAGE",
+  "LINKAGE", "SCREEN", "SECTION", "PROCEDURE", "DIVISION", "PROGRAMID",
   "DISPLAY", "ACCEPT", "STOP", "RUN", "IF", "THEN", "ENDIF", "PERFORM",
   "UNTIL", "COUNT", "TIMES", "PICTURE", "PIC", "IS", "TO", "PERIOD",
   "COMMA", "GT_OP", "LT_OP", "EQ_OP", "DOUBLE_EQ_OP", "GT_EQ_OP",
   "LT_EQ_OP", "OPEN_PARENTHESES", "CLOSE_PARENTHESES", "ADD", "NINE",
   "LETTERV", "LETTERS", "LETTERX", "$accept", "Program", "Module1",
-  "Module2", "Module3", "ProgID", "Statements", "Statement", "Expr",
-  "Condition", "Operator", "DoubleDigit", "Nines", "Xs", "IntPicClause",
-  "FloatClause", "UnsignedClause", "StringPicClause", "IDDiv", "EnvDiv",
-  "ProcDiv", "StopRun", YY_NULLPTR
+  "Module2", "Module3", "Module4", "ProgID", "Statements", "Statement",
+  "Expr", "Condition", "Operator", "DoubleDigit", "Nines", "Xs",
+  "IntPicClause", "FloatClause", "UnsignedClause", "StringPicClause",
+  "IDDiv", "DataDiv", "EnvDiv", "ProcDiv", "StopRun", YY_NULLPTR
 };
 #endif
 
@@ -602,16 +610,16 @@ static const yytype_int16 yytoknum[] =
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
      285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295,   296
+     295,   296,   297,   298,   299,   300,   301,   302
 };
 # endif
 
-#define YYPACT_NINF (-55)
+#define YYPACT_NINF (-57)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-38)
+#define YYTABLE_NINF (-39)
 
 #define yytable_value_is_error(Yyn) \
   0
@@ -620,16 +628,17 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      17,     9,    31,    29,    40,    25,   -55,    43,    45,   -55,
-      28,   -55,   -55,    30,    46,   -55,    -4,    53,   -55,    32,
-      56,    55,    57,    58,    -2,   -55,    27,    50,    -4,    38,
-      61,    41,   -55,   -55,   -55,   -55,    11,    52,     0,    44,
-      47,    59,   -55,   -55,   -55,   -18,   -55,   -55,   -55,   -55,
-     -55,   -55,   -55,    33,    -2,    49,    51,    62,    70,    54,
-      60,   -12,   -55,   -55,    64,   -55,    11,   -55,   -55,   -55,
-       8,    12,    39,   -14,    37,   -55,   -55,   -55,   -55,   -55,
-     -55,    75,    39,    42,    37,   -55,   -55,   -55,    76,   -55,
-     -55,    77,   -55,    39,   -55,    48,    63,   -55,   -55,   -55
+       0,    10,    12,    21,    17,     4,   -57,    27,    46,   -57,
+      22,   -57,   -57,    24,    40,    43,   -57,    54,   -57,    28,
+      44,   -57,    -4,    29,   -57,    30,    60,    59,    61,    62,
+      -2,   -57,    35,    48,    -4,    36,    65,   -57,   -57,   -57,
+     -57,   -57,    11,    49,     1,    41,    42,    50,   -57,   -57,
+     -57,    23,   -57,   -57,   -57,   -57,   -57,   -57,    39,    -2,
+      47,    51,    71,    72,    52,    53,   -38,   -57,   -57,    55,
+     -57,    11,   -57,   -57,   -57,   -11,   -16,    37,   -36,    38,
+     -57,   -57,   -57,   -57,   -57,   -57,    77,    37,    45,    38,
+     -57,   -57,   -57,    79,   -57,   -57,    83,   -57,    37,   -57,
+      56,    57,   -57,   -57,   -57
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -638,31 +647,32 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     0,     0,     0,     1,     0,     0,     4,
-       0,     3,    47,     0,     0,     2,     7,     0,    48,     0,
-       0,     0,     0,     0,    37,     9,     0,     0,     7,    11,
-       0,     0,    49,    38,    12,    13,     0,     0,     0,     0,
-       0,     0,     5,     8,    10,     0,     6,    31,    32,    33,
-      34,    35,    36,     0,    37,     0,     0,     0,     0,     0,
-       0,    39,    30,    29,     0,    16,     0,    27,    28,    50,
-      39,    39,    39,    41,    18,    25,    19,    21,    23,    26,
-      14,     0,    39,    41,    17,    24,    20,    22,     0,    40,
-      45,     0,    42,    39,    15,     0,     0,    44,    43,    46
+       0,     3,    48,     0,     0,     0,     5,     0,    49,     0,
+       0,     2,     8,     0,    50,     0,     0,     0,     0,     0,
+      38,    10,     0,     0,     8,    12,     0,     7,    51,    39,
+      13,    14,     0,     0,     0,     0,     0,     0,     6,     9,
+      11,     0,    32,    33,    34,    35,    36,    37,     0,    38,
+       0,     0,     0,     0,     0,     0,    40,    31,    30,     0,
+      17,     0,    28,    29,    52,    40,    40,    40,    42,    19,
+      26,    20,    22,    24,    27,    15,     0,    40,    42,    18,
+      25,    21,    23,     0,    41,    46,     0,    43,    40,    16,
+       0,     0,    45,    44,    47
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -55,   -55,   -55,   -55,   -55,   -55,    65,   -20,   -55,   -55,
-      20,   -55,   -54,   -48,   -55,    18,    19,   -55,   -55,   -55,
-     -55,   -55
+     -57,   -57,   -57,   -57,   -57,   -57,   -57,    63,   -27,   -57,
+     -57,    16,   -57,   -53,   -56,   -57,    13,    14,   -57,   -57,
+     -57,   -57,   -57,   -57
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3,     8,    15,    11,    27,    28,    29,    37,
-      53,    30,    89,    92,    76,    77,    78,    79,     4,     9,
-      16,    42
+      -1,     2,     3,     8,    15,    21,    11,    33,    34,    35,
+      43,    58,    36,    94,    97,    81,    82,    83,    84,     4,
+       9,    16,    22,    48
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -670,68 +680,69 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      20,   -37,    20,    55,    38,    60,    61,    74,    21,    22,
-      21,    22,    23,    75,    23,    24,    84,    24,    90,     5,
-      56,    91,    85,    25,     1,    25,    71,    83,    72,    73,
-      39,     6,    40,    26,    64,    26,    62,     7,    63,    97,
-      47,    48,    49,    50,    51,    52,    82,    88,    72,    83,
-      82,    10,    12,    13,    14,    17,    19,    18,    31,    32,
-      33,    34,    35,    36,    41,    44,    45,    67,    46,    54,
-      57,    65,    66,    58,    59,    68,    93,    82,    94,    95,
-      96,    69,    80,    83,    98,    70,    81,     0,    86,    87,
-       0,     0,     0,    43,     0,     0,     0,     0,     0,    99
+      26,   -38,    26,    44,    60,    96,    76,     1,    77,    78,
+      80,    88,     6,    79,    27,    28,    27,    28,    29,    90,
+      29,    30,    89,    30,    95,    93,     5,    61,    87,    31,
+       7,    31,    69,    87,    10,    77,    88,    12,    45,    32,
+      46,    32,    67,    13,    68,   102,    52,    53,    54,    55,
+      56,    57,    65,    66,    14,    17,    19,    18,    20,    23,
+      25,    24,    37,    38,    39,    40,    41,    42,    47,    50,
+      51,    64,    59,    62,    63,    70,    72,    73,    71,    85,
+      99,    87,   100,    98,    75,    74,   101,    86,    91,    92,
+       0,     0,    88,     0,     0,     0,     0,    49,   103,   104
 };
 
 static const yytype_int8 yycheck[] =
 {
-       4,     5,     4,     3,    24,    23,    24,    61,    12,    13,
-      12,    13,    16,    61,    16,    19,    70,    19,    72,    10,
-      20,    35,    70,    27,     7,    27,    38,    41,    40,    41,
-       3,     0,     5,    37,    54,    37,     3,     8,     5,    93,
-      29,    30,    31,    32,    33,    34,    38,    35,    40,    41,
-      38,    11,    27,    10,     9,    27,    10,    27,     5,    27,
-       4,     6,     5,     5,    14,    27,     5,     5,    27,    17,
-      26,    22,    21,    26,    15,     5,    39,    38,     3,     3,
-       3,    27,    18,    41,    36,    25,    66,    -1,    70,    70,
-      -1,    -1,    -1,    28,    -1,    -1,    -1,    -1,    -1,    36
+       4,     5,     4,    30,     3,    41,    44,     7,    46,    47,
+      66,    47,     0,    66,    18,    19,    18,    19,    22,    75,
+      22,    25,    75,    25,    77,    41,    16,    26,    44,    33,
+       9,    33,    59,    44,    17,    46,    47,    33,     3,    43,
+       5,    43,     3,    16,     5,    98,    35,    36,    37,    38,
+      39,    40,    29,    30,     8,    33,    16,    33,    15,     5,
+      16,    33,    33,    33,     4,     6,     5,     5,    20,    33,
+       5,    21,    23,    32,    32,    28,     5,     5,    27,    24,
+       3,    44,     3,    45,    31,    33,     3,    71,    75,    75,
+      -1,    -1,    47,    -1,    -1,    -1,    -1,    34,    42,    42
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     7,    43,    44,    60,    10,     0,     8,    45,    61,
-      11,    47,    27,    10,     9,    46,    62,    27,    27,    10,
-       4,    12,    13,    16,    19,    27,    37,    48,    49,    50,
-      53,     5,    27,     4,     6,     5,     5,    51,    49,     3,
-       5,    14,    63,    48,    27,     5,    27,    29,    30,    31,
-      32,    33,    34,    52,    17,     3,    20,    26,    26,    15,
-      23,    24,     3,     5,    49,    22,    21,     5,     5,    27,
-      25,    38,    40,    41,    54,    55,    56,    57,    58,    59,
-      18,    52,    38,    41,    54,    55,    57,    58,    35,    54,
-      54,    35,    55,    39,     3,     3,     3,    54,    36,    36
+       0,     7,    49,    50,    67,    16,     0,     9,    51,    68,
+      17,    54,    33,    16,     8,    52,    69,    33,    33,    16,
+      15,    53,    70,     5,    33,    16,     4,    18,    19,    22,
+      25,    33,    43,    55,    56,    57,    60,    33,    33,     4,
+       6,     5,     5,    58,    56,     3,     5,    20,    71,    55,
+      33,     5,    35,    36,    37,    38,    39,    40,    59,    23,
+       3,    26,    32,    32,    21,    29,    30,     3,     5,    56,
+      28,    27,     5,     5,    33,    31,    44,    46,    47,    61,
+      62,    63,    64,    65,    66,    24,    59,    44,    47,    61,
+      62,    64,    65,    41,    61,    61,    41,    62,    45,     3,
+       3,     3,    61,    42,    42
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    42,    43,    44,    45,    46,    47,    48,    48,    49,
-      49,    49,    50,    50,    50,    50,    50,    50,    50,    50,
-      50,    50,    50,    50,    50,    50,    50,    50,    50,    51,
-      51,    52,    52,    52,    52,    52,    52,    53,    53,    54,
-      54,    55,    55,    56,    57,    58,    59,    60,    61,    62,
-      63
+       0,    48,    49,    50,    51,    52,    53,    54,    55,    55,
+      56,    56,    56,    57,    57,    57,    57,    57,    57,    57,
+      57,    57,    57,    57,    57,    57,    57,    57,    57,    57,
+      58,    58,    59,    59,    59,    59,    59,    59,    60,    60,
+      61,    61,    62,    62,    63,    64,    65,    66,    67,    68,
+      69,    70,    71
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     3,     2,     1,     3,     4,     0,     2,     1,
-       2,     1,     2,     2,     5,     6,     4,     5,     4,     4,
-       5,     4,     5,     4,     5,     4,     4,     4,     4,     3,
-       3,     1,     1,     1,     1,     1,     1,     0,     2,     0,
-       2,     0,     2,     4,     3,     2,     4,     3,     3,     3,
-       3
+       0,     2,     4,     2,     1,     1,     3,     4,     0,     2,
+       1,     2,     1,     2,     2,     5,     6,     4,     5,     4,
+       4,     5,     4,     5,     4,     5,     4,     4,     4,     4,
+       3,     3,     1,     1,     1,     1,     1,     1,     0,     2,
+       0,     2,     0,     2,     4,     3,     2,     4,     3,     3,
+       3,     3,     3
 };
 
 
@@ -821,21 +832,21 @@ yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)
   switch (yytype)
     {
     case 3: /* NUMBER  */
-#line 74 "smallCobolParser.y"
+#line 80 "smallCobolParser.y"
          { fprintf(yyoutput, "%d", ((*yyvaluep).number)); }
-#line 827 "smallCobolParser.tab.c"
+#line 838 "smallCobolParser.tab.c"
         break;
 
     case 4: /* DIGIT  */
-#line 75 "smallCobolParser.y"
+#line 81 "smallCobolParser.y"
          { fprintf(yyoutput, "%d", ((*yyvaluep).number)); }
-#line 833 "smallCobolParser.tab.c"
+#line 844 "smallCobolParser.tab.c"
         break;
 
     case 5: /* ID  */
-#line 73 "smallCobolParser.y"
+#line 79 "smallCobolParser.y"
          { fprintf(yyoutput, "%s", ((*yyvaluep).string)); }
-#line 839 "smallCobolParser.tab.c"
+#line 850 "smallCobolParser.tab.c"
         break;
 
       default:
@@ -1449,334 +1460,348 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 89 "smallCobolParser.y"
-                                        { printf("\n RECOGNIZED RULE: COBOL Program Start\n");
+#line 95 "smallCobolParser.y"
+                                                { printf("\n RECOGNIZED RULE: COBOL Program Start\n");
 }
-#line 1456 "smallCobolParser.tab.c"
+#line 1467 "smallCobolParser.tab.c"
     break;
 
   case 3:
-#line 96 "smallCobolParser.y"
+#line 101 "smallCobolParser.y"
                              { printf("\n RECOGNIZED RULE: Module1: Identification Division\n"); 
 }
-#line 1463 "smallCobolParser.tab.c"
+#line 1474 "smallCobolParser.tab.c"
     break;
 
   case 4:
-#line 103 "smallCobolParser.y"
-                       { printf("\n RECOGNIZED RULE: Module2: Environment Division\n");
+#line 107 "smallCobolParser.y"
+                        { printf("\n RECOGNIZED RULE: Module2: Data Division\n");
 }
-#line 1470 "smallCobolParser.tab.c"
+#line 1481 "smallCobolParser.tab.c"
     break;
 
   case 5:
-#line 110 "smallCobolParser.y"
-                                           { printf("\n RECOGNIZED RULE: Module3: Procedure Division\n");
+#line 112 "smallCobolParser.y"
+                       { printf("\n RECOGNIZED RULE: Module3: Environment Division\n");
 }
-#line 1477 "smallCobolParser.tab.c"
+#line 1488 "smallCobolParser.tab.c"
     break;
 
   case 6:
 #line 118 "smallCobolParser.y"
+                                           { printf("\n RECOGNIZED RULE: Module4: Procedure Division\n");
+}
+#line 1495 "smallCobolParser.tab.c"
+    break;
+
+  case 7:
+#line 126 "smallCobolParser.y"
                                            { printf("\n RECOGNIZED RULE: Program Start\n");
 }
-#line 1484 "smallCobolParser.tab.c"
-    break;
-
-  case 8:
-#line 125 "smallCobolParser.y"
-                               {(yyval.ast) = (yyvsp[0].ast);}
-#line 1490 "smallCobolParser.tab.c"
-    break;
-
-  case 9:
-#line 135 "smallCobolParser.y"
-                         {}
-#line 1496 "smallCobolParser.tab.c"
-    break;
-
-  case 10:
-#line 135 "smallCobolParser.y"
-                                          {(yyval.ast) = (yyvsp[-1].ast); }
 #line 1502 "smallCobolParser.tab.c"
     break;
 
-  case 11:
-#line 136 "smallCobolParser.y"
-                                                               {(yyval.ast) = (yyvsp[0].ast); }
+  case 9:
+#line 145 "smallCobolParser.y"
+                               {(yyval.ast) = (yyvsp[0].ast);}
 #line 1508 "smallCobolParser.tab.c"
     break;
 
+  case 10:
+#line 155 "smallCobolParser.y"
+                         {}
+#line 1514 "smallCobolParser.tab.c"
+    break;
+
+  case 11:
+#line 155 "smallCobolParser.y"
+                                          {(yyval.ast) = (yyvsp[-1].ast); }
+#line 1520 "smallCobolParser.tab.c"
+    break;
+
   case 12:
-#line 139 "smallCobolParser.y"
-                        { printf("\n RECOGNIZED RULE: Display Call\n");
-            printf("JAVA: system.out.println('%s');",(yyvsp[0].string));
-		}
-#line 1516 "smallCobolParser.tab.c"
+#line 156 "smallCobolParser.y"
+                                                               {(yyval.ast) = (yyvsp[0].ast); }
+#line 1526 "smallCobolParser.tab.c"
     break;
 
   case 13:
-#line 143 "smallCobolParser.y"
-                            {printf("\n RECOGNIZED RULE: Accept ID\n");
-			printf("JAVA: %s = input.nextLine();",(yyvsp[0].string));
+#line 159 "smallCobolParser.y"
+                        { printf("\n RECOGNIZED RULE: Display Call\n");
+            printf("JAVA: system.out.println('%s');",(yyvsp[0].string));
 		}
-#line 1524 "smallCobolParser.tab.c"
+#line 1534 "smallCobolParser.tab.c"
     break;
 
   case 14:
-#line 147 "smallCobolParser.y"
+#line 163 "smallCobolParser.y"
+                            {printf("\n RECOGNIZED RULE: Accept ID\n");
+			printf("JAVA: %s = input.nextLine();",(yyvsp[0].string));
+		}
+#line 1542 "smallCobolParser.tab.c"
+    break;
+
+  case 15:
+#line 167 "smallCobolParser.y"
                                                     { printf("\n RECOGNIZED RULE: If Statement");
 			printf("JAVA: if($2) {$4}");
 			/* makeTree(,,) */
 		}
-#line 1533 "smallCobolParser.tab.c"
-    break;
-
-  case 15:
-#line 152 "smallCobolParser.y"
-                                                                {printf("\n RECOGNIZED RULE: While loop");
-			printf("JAVA: while($4 $5 %i) $2}",(yyvsp[0].number));
-		}
-#line 1541 "smallCobolParser.tab.c"
+#line 1551 "smallCobolParser.tab.c"
     break;
 
   case 16:
-#line 156 "smallCobolParser.y"
-                                                 {printf("\n RECOGNIZED RULE: For loop");
-			printf("JAVA: for(int i=0; i<%i;i++) {$2}",(yyvsp[-1].number));
+#line 172 "smallCobolParser.y"
+                                                                {printf("\n RECOGNIZED RULE: While loop");
+			printf("JAVA: while($4 $5 %i) $2}",(yyvsp[0].number));
 		}
-#line 1549 "smallCobolParser.tab.c"
+#line 1559 "smallCobolParser.tab.c"
     break;
 
   case 17:
-#line 164 "smallCobolParser.y"
-                                                  { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
-			printf("JAVA: int $2 = $5");
+#line 176 "smallCobolParser.y"
+                                                 {printf("\n RECOGNIZED RULE: For loop");
+			printf("JAVA: for(int i=0; i<%i;i++) {$2}",(yyvsp[-1].number));
 		}
-#line 1557 "smallCobolParser.tab.c"
+#line 1567 "smallCobolParser.tab.c"
     break;
 
   case 18:
-#line 167 "smallCobolParser.y"
-                                           { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
-			printf("JAVA: int $2 = $4");
+#line 184 "smallCobolParser.y"
+                                                  { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
+			printf("JAVA: int $2 = $5");
 		}
-#line 1565 "smallCobolParser.tab.c"
+#line 1575 "smallCobolParser.tab.c"
     break;
 
   case 19:
-#line 170 "smallCobolParser.y"
-                                                  { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
+#line 187 "smallCobolParser.y"
+                                           { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
 			printf("JAVA: int $2 = $4");
 		}
-#line 1573 "smallCobolParser.tab.c"
+#line 1583 "smallCobolParser.tab.c"
     break;
 
   case 20:
-#line 177 "smallCobolParser.y"
-                                                        { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 1");
-			printf("JAVA: float %s = $5", (yyvsp[-3].string));
+#line 190 "smallCobolParser.y"
+                                                  { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
+			printf("JAVA: int $2 = $4");
 		}
-#line 1581 "smallCobolParser.tab.c"
+#line 1591 "smallCobolParser.tab.c"
     break;
 
   case 21:
-#line 180 "smallCobolParser.y"
-                                                 { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 2");
-			printf("JAVA: float %s = $4", (yyvsp[-2].string));
+#line 197 "smallCobolParser.y"
+                                                        { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 1");
+			printf("JAVA: float %s = $5", (yyvsp[-3].string));
 		}
-#line 1589 "smallCobolParser.tab.c"
+#line 1599 "smallCobolParser.tab.c"
     break;
 
   case 22:
-#line 186 "smallCobolParser.y"
-                                                           { printf("\n RECOGNIZED RULE: Any-Digit Un-Signed Variable Declaration: Type 1");
-			printf("JAVA: needs extra package");
+#line 200 "smallCobolParser.y"
+                                                 { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 2");
+			printf("JAVA: float %s = $4", (yyvsp[-2].string));
 		}
-#line 1597 "smallCobolParser.tab.c"
+#line 1607 "smallCobolParser.tab.c"
     break;
 
   case 23:
-#line 189 "smallCobolParser.y"
-                                                    { printf("\n RECOGNIZED RULE: Any-Digit Un-Signed Variable Declaration: Type 2");
+#line 206 "smallCobolParser.y"
+                                                           { printf("\n RECOGNIZED RULE: Any-Digit Un-Signed Variable Declaration: Type 1");
 			printf("JAVA: needs extra package");
 		}
-#line 1605 "smallCobolParser.tab.c"
+#line 1615 "smallCobolParser.tab.c"
     break;
 
   case 24:
-#line 195 "smallCobolParser.y"
-                                               { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
-			printf("JAVA: String %s = $5", (yyvsp[-3].string));
+#line 209 "smallCobolParser.y"
+                                                    { printf("\n RECOGNIZED RULE: Any-Digit Un-Signed Variable Declaration: Type 2");
+			printf("JAVA: needs extra package");
 		}
-#line 1613 "smallCobolParser.tab.c"
+#line 1623 "smallCobolParser.tab.c"
     break;
 
   case 25:
-#line 198 "smallCobolParser.y"
-                                        { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
-			printf("JAVA: String %s = $4", (yyvsp[-2].string));
+#line 215 "smallCobolParser.y"
+                                               { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
+			printf("JAVA: String %s = $5", (yyvsp[-3].string));
 		}
-#line 1621 "smallCobolParser.tab.c"
+#line 1631 "smallCobolParser.tab.c"
     break;
 
   case 26:
-#line 201 "smallCobolParser.y"
-                                                     { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
+#line 218 "smallCobolParser.y"
+                                        { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
 			printf("JAVA: String %s = $4", (yyvsp[-2].string));
 		}
-#line 1629 "smallCobolParser.tab.c"
+#line 1639 "smallCobolParser.tab.c"
     break;
 
   case 27:
-#line 208 "smallCobolParser.y"
-                                   { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input");
-			printf("JAVA: %s = %s + %i", (yyvsp[0].string), (yyvsp[0].string), (yyvsp[-2].number));
+#line 221 "smallCobolParser.y"
+                                                     { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
+			printf("JAVA: String %s = $4", (yyvsp[-2].string));
 		}
-#line 1637 "smallCobolParser.tab.c"
+#line 1647 "smallCobolParser.tab.c"
     break;
 
   case 28:
-#line 212 "smallCobolParser.y"
-                               { printf("\n RECOGNIZED RULE: Add Statement: Single ID Input");
-			printf("JAVA: %s = %s + %s", (yyvsp[0].string), (yyvsp[0].string), (yyvsp[-2].string)); 
+#line 228 "smallCobolParser.y"
+                                   { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input");
+			printf("JAVA: %s = %s + %i", (yyvsp[0].string), (yyvsp[0].string), (yyvsp[-2].number));
 		}
-#line 1645 "smallCobolParser.tab.c"
+#line 1655 "smallCobolParser.tab.c"
     break;
 
   case 29:
-#line 244 "smallCobolParser.y"
-                               {
-			//makeTree(,,)
+#line 232 "smallCobolParser.y"
+                               { printf("\n RECOGNIZED RULE: Add Statement: Single ID Input");
+			printf("JAVA: %s = %s + %s", (yyvsp[0].string), (yyvsp[0].string), (yyvsp[-2].string)); 
 		}
-#line 1653 "smallCobolParser.tab.c"
+#line 1663 "smallCobolParser.tab.c"
     break;
 
   case 30:
-#line 247 "smallCobolParser.y"
-                                     {
-
+#line 264 "smallCobolParser.y"
+                               {
+			//makeTree(,,)
 		}
-#line 1661 "smallCobolParser.tab.c"
+#line 1671 "smallCobolParser.tab.c"
     break;
 
   case 31:
-#line 253 "smallCobolParser.y"
-                      {}
-#line 1667 "smallCobolParser.tab.c"
-    break;
+#line 267 "smallCobolParser.y"
+                                     {
 
-  case 32:
-#line 253 "smallCobolParser.y"
-                                 {}
-#line 1673 "smallCobolParser.tab.c"
-    break;
-
-  case 33:
-#line 253 "smallCobolParser.y"
-                                            {}
+		}
 #line 1679 "smallCobolParser.tab.c"
     break;
 
-  case 34:
-#line 253 "smallCobolParser.y"
-                                                              {}
+  case 32:
+#line 273 "smallCobolParser.y"
+                      {}
 #line 1685 "smallCobolParser.tab.c"
     break;
 
-  case 35:
-#line 253 "smallCobolParser.y"
-                                                                            {}
+  case 33:
+#line 273 "smallCobolParser.y"
+                                 {}
 #line 1691 "smallCobolParser.tab.c"
     break;
 
+  case 34:
+#line 273 "smallCobolParser.y"
+                                            {}
+#line 1697 "smallCobolParser.tab.c"
+    break;
+
+  case 35:
+#line 273 "smallCobolParser.y"
+                                                              {}
+#line 1703 "smallCobolParser.tab.c"
+    break;
+
   case 36:
-#line 253 "smallCobolParser.y"
+#line 273 "smallCobolParser.y"
+                                                                            {}
+#line 1709 "smallCobolParser.tab.c"
+    break;
+
+  case 37:
+#line 273 "smallCobolParser.y"
                                                                                           {
 }
-#line 1698 "smallCobolParser.tab.c"
+#line 1716 "smallCobolParser.tab.c"
     break;
 
-  case 38:
-#line 256 "smallCobolParser.y"
+  case 39:
+#line 276 "smallCobolParser.y"
                               { printf("\n RECOGNIZED RULE: Double Digit\n");
 }
-#line 1705 "smallCobolParser.tab.c"
+#line 1723 "smallCobolParser.tab.c"
     break;
 
-  case 40:
-#line 259 "smallCobolParser.y"
+  case 41:
+#line 279 "smallCobolParser.y"
                      { printf("\n RECOGNIZED RULE: Nines\n");
 }
-#line 1712 "smallCobolParser.tab.c"
-    break;
-
-  case 42:
-#line 262 "smallCobolParser.y"
-                     { printf("\n RECOGNIZED RULE: X's\n");
-}
-#line 1719 "smallCobolParser.tab.c"
+#line 1730 "smallCobolParser.tab.c"
     break;
 
   case 43:
-#line 265 "smallCobolParser.y"
-                                                               { printf("\n RECOGNIZED RULE: Integer Pic Clause\n");
+#line 282 "smallCobolParser.y"
+                     { printf("\n RECOGNIZED RULE: X's\n");
 }
-#line 1726 "smallCobolParser.tab.c"
+#line 1737 "smallCobolParser.tab.c"
     break;
 
   case 44:
-#line 268 "smallCobolParser.y"
-                                 { printf("\n RECOGNIZED RULE: Float Clause\n");
+#line 285 "smallCobolParser.y"
+                                                               { printf("\n RECOGNIZED RULE: Integer Pic Clause\n");
 }
-#line 1733 "smallCobolParser.tab.c"
+#line 1744 "smallCobolParser.tab.c"
     break;
 
   case 45:
-#line 271 "smallCobolParser.y"
-                              { printf("\n RECOGNIZED RULE: Un-signed Clause\n");
+#line 288 "smallCobolParser.y"
+                                 { printf("\n RECOGNIZED RULE: Float Clause\n");
 }
-#line 1740 "smallCobolParser.tab.c"
+#line 1751 "smallCobolParser.tab.c"
     break;
 
   case 46:
-#line 274 "smallCobolParser.y"
-                                                                          { printf("\n RECOGNIZED RULE: String Pic Clause\n");
+#line 291 "smallCobolParser.y"
+                              { printf("\n RECOGNIZED RULE: Un-signed Clause\n");
 }
-#line 1747 "smallCobolParser.tab.c"
+#line 1758 "smallCobolParser.tab.c"
     break;
 
   case 47:
-#line 288 "smallCobolParser.y"
-                                       { printf("\n RECOGNIZED RULE: Identification Division Declaration\n");
+#line 294 "smallCobolParser.y"
+                                                                          { printf("\n RECOGNIZED RULE: String Pic Clause\n");
 }
-#line 1754 "smallCobolParser.tab.c"
+#line 1765 "smallCobolParser.tab.c"
     break;
 
   case 48:
-#line 296 "smallCobolParser.y"
-                                     { printf("\n RECOGNIZED RULE: Environment Division Declaration\n");
+#line 308 "smallCobolParser.y"
+                                       { printf("\n RECOGNIZED RULE: Identification Division Declaration\n");
 }
-#line 1761 "smallCobolParser.tab.c"
+#line 1772 "smallCobolParser.tab.c"
     break;
 
   case 49:
-#line 304 "smallCobolParser.y"
-                                          { printf("\n RECOGNIZED RULE: Procedure Division Declaration\n");
-/* probably also need a way to carry anything in indented lines under this under the procedure division */
+#line 315 "smallCobolParser.y"
+                                     { printf("\n RECOGNIZED RULE: Data Division Declaration\n");
 }
-#line 1769 "smallCobolParser.tab.c"
+#line 1779 "smallCobolParser.tab.c"
     break;
 
   case 50:
-#line 313 "smallCobolParser.y"
+#line 322 "smallCobolParser.y"
+                                     { printf("\n RECOGNIZED RULE: Environment Division Declaration\n");
+}
+#line 1786 "smallCobolParser.tab.c"
+    break;
+
+  case 51:
+#line 330 "smallCobolParser.y"
+                                          { printf("\n RECOGNIZED RULE: Procedure Division Declaration\n");
+/* probably also need a way to carry anything in indented lines under this under the procedure division */
+}
+#line 1794 "smallCobolParser.tab.c"
+    break;
+
+  case 52:
+#line 339 "smallCobolParser.y"
                                 { printf("\n RECOGNIZED RULE: Stop Run\n");
 }
-#line 1776 "smallCobolParser.tab.c"
+#line 1801 "smallCobolParser.tab.c"
     break;
 
 
-#line 1780 "smallCobolParser.tab.c"
+#line 1805 "smallCobolParser.tab.c"
 
       default: break;
     }
@@ -2008,7 +2033,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 318 "smallCobolParser.y"
+#line 344 "smallCobolParser.y"
 
 
 int main(int argc, char**argv)	
