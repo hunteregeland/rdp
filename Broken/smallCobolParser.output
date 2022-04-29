@@ -1,0 +1,1260 @@
+Nonterminals useless in grammar
+
+    FileSec
+    WSSec
+    LinkSec
+    ScrSec
+    NumberClause
+    IDClause
+
+
+Terminals unused in grammar
+
+    FILE
+    WORKINGSTORAGE
+    LINKAGE
+    SCREEN
+    SECTION
+    COMMA
+
+
+Rules useless in grammar
+
+   55 FileSec: %empty
+   56        | FILE SECTION PERIOD
+
+   57 WSSec: %empty
+   58      | WORKINGSTORAGE SECTION PERIOD
+
+   59 LinkSec: %empty
+   60        | LINKAGE SECTION PERIOD
+
+   61 ScrSec: %empty
+   62       | SCREEN SECTION PERIOD
+
+   63 Expr: ADD NumberClause TO ID
+   64     | ADD IDClause TO ID
+   65     | ADD NUMBER TO IDClause
+   66     | ADD NumberClause TO IDClause
+   67     | ADD ID TO IDClause
+   68     | ADD IDClause TO IDClause
+
+   69 NumberClause: NUMBER COMMA NumberClause
+
+   70 IDClause: ID COMMA IDClause
+
+
+State 39 conflicts: 1 shift/reduce
+State 69 conflicts: 12 reduce/reduce
+State 78 conflicts: 12 reduce/reduce
+
+
+Grammar
+
+    0 $accept: Program $end
+
+    1 $@1: %empty
+
+    2 $@2: %empty
+
+    3 $@3: %empty
+
+    4 Program: Module1 $@1 Module2 $@2 Module3 $@3 Module4
+
+    5 Module1: IDDiv ProgID
+
+    6 Module2: DataDiv
+
+    7 Module3: EnvDiv
+
+    8 Module4: ProcDiv Statements StopRun
+
+    9 ProgID: PROGRAMID PERIOD ID PERIOD
+
+   10 Statements: %empty
+   11           | Statement Statements
+
+   12 Statement: PERIOD
+   13          | Expr PERIOD
+   14          | Expr
+
+   15 Expr: DISPLAY STRING
+   16     | ACCEPT ID
+   17     | IF Condition THEN Statement ENDIF
+   18     | PERFORM Statement UNTIL COUNT Operator NUMBER
+   19     | PERFORM Statement NUMBER TIMES
+   20     | DoubleDigit ID PICTURE IS Nines
+   21     | DoubleDigit ID PIC Nines
+   22     | DoubleDigit ID PIC IntPicClause
+   23     | DoubleDigit ID PICTURE IS FloatClause
+   24     | DoubleDigit ID PIC FloatClause
+   25     | DoubleDigit ID PICTURE IS UnsignedClause
+   26     | DoubleDigit ID PIC UnsignedClause
+   27     | DoubleDigit ID PICTURE IS Xs
+   28     | DoubleDigit ID PIC Xs
+   29     | DoubleDigit ID PIC StringPicClause
+   30     | ADD NUMBER TO ID
+   31     | ADD ID TO ID
+
+   32 Condition: ID Operator ID
+   33          | ID Operator NUMBER
+
+   34 Operator: GT_OP
+   35         | LT_OP
+   36         | EQ_OP
+   37         | DOUBLE_EQ_OP
+   38         | GT_EQ_OP
+   39         | LT_EQ_OP
+
+   40 DoubleDigit: %empty
+   41            | DIGIT DIGIT
+
+   42 Nines: %empty
+   43      | NINE Nines
+
+   44 Xs: %empty
+   45   | LETTERX Xs
+
+   46 IntPicClause: NINE OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES
+
+   47 FloatClause: Nines LETTERV Nines
+
+   48 UnsignedClause: LETTERS Nines
+
+   49 StringPicClause: LETTERX OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES
+
+   50 IDDiv: IDENTIFICATION DIVISION PERIOD
+
+   51 DataDiv: DATA DIVISION PERIOD
+
+   52 EnvDiv: ENVIRIONMENT DIVISION PERIOD
+
+   53 ProcDiv: PROCEDURE DIVISION PERIOD
+
+   54 StopRun: STOP RUN PERIOD
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    NUMBER <number> (258) 18 19 30 33 46 49
+    DIGIT <number> (259) 41
+    ID <string> (260) 9 16 20 21 22 23 24 25 26 27 28 29 30 31 32 33
+    STRING <string> (261) 15
+    IDENTIFICATION <string> (262) 50
+    ENVIRIONMENT <string> (263) 52
+    DATA <string> (264) 51
+    FILE <string> (265)
+    WORKINGSTORAGE <string> (266)
+    LINKAGE <string> (267)
+    SCREEN <string> (268)
+    SECTION <string> (269)
+    PROCEDURE <string> (270) 53
+    DIVISION <string> (271) 50 51 52 53
+    PROGRAMID <string> (272) 9
+    DISPLAY <string> (273) 15
+    ACCEPT <string> (274) 16
+    STOP <string> (275) 54
+    RUN <string> (276) 54
+    IF <string> (277) 17
+    THEN <string> (278) 17
+    ENDIF <string> (279) 17
+    PERFORM <string> (280) 18 19
+    UNTIL <string> (281) 18
+    COUNT <string> (282) 18
+    TIMES <string> (283) 19
+    PICTURE <string> (284) 20 23 25 27
+    PIC <string> (285) 21 22 24 26 28 29
+    IS <string> (286) 20 23 25 27
+    TO <string> (287) 30 31
+    DOUBLE_EQ_OP <string> (288) 37
+    GT_EQ_OP <string> (289) 38
+    LT_EQ_OP <string> (290) 39
+    PERIOD <character> (291) 9 12 13 50 51 52 53 54
+    COMMA <character> (292)
+    GT_OP <character> (293) 34
+    LT_OP <character> (294) 35
+    EQ_OP <character> (295) 36
+    OPEN_PARENTHESES <character> (296) 46 49
+    CLOSE_PARENTHESES <character> (297) 46 49
+    ADD <character> (298) 30 31
+    NINE <character> (299) 43 46
+    LETTERV <character> (300) 47
+    LETTERS <character> (301) 48
+    LETTERX <character> (302) 45 49
+
+
+Nonterminals, with rules where they appear
+
+    $accept (48)
+        on left: 0
+    Program <ast> (49)
+        on left: 4
+        on right: 0
+    $@1 (50)
+        on left: 1
+        on right: 4
+    $@2 (51)
+        on left: 2
+        on right: 4
+    $@3 (52)
+        on left: 3
+        on right: 4
+    Module1 <ast> (53)
+        on left: 5
+        on right: 4
+    Module2 <ast> (54)
+        on left: 6
+        on right: 4
+    Module3 <ast> (55)
+        on left: 7
+        on right: 4
+    Module4 <ast> (56)
+        on left: 8
+        on right: 4
+    ProgID <ast> (57)
+        on left: 9
+        on right: 5
+    Statements <ast> (58)
+        on left: 10 11
+        on right: 8 11
+    Statement <ast> (59)
+        on left: 12 13 14
+        on right: 11 17 18 19
+    Expr <ast> (60)
+        on left: 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+        on right: 13 14
+    Condition <ast> (61)
+        on left: 32 33
+        on right: 17
+    Operator <ast> (62)
+        on left: 34 35 36 37 38 39
+        on right: 18 32 33
+    DoubleDigit <ast> (63)
+        on left: 40 41
+        on right: 20 21 22 23 24 25 26 27 28 29
+    Nines <ast> (64)
+        on left: 42 43
+        on right: 20 21 43 47 48
+    Xs <ast> (65)
+        on left: 44 45
+        on right: 27 28 45
+    IntPicClause <ast> (66)
+        on left: 46
+        on right: 22
+    FloatClause <ast> (67)
+        on left: 47
+        on right: 23 24
+    UnsignedClause <ast> (68)
+        on left: 48
+        on right: 25 26
+    StringPicClause <ast> (69)
+        on left: 49
+        on right: 29
+    IDDiv <ast> (70)
+        on left: 50
+        on right: 5
+    DataDiv <ast> (71)
+        on left: 51
+        on right: 6
+    EnvDiv <ast> (72)
+        on left: 52
+        on right: 7
+    ProcDiv <ast> (73)
+        on left: 53
+        on right: 8
+    StopRun <ast> (74)
+        on left: 54
+        on right: 8
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    IDENTIFICATION  shift, and go to state 1
+
+    Program  go to state 2
+    Module1  go to state 3
+    IDDiv    go to state 4
+
+
+State 1
+
+   50 IDDiv: IDENTIFICATION . DIVISION PERIOD
+
+    DIVISION  shift, and go to state 5
+
+
+State 2
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 6
+
+
+State 3
+
+    4 Program: Module1 . $@1 Module2 $@2 Module3 $@3 Module4
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 7
+
+
+State 4
+
+    5 Module1: IDDiv . ProgID
+
+    PROGRAMID  shift, and go to state 8
+
+    ProgID  go to state 9
+
+
+State 5
+
+   50 IDDiv: IDENTIFICATION DIVISION . PERIOD
+
+    PERIOD  shift, and go to state 10
+
+
+State 6
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+State 7
+
+    4 Program: Module1 $@1 . Module2 $@2 Module3 $@3 Module4
+
+    DATA  shift, and go to state 11
+
+    Module2  go to state 12
+    DataDiv  go to state 13
+
+
+State 8
+
+    9 ProgID: PROGRAMID . PERIOD ID PERIOD
+
+    PERIOD  shift, and go to state 14
+
+
+State 9
+
+    5 Module1: IDDiv ProgID .
+
+    $default  reduce using rule 5 (Module1)
+
+
+State 10
+
+   50 IDDiv: IDENTIFICATION DIVISION PERIOD .
+
+    $default  reduce using rule 50 (IDDiv)
+
+
+State 11
+
+   51 DataDiv: DATA . DIVISION PERIOD
+
+    DIVISION  shift, and go to state 15
+
+
+State 12
+
+    4 Program: Module1 $@1 Module2 . $@2 Module3 $@3 Module4
+
+    $default  reduce using rule 2 ($@2)
+
+    $@2  go to state 16
+
+
+State 13
+
+    6 Module2: DataDiv .
+
+    $default  reduce using rule 6 (Module2)
+
+
+State 14
+
+    9 ProgID: PROGRAMID PERIOD . ID PERIOD
+
+    ID  shift, and go to state 17
+
+
+State 15
+
+   51 DataDiv: DATA DIVISION . PERIOD
+
+    PERIOD  shift, and go to state 18
+
+
+State 16
+
+    4 Program: Module1 $@1 Module2 $@2 . Module3 $@3 Module4
+
+    ENVIRIONMENT  shift, and go to state 19
+
+    Module3  go to state 20
+    EnvDiv   go to state 21
+
+
+State 17
+
+    9 ProgID: PROGRAMID PERIOD ID . PERIOD
+
+    PERIOD  shift, and go to state 22
+
+
+State 18
+
+   51 DataDiv: DATA DIVISION PERIOD .
+
+    $default  reduce using rule 51 (DataDiv)
+
+
+State 19
+
+   52 EnvDiv: ENVIRIONMENT . DIVISION PERIOD
+
+    DIVISION  shift, and go to state 23
+
+
+State 20
+
+    4 Program: Module1 $@1 Module2 $@2 Module3 . $@3 Module4
+
+    $default  reduce using rule 3 ($@3)
+
+    $@3  go to state 24
+
+
+State 21
+
+    7 Module3: EnvDiv .
+
+    $default  reduce using rule 7 (Module3)
+
+
+State 22
+
+    9 ProgID: PROGRAMID PERIOD ID PERIOD .
+
+    $default  reduce using rule 9 (ProgID)
+
+
+State 23
+
+   52 EnvDiv: ENVIRIONMENT DIVISION . PERIOD
+
+    PERIOD  shift, and go to state 25
+
+
+State 24
+
+    4 Program: Module1 $@1 Module2 $@2 Module3 $@3 . Module4
+
+    PROCEDURE  shift, and go to state 26
+
+    Module4  go to state 27
+    ProcDiv  go to state 28
+
+
+State 25
+
+   52 EnvDiv: ENVIRIONMENT DIVISION PERIOD .
+
+    $default  reduce using rule 52 (EnvDiv)
+
+
+State 26
+
+   53 ProcDiv: PROCEDURE . DIVISION PERIOD
+
+    DIVISION  shift, and go to state 29
+
+
+State 27
+
+    4 Program: Module1 $@1 Module2 $@2 Module3 $@3 Module4 .
+
+    $default  reduce using rule 4 (Program)
+
+
+State 28
+
+    8 Module4: ProcDiv . Statements StopRun
+
+    DIGIT    shift, and go to state 30
+    DISPLAY  shift, and go to state 31
+    ACCEPT   shift, and go to state 32
+    IF       shift, and go to state 33
+    PERFORM  shift, and go to state 34
+    PERIOD   shift, and go to state 35
+    ADD      shift, and go to state 36
+
+    ID        reduce using rule 40 (DoubleDigit)
+    $default  reduce using rule 10 (Statements)
+
+    Statements   go to state 37
+    Statement    go to state 38
+    Expr         go to state 39
+    DoubleDigit  go to state 40
+
+
+State 29
+
+   53 ProcDiv: PROCEDURE DIVISION . PERIOD
+
+    PERIOD  shift, and go to state 41
+
+
+State 30
+
+   41 DoubleDigit: DIGIT . DIGIT
+
+    DIGIT  shift, and go to state 42
+
+
+State 31
+
+   15 Expr: DISPLAY . STRING
+
+    STRING  shift, and go to state 43
+
+
+State 32
+
+   16 Expr: ACCEPT . ID
+
+    ID  shift, and go to state 44
+
+
+State 33
+
+   17 Expr: IF . Condition THEN Statement ENDIF
+
+    ID  shift, and go to state 45
+
+    Condition  go to state 46
+
+
+State 34
+
+   18 Expr: PERFORM . Statement UNTIL COUNT Operator NUMBER
+   19     | PERFORM . Statement NUMBER TIMES
+
+    DIGIT    shift, and go to state 30
+    DISPLAY  shift, and go to state 31
+    ACCEPT   shift, and go to state 32
+    IF       shift, and go to state 33
+    PERFORM  shift, and go to state 34
+    PERIOD   shift, and go to state 35
+    ADD      shift, and go to state 36
+
+    $default  reduce using rule 40 (DoubleDigit)
+
+    Statement    go to state 47
+    Expr         go to state 39
+    DoubleDigit  go to state 40
+
+
+State 35
+
+   12 Statement: PERIOD .
+
+    $default  reduce using rule 12 (Statement)
+
+
+State 36
+
+   30 Expr: ADD . NUMBER TO ID
+   31     | ADD . ID TO ID
+
+    NUMBER  shift, and go to state 48
+    ID      shift, and go to state 49
+
+
+State 37
+
+    8 Module4: ProcDiv Statements . StopRun
+
+    STOP  shift, and go to state 50
+
+    StopRun  go to state 51
+
+
+State 38
+
+   11 Statements: Statement . Statements
+
+    DIGIT    shift, and go to state 30
+    DISPLAY  shift, and go to state 31
+    ACCEPT   shift, and go to state 32
+    IF       shift, and go to state 33
+    PERFORM  shift, and go to state 34
+    PERIOD   shift, and go to state 35
+    ADD      shift, and go to state 36
+
+    ID        reduce using rule 40 (DoubleDigit)
+    $default  reduce using rule 10 (Statements)
+
+    Statements   go to state 52
+    Statement    go to state 38
+    Expr         go to state 39
+    DoubleDigit  go to state 40
+
+
+State 39
+
+   13 Statement: Expr . PERIOD
+   14          | Expr .
+
+    PERIOD  shift, and go to state 53
+
+    PERIOD    [reduce using rule 14 (Statement)]
+    $default  reduce using rule 14 (Statement)
+
+
+State 40
+
+   20 Expr: DoubleDigit . ID PICTURE IS Nines
+   21     | DoubleDigit . ID PIC Nines
+   22     | DoubleDigit . ID PIC IntPicClause
+   23     | DoubleDigit . ID PICTURE IS FloatClause
+   24     | DoubleDigit . ID PIC FloatClause
+   25     | DoubleDigit . ID PICTURE IS UnsignedClause
+   26     | DoubleDigit . ID PIC UnsignedClause
+   27     | DoubleDigit . ID PICTURE IS Xs
+   28     | DoubleDigit . ID PIC Xs
+   29     | DoubleDigit . ID PIC StringPicClause
+
+    ID  shift, and go to state 54
+
+
+State 41
+
+   53 ProcDiv: PROCEDURE DIVISION PERIOD .
+
+    $default  reduce using rule 53 (ProcDiv)
+
+
+State 42
+
+   41 DoubleDigit: DIGIT DIGIT .
+
+    $default  reduce using rule 41 (DoubleDigit)
+
+
+State 43
+
+   15 Expr: DISPLAY STRING .
+
+    $default  reduce using rule 15 (Expr)
+
+
+State 44
+
+   16 Expr: ACCEPT ID .
+
+    $default  reduce using rule 16 (Expr)
+
+
+State 45
+
+   32 Condition: ID . Operator ID
+   33          | ID . Operator NUMBER
+
+    DOUBLE_EQ_OP  shift, and go to state 55
+    GT_EQ_OP      shift, and go to state 56
+    LT_EQ_OP      shift, and go to state 57
+    GT_OP         shift, and go to state 58
+    LT_OP         shift, and go to state 59
+    EQ_OP         shift, and go to state 60
+
+    Operator  go to state 61
+
+
+State 46
+
+   17 Expr: IF Condition . THEN Statement ENDIF
+
+    THEN  shift, and go to state 62
+
+
+State 47
+
+   18 Expr: PERFORM Statement . UNTIL COUNT Operator NUMBER
+   19     | PERFORM Statement . NUMBER TIMES
+
+    NUMBER  shift, and go to state 63
+    UNTIL   shift, and go to state 64
+
+
+State 48
+
+   30 Expr: ADD NUMBER . TO ID
+
+    TO  shift, and go to state 65
+
+
+State 49
+
+   31 Expr: ADD ID . TO ID
+
+    TO  shift, and go to state 66
+
+
+State 50
+
+   54 StopRun: STOP . RUN PERIOD
+
+    RUN  shift, and go to state 67
+
+
+State 51
+
+    8 Module4: ProcDiv Statements StopRun .
+
+    $default  reduce using rule 8 (Module4)
+
+
+State 52
+
+   11 Statements: Statement Statements .
+
+    $default  reduce using rule 11 (Statements)
+
+
+State 53
+
+   13 Statement: Expr PERIOD .
+
+    $default  reduce using rule 13 (Statement)
+
+
+State 54
+
+   20 Expr: DoubleDigit ID . PICTURE IS Nines
+   21     | DoubleDigit ID . PIC Nines
+   22     | DoubleDigit ID . PIC IntPicClause
+   23     | DoubleDigit ID . PICTURE IS FloatClause
+   24     | DoubleDigit ID . PIC FloatClause
+   25     | DoubleDigit ID . PICTURE IS UnsignedClause
+   26     | DoubleDigit ID . PIC UnsignedClause
+   27     | DoubleDigit ID . PICTURE IS Xs
+   28     | DoubleDigit ID . PIC Xs
+   29     | DoubleDigit ID . PIC StringPicClause
+
+    PICTURE  shift, and go to state 68
+    PIC      shift, and go to state 69
+
+
+State 55
+
+   37 Operator: DOUBLE_EQ_OP .
+
+    $default  reduce using rule 37 (Operator)
+
+
+State 56
+
+   38 Operator: GT_EQ_OP .
+
+    $default  reduce using rule 38 (Operator)
+
+
+State 57
+
+   39 Operator: LT_EQ_OP .
+
+    $default  reduce using rule 39 (Operator)
+
+
+State 58
+
+   34 Operator: GT_OP .
+
+    $default  reduce using rule 34 (Operator)
+
+
+State 59
+
+   35 Operator: LT_OP .
+
+    $default  reduce using rule 35 (Operator)
+
+
+State 60
+
+   36 Operator: EQ_OP .
+
+    $default  reduce using rule 36 (Operator)
+
+
+State 61
+
+   32 Condition: ID Operator . ID
+   33          | ID Operator . NUMBER
+
+    NUMBER  shift, and go to state 70
+    ID      shift, and go to state 71
+
+
+State 62
+
+   17 Expr: IF Condition THEN . Statement ENDIF
+
+    DIGIT    shift, and go to state 30
+    DISPLAY  shift, and go to state 31
+    ACCEPT   shift, and go to state 32
+    IF       shift, and go to state 33
+    PERFORM  shift, and go to state 34
+    PERIOD   shift, and go to state 35
+    ADD      shift, and go to state 36
+
+    $default  reduce using rule 40 (DoubleDigit)
+
+    Statement    go to state 72
+    Expr         go to state 39
+    DoubleDigit  go to state 40
+
+
+State 63
+
+   19 Expr: PERFORM Statement NUMBER . TIMES
+
+    TIMES  shift, and go to state 73
+
+
+State 64
+
+   18 Expr: PERFORM Statement UNTIL . COUNT Operator NUMBER
+
+    COUNT  shift, and go to state 74
+
+
+State 65
+
+   30 Expr: ADD NUMBER TO . ID
+
+    ID  shift, and go to state 75
+
+
+State 66
+
+   31 Expr: ADD ID TO . ID
+
+    ID  shift, and go to state 76
+
+
+State 67
+
+   54 StopRun: STOP RUN . PERIOD
+
+    PERIOD  shift, and go to state 77
+
+
+State 68
+
+   20 Expr: DoubleDigit ID PICTURE . IS Nines
+   23     | DoubleDigit ID PICTURE . IS FloatClause
+   25     | DoubleDigit ID PICTURE . IS UnsignedClause
+   27     | DoubleDigit ID PICTURE . IS Xs
+
+    IS  shift, and go to state 78
+
+
+State 69
+
+   21 Expr: DoubleDigit ID PIC . Nines
+   22     | DoubleDigit ID PIC . IntPicClause
+   24     | DoubleDigit ID PIC . FloatClause
+   26     | DoubleDigit ID PIC . UnsignedClause
+   28     | DoubleDigit ID PIC . Xs
+   29     | DoubleDigit ID PIC . StringPicClause
+
+    NINE     shift, and go to state 79
+    LETTERS  shift, and go to state 80
+    LETTERX  shift, and go to state 81
+
+    NUMBER    reduce using rule 42 (Nines)
+    NUMBER    [reduce using rule 44 (Xs)]
+    DIGIT     reduce using rule 42 (Nines)
+    DIGIT     [reduce using rule 44 (Xs)]
+    ID        reduce using rule 42 (Nines)
+    ID        [reduce using rule 44 (Xs)]
+    DISPLAY   reduce using rule 42 (Nines)
+    DISPLAY   [reduce using rule 44 (Xs)]
+    ACCEPT    reduce using rule 42 (Nines)
+    ACCEPT    [reduce using rule 44 (Xs)]
+    STOP      reduce using rule 42 (Nines)
+    STOP      [reduce using rule 44 (Xs)]
+    IF        reduce using rule 42 (Nines)
+    IF        [reduce using rule 44 (Xs)]
+    ENDIF     reduce using rule 42 (Nines)
+    ENDIF     [reduce using rule 44 (Xs)]
+    PERFORM   reduce using rule 42 (Nines)
+    PERFORM   [reduce using rule 44 (Xs)]
+    UNTIL     reduce using rule 42 (Nines)
+    UNTIL     [reduce using rule 44 (Xs)]
+    PERIOD    reduce using rule 42 (Nines)
+    PERIOD    [reduce using rule 44 (Xs)]
+    ADD       reduce using rule 42 (Nines)
+    ADD       [reduce using rule 44 (Xs)]
+    $default  reduce using rule 42 (Nines)
+
+    Nines            go to state 82
+    Xs               go to state 83
+    IntPicClause     go to state 84
+    FloatClause      go to state 85
+    UnsignedClause   go to state 86
+    StringPicClause  go to state 87
+
+
+State 70
+
+   33 Condition: ID Operator NUMBER .
+
+    $default  reduce using rule 33 (Condition)
+
+
+State 71
+
+   32 Condition: ID Operator ID .
+
+    $default  reduce using rule 32 (Condition)
+
+
+State 72
+
+   17 Expr: IF Condition THEN Statement . ENDIF
+
+    ENDIF  shift, and go to state 88
+
+
+State 73
+
+   19 Expr: PERFORM Statement NUMBER TIMES .
+
+    $default  reduce using rule 19 (Expr)
+
+
+State 74
+
+   18 Expr: PERFORM Statement UNTIL COUNT . Operator NUMBER
+
+    DOUBLE_EQ_OP  shift, and go to state 55
+    GT_EQ_OP      shift, and go to state 56
+    LT_EQ_OP      shift, and go to state 57
+    GT_OP         shift, and go to state 58
+    LT_OP         shift, and go to state 59
+    EQ_OP         shift, and go to state 60
+
+    Operator  go to state 89
+
+
+State 75
+
+   30 Expr: ADD NUMBER TO ID .
+
+    $default  reduce using rule 30 (Expr)
+
+
+State 76
+
+   31 Expr: ADD ID TO ID .
+
+    $default  reduce using rule 31 (Expr)
+
+
+State 77
+
+   54 StopRun: STOP RUN PERIOD .
+
+    $default  reduce using rule 54 (StopRun)
+
+
+State 78
+
+   20 Expr: DoubleDigit ID PICTURE IS . Nines
+   23     | DoubleDigit ID PICTURE IS . FloatClause
+   25     | DoubleDigit ID PICTURE IS . UnsignedClause
+   27     | DoubleDigit ID PICTURE IS . Xs
+
+    NINE     shift, and go to state 90
+    LETTERS  shift, and go to state 80
+    LETTERX  shift, and go to state 91
+
+    NUMBER    reduce using rule 42 (Nines)
+    NUMBER    [reduce using rule 44 (Xs)]
+    DIGIT     reduce using rule 42 (Nines)
+    DIGIT     [reduce using rule 44 (Xs)]
+    ID        reduce using rule 42 (Nines)
+    ID        [reduce using rule 44 (Xs)]
+    DISPLAY   reduce using rule 42 (Nines)
+    DISPLAY   [reduce using rule 44 (Xs)]
+    ACCEPT    reduce using rule 42 (Nines)
+    ACCEPT    [reduce using rule 44 (Xs)]
+    STOP      reduce using rule 42 (Nines)
+    STOP      [reduce using rule 44 (Xs)]
+    IF        reduce using rule 42 (Nines)
+    IF        [reduce using rule 44 (Xs)]
+    ENDIF     reduce using rule 42 (Nines)
+    ENDIF     [reduce using rule 44 (Xs)]
+    PERFORM   reduce using rule 42 (Nines)
+    PERFORM   [reduce using rule 44 (Xs)]
+    UNTIL     reduce using rule 42 (Nines)
+    UNTIL     [reduce using rule 44 (Xs)]
+    PERIOD    reduce using rule 42 (Nines)
+    PERIOD    [reduce using rule 44 (Xs)]
+    ADD       reduce using rule 42 (Nines)
+    ADD       [reduce using rule 44 (Xs)]
+    $default  reduce using rule 42 (Nines)
+
+    Nines           go to state 92
+    Xs              go to state 93
+    FloatClause     go to state 94
+    UnsignedClause  go to state 95
+
+
+State 79
+
+   43 Nines: NINE . Nines
+   46 IntPicClause: NINE . OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES
+
+    OPEN_PARENTHESES  shift, and go to state 96
+    NINE              shift, and go to state 90
+
+    $default  reduce using rule 42 (Nines)
+
+    Nines  go to state 97
+
+
+State 80
+
+   48 UnsignedClause: LETTERS . Nines
+
+    NINE  shift, and go to state 90
+
+    $default  reduce using rule 42 (Nines)
+
+    Nines  go to state 98
+
+
+State 81
+
+   45 Xs: LETTERX . Xs
+   49 StringPicClause: LETTERX . OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES
+
+    OPEN_PARENTHESES  shift, and go to state 99
+    LETTERX           shift, and go to state 91
+
+    $default  reduce using rule 44 (Xs)
+
+    Xs  go to state 100
+
+
+State 82
+
+   21 Expr: DoubleDigit ID PIC Nines .
+   47 FloatClause: Nines . LETTERV Nines
+
+    LETTERV  shift, and go to state 101
+
+    $default  reduce using rule 21 (Expr)
+
+
+State 83
+
+   28 Expr: DoubleDigit ID PIC Xs .
+
+    $default  reduce using rule 28 (Expr)
+
+
+State 84
+
+   22 Expr: DoubleDigit ID PIC IntPicClause .
+
+    $default  reduce using rule 22 (Expr)
+
+
+State 85
+
+   24 Expr: DoubleDigit ID PIC FloatClause .
+
+    $default  reduce using rule 24 (Expr)
+
+
+State 86
+
+   26 Expr: DoubleDigit ID PIC UnsignedClause .
+
+    $default  reduce using rule 26 (Expr)
+
+
+State 87
+
+   29 Expr: DoubleDigit ID PIC StringPicClause .
+
+    $default  reduce using rule 29 (Expr)
+
+
+State 88
+
+   17 Expr: IF Condition THEN Statement ENDIF .
+
+    $default  reduce using rule 17 (Expr)
+
+
+State 89
+
+   18 Expr: PERFORM Statement UNTIL COUNT Operator . NUMBER
+
+    NUMBER  shift, and go to state 102
+
+
+State 90
+
+   43 Nines: NINE . Nines
+
+    NINE  shift, and go to state 90
+
+    $default  reduce using rule 42 (Nines)
+
+    Nines  go to state 97
+
+
+State 91
+
+   45 Xs: LETTERX . Xs
+
+    LETTERX  shift, and go to state 91
+
+    $default  reduce using rule 44 (Xs)
+
+    Xs  go to state 100
+
+
+State 92
+
+   20 Expr: DoubleDigit ID PICTURE IS Nines .
+   47 FloatClause: Nines . LETTERV Nines
+
+    LETTERV  shift, and go to state 101
+
+    $default  reduce using rule 20 (Expr)
+
+
+State 93
+
+   27 Expr: DoubleDigit ID PICTURE IS Xs .
+
+    $default  reduce using rule 27 (Expr)
+
+
+State 94
+
+   23 Expr: DoubleDigit ID PICTURE IS FloatClause .
+
+    $default  reduce using rule 23 (Expr)
+
+
+State 95
+
+   25 Expr: DoubleDigit ID PICTURE IS UnsignedClause .
+
+    $default  reduce using rule 25 (Expr)
+
+
+State 96
+
+   46 IntPicClause: NINE OPEN_PARENTHESES . NUMBER CLOSE_PARENTHESES
+
+    NUMBER  shift, and go to state 103
+
+
+State 97
+
+   43 Nines: NINE Nines .
+
+    $default  reduce using rule 43 (Nines)
+
+
+State 98
+
+   48 UnsignedClause: LETTERS Nines .
+
+    $default  reduce using rule 48 (UnsignedClause)
+
+
+State 99
+
+   49 StringPicClause: LETTERX OPEN_PARENTHESES . NUMBER CLOSE_PARENTHESES
+
+    NUMBER  shift, and go to state 104
+
+
+State 100
+
+   45 Xs: LETTERX Xs .
+
+    $default  reduce using rule 45 (Xs)
+
+
+State 101
+
+   47 FloatClause: Nines LETTERV . Nines
+
+    NINE  shift, and go to state 90
+
+    $default  reduce using rule 42 (Nines)
+
+    Nines  go to state 105
+
+
+State 102
+
+   18 Expr: PERFORM Statement UNTIL COUNT Operator NUMBER .
+
+    $default  reduce using rule 18 (Expr)
+
+
+State 103
+
+   46 IntPicClause: NINE OPEN_PARENTHESES NUMBER . CLOSE_PARENTHESES
+
+    CLOSE_PARENTHESES  shift, and go to state 106
+
+
+State 104
+
+   49 StringPicClause: LETTERX OPEN_PARENTHESES NUMBER . CLOSE_PARENTHESES
+
+    CLOSE_PARENTHESES  shift, and go to state 107
+
+
+State 105
+
+   47 FloatClause: Nines LETTERV Nines .
+
+    $default  reduce using rule 47 (FloatClause)
+
+
+State 106
+
+   46 IntPicClause: NINE OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES .
+
+    $default  reduce using rule 46 (IntPicClause)
+
+
+State 107
+
+   49 StringPicClause: LETTERX OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES .
+
+    $default  reduce using rule 49 (StringPicClause)
