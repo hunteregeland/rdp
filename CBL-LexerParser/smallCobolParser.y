@@ -32,8 +32,13 @@ char currentScope[50]; /* global or the name of the function */
 
 %token <string> IDENTIFICATION
 %token <string> ENVIRIONMENT
+%token <string> DATA
 %token <string> PROCEDURE
 %token <string> DIVISION
+
+%token <string> FILEE
+%token <string> WORKINGSTORAGE
+%token <string> SECTION
 
 %token <string> PROGRAMID
 %token <string> DISPLAY
@@ -74,7 +79,7 @@ char currentScope[50]; /* global or the name of the function */
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 %printer { fprintf(yyoutput, "%d", $$); } DIGIT;
 
-%type <ast> Program Module1 Module2 Module3 IDDiv EnvDiv ProcDiv ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs
+%type <ast> Program Module1 Module2 Module3 IDDiv EnvDiv DataDiv ProcDiv FileSec WSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs
 
 %start Program
 
@@ -86,28 +91,28 @@ char currentScope[50]; /* global or the name of the function */
 
 /* basic structure of the current cobol test program */
 
-Program:	Module1 Module2 Module3 { printf("\n RECOGNIZED RULE: COBOL Program Start\n");
+Program:	Module1 Module2 Module3 { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
 };
 
 
 /* part of the program including the identification division and the program id declaration */
 /* lines 1 & 2 */
 
-Module1:	IDDiv ProgID { printf("\n RECOGNIZED RULE: Module1: Identification Division\n"); 
+Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identification Division\n\n"); 
 };
 
 
 /* part of the program that contains the environment division */
 /* line 3 */
 
-Module2:	EnvDiv { printf("\n RECOGNIZED RULE: Module2: Environment Division\n");
+Module2:	EnvDiv DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Environment & Data Division\n\n"); } | DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Data Division (No Env Division)\n\n");
 };
 
 
 /* part of the program that contains the procedure division and everything that is inside it, which is statements since this is where all executable code is written */
 /* lines 4-6 */
 
-Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Procedure Division\n");
+Module3:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n");
 };
 
 
@@ -115,7 +120,10 @@ Module3:	ProcDiv Statements StopRun { printf("\n RECOGNIZED RULE: Module3: Proce
 /* line 2 */
 /* this needs to be fixed, we cannot recognize PROGRAM-ID currently */
 
-ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program Start\n");
+ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID Declaration\n\n");
+};
+
+ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
 };
 
 
@@ -134,14 +142,24 @@ Statements:
 /* A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into */
 Statement:        PERIOD {} | Expr PERIOD {$$ = $1; }
 							| Expr {$$ = $1; }
+				/* this needs to be redone, as we need to check for a period inside each
+				expression, not up here. if we don't check in each expression, we will not
+				get the print statements when the function does not include a period */
 ;
 
 Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
-            printf("JAVA: system.out.println('%s');",$2);
+            printf(" JAVA: system.out.println('%s');\n\n",$2);
+			/* this doesn't put the string in the java 'code' currently */
+		}
+		| DISPLAY STRING COMMA ID PERIOD { printf("\n RECOGNIZED RULE: Display Call With Concatenation\n");
+            printf(" JAVA: system.out.println('%s' + ID);\n\n",$2);
+			/* for some reason only the DISPLAY STRING worked without including PERIOD */
+			/* this and all below require it for period to be parsed inside the function call */
+			/* this means that all function calls only work with periods. */
 		}
 
-		| ACCEPT ID {printf("\n RECOGNIZED RULE: Accept ID\n");
-			printf("JAVA: %s = input.nextLine();",$2);
+		| ACCEPT ID PERIOD {printf("\n RECOGNIZED RULE: Accept ID\n");
+			printf(" JAVA: %s = input.nextLine();\n\n",$2);
 		}
 
 		| IF Condition THEN Statement ENDIF { printf("\n RECOGNIZED RULE: If Statement");
@@ -281,28 +299,44 @@ IDClause:	ID COMMA IDClause {} | ID { printf("\n RECOGNIZED RULE: ID Clause\n");
 };
 
 
-/* identification division declaration in cobol (line 2) */
+/* identification division declaration in cobol */
 /* recognize an identification division declaration if line is in order: */
 /* IDENTIFICATION, DIVISION, . */
 
-IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED RULE: Identification Division Declaration\n");
+IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
 };
 
 
-/* environment division declaration in cobol (line 3) */
+/* environment division declaration in cobol */
 /* recognize an environment division declaration if line is in order: */
 /* ENVIRONMENT, DIVISION, . */
 
-EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED RULE: Environment Division Declaration\n");
+EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Environment Division Declaration\n\n");
 };
 
+/* data division declaration in cobol */
+/* recognize an environment division declaration if line is in order: */
+/* DATA, DIVISION, . */
 
-/* procedure division declaration in cobol (line 4) */
+DataDiv: 	DATA DIVISION PERIOD FileSec WSSec { printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
+};
+/* THIS ONLY WORKS IF ALL SECTIONS ARE INCLUDED CURRENTLY */
+
+/* sections of the data division include the file section, */
+/* working-storage section, local-storage section, and */
+/* linkage section. these are defined below */
+
+FileSec:	FILEE SECTION PERIOD { printf("\n RECOGNIZED SECTION: File Section Declaration\n\n");
+};
+
+WSSec:	WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED SECTION: Working-Storage Section Declaration\n\n");
+};
+
+/* procedure division declaration in cobol */
 /* recognize a procedure division declaration if line is in order: */
 /* PROCEDURE, DIVISION, . */
 
-ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Division Declaration\n");
-/* probably also need a way to carry anything in indented lines under this under the procedure division */
+ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Procedure Division Declaration\n\n");
 };
 
 
@@ -310,7 +344,7 @@ ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED RULE: Procedure Divis
 /* recognize display if the line is in order: */
 /* STOP, RUN, . */
 
-StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run\n");
+StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run\n\n");
 };
 
 

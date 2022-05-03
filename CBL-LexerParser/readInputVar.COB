@@ -3,6 +3,7 @@
        DATA DIVISION.
           FILE SECTION.
           WORKING-STORAGE SECTION.
+          01 WS-INPUT    PIC A(20).
 
        PROCEDURE DIVISION.
           MAIN-PROCEDURE.
@@ -11,3 +12,5 @@
            DISPLAY  "Nice to meet you, ", WS-INPUT.
 
            STOP RUN.
+
+       END PROGRAM READ-NAME.

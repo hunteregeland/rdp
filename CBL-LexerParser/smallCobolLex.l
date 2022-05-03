@@ -18,7 +18,7 @@ LETTER  [A-Za-z]
 DIGIT   [0-9]
 ID      {LETTER}({LETTER}|{DIGIT}|-)*
 NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
-STRING  ['][A-Za-z0-9 ]*[']
+STRING  ['"][A-Za-z0-9:, ]*['"]
 
 %%  
 
@@ -46,6 +46,10 @@ STRING  ['][A-Za-z0-9 ]*[']
     return LT_EQ_OP;
 }
 
+","  {printf("%s : COMMA\n", yytext);
+    return COMMA;
+}
+
 "IDENTIFICATION"  {printf("%s : IDENTIFICATION\n", yytext);
     return IDENTIFICATION;
 }
@@ -58,6 +62,10 @@ STRING  ['][A-Za-z0-9 ]*[']
     return ENVIRIONMENT;
 }
 
+"DATA"  {printf("%s : DATA\n", yytext);
+    return DATA;
+}
+
 "PROCEDURE"  {printf("%s : PROCEDURE\n", yytext);
     return PROCEDURE;
 }
@@ -66,8 +74,24 @@ STRING  ['][A-Za-z0-9 ]*[']
     return DIVISION;
 }
 
+"FILE"  {printf("%s : FILE\n", yytext);
+    return FILEE;
+}
+
+"WORKING-STORAGE"  {printf("%s : WORKING-STORAGE\n", yytext);
+    return WORKINGSTORAGE;
+}
+
+"SECTION"  {printf("%s : SECTION\n", yytext);
+    return SECTION;
+}
+
 "DISPLAY"  {printf("%s : KEYWORD\n", yytext);
     return DISPLAY;
+}
+
+"ACCEPT"  {printf("%s : KEYWORD\n", yytext);
+    return ACCEPT;
 }
 
 "STOP"  {printf("%s : KEYWORD\n", yytext);
