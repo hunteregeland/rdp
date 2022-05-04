@@ -12,7 +12,7 @@
 
 %option yylineno
 
-DELIM   [ \t\n]
+DELIM   [ \t\n\r]
 WS      {DELIM}+
 LETTER  [A-Za-z]
 DIGIT   [0-9]
