@@ -20,6 +20,7 @@ ID      {LETTER}({LETTER}|{DIGIT}|-)*
 NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 STRING  ['"][A-Za-z0-9:, ]*['"]
 
+
 %%  
 
 ">"  {printf("%s : OPERATOR\n", yytext);

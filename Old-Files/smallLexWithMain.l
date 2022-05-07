@@ -13,52 +13,57 @@
 
 DELIM   [ \t\n]
 WS      {DELIM}+
-LETTER  [A-za-z]
+LETTER  [A-Za-z]
 DIGIT   [0-9]
 ID      {LETTER}({LETTER}|{DIGIT})*
 NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
+STRING  ['"][A-Za-z0-9:, ]*['"]   
 
 %%  
 
 "char"  {printf("%s : OPERATOR\n", yytext);
-    return TYPE;
+    // return TYPE;
 }
 
 "int"  {printf("%s : OPERATOR\n", yytext);
-    return TYPE;
+    // return TYPE;
 }
 
 
 "+"  {printf("%s : OPERATOR\n", yytext);
-    return PLUS_OP;
+    // return PLUS_OP;
 }
 
 "-"  {printf("%s : OPERATOR\n", yytext);
-    return HYPHEN_OP;
+    // return HYPHEN_OP;
 }
 
 "*"  {printf("%s : OPERATOR\n", yytext);
-    return MULTIPLY_OP;
+    // return MULTIPLY_OP;
 }
 
 "="  {printf("%s : OPERATOR\n", yytext);
-    return EQ_OP;
+    // return EQ_OP;
 }
 
 ";"  {printf("%s : OPERATOR\n", yytext);
-    return SEMICOLON;
+    // return SEMICOLON;
 }
 
 "ACCEPT"  {printf("%s : KEYWORD\n", yytext); 
-    return ACCEPT;
+    // return ACCEPT;
 }
 
 {NUMBER}     {printf("%s : NUMBER\n", yytext);
-    return NUMBER;
+    // return NUMBER;
+}
+
+{STRING}     {printf("%s : STRING\n", yytext);
+    // return STRING;
 }
 
 {ID}        {printf("%s : ID\n", yytext);
-    return ID;
+    // return ID;
 } 
 
 

@@ -112,7 +112,8 @@ Module2:	EnvDiv DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Environmen
 /* part of the program that contains the procedure division and everything that is inside it, which is statements since this is where all executable code is written */
 /* lines 4-6 */
 
-Module3:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n");
+Module3:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n"); }
+			| ProcDiv ProcID StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division (no statements)\n\n");
 };
 
 
@@ -129,7 +130,7 @@ ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
 
 /* this is a recursive way to read however many statements in the procedure division */
 
-Statements:	
+Statements:	Statement {$$ = $1;}
 	| Statement Statements {$$ = $2;}
 ;
 
@@ -139,27 +140,29 @@ Statements:
 /* use '|' to put multiple different statements in here */
 
 
+
 /* A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into */
-Statement:        PERIOD {} | Expr PERIOD {$$ = $1; }
-							| Expr {$$ = $1; }
+Statement:	Expr PERIOD {$$ = $1; }
+							
 				/* this needs to be redone, as we need to check for a period inside each
 				expression, not up here. if we don't check in each expression, we will not
 				get the print statements when the function does not include a period */
 ;
 
+
 Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
             printf(" JAVA: system.out.println('%s');\n\n",$2);
 			/* this doesn't put the string in the java 'code' currently */
 		}
-		| DISPLAY STRING COMMA ID PERIOD { printf("\n RECOGNIZED RULE: Display Call With Concatenation\n");
+		| DISPLAY STRING COMMA ID { printf("\n RECOGNIZED RULE: Display Call With Concatenation\n");
             printf(" JAVA: system.out.println('%s' + ID);\n\n",$2);
 			/* for some reason only the DISPLAY STRING worked without including PERIOD */
 			/* this and all below require it for period to be parsed inside the function call */
 			/* this means that all function calls only work with periods. */
 		}
 
-		| ACCEPT ID PERIOD {printf("\n RECOGNIZED RULE: Accept ID\n");
-			printf(" JAVA: %s = input.nextLine();\n\n",$2);
+		| ACCEPT ID {printf("\n RECOGNIZED RULE: Accept ID\n");
+			printf(" JAVA: %s = input.nextLine();\n\n", $2);
 		}
 
 		| IF Condition THEN Statement ENDIF { printf("\n RECOGNIZED RULE: If Statement");
@@ -271,7 +274,8 @@ Condition:	ID Operator ID {
 Operator:	GT_OP {} | LT_OP {} | EQ_OP {} | DOUBLE_EQ_OP {} | GT_EQ_OP {} | LT_EQ_OP {
 };
 
-DoubleDigit:	| DIGIT DIGIT { printf("\n RECOGNIZED RULE: Double Digit\n");
+DoubleDigit: {printf("DOUBLEDIGIT EMPTY RULE");}	
+	| DIGIT DIGIT { printf("\n RECOGNIZED RULE: Double Digit\n");
 };
 
 Nines:	| NINE Nines { printf("\n RECOGNIZED RULE: Nines\n");
