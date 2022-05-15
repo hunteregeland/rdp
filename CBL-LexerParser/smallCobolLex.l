@@ -21,6 +21,7 @@ NUMBER  {DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?
 STRING  ['"][A-Za-z0-9:, ]*['"]
 
 
+
 %%  
 
 ">"  {printf("%s : OPERATOR\n", yytext);
@@ -51,95 +52,95 @@ STRING  ['"][A-Za-z0-9:, ]*['"]
     return COMMA;
 }
 
-"IDENTIFICATION"  {printf("%s : IDENTIFICATION\n", yytext);
+(?i:identification)  {printf("%s : IDENTIFICATION\n", yytext);
     return IDENTIFICATION;
 }
 
-"PROGRAM-ID"  {printf("%s : PROGRAMID\n", yytext);
+(?i:program-id)  {printf("%s : PROGRAMID\n", yytext);
     return PROGRAMID;
 }
 
-"ENVIRONMENT"  {printf("%s : ENVIRONMENT\n", yytext);
+(?i:environment)  {printf("%s : ENVIRONMENT\n", yytext);
     return ENVIRIONMENT;
 }
 
-"DATA"  {printf("%s : DATA\n", yytext);
+(?i:data)  {printf("%s : DATA\n", yytext);
     return DATA;
 }
 
-"PROCEDURE"  {printf("%s : PROCEDURE\n", yytext);
+(?i:procedure)  {printf("%s : PROCEDURE\n", yytext);
     return PROCEDURE;
 }
 
-"DIVISION"  {printf("%s : DIVISION\n", yytext);
+(?i:division)  {printf("%s : DIVISION\n", yytext);
     return DIVISION;
 }
 
-"FILE"  {printf("%s : FILE\n", yytext);
+(?i:file)  {printf("%s : FILE\n", yytext);
     return FILEE;
 }
 
-"WORKING-STORAGE"  {printf("%s : WORKING-STORAGE\n", yytext);
+(?i:working-storage)  {printf("%s : WORKING-STORAGE\n", yytext);
     return WORKINGSTORAGE;
 }
 
-"SECTION"  {printf("%s : SECTION\n", yytext);
+(?i:section)  {printf("%s : SECTION\n", yytext);
     return SECTION;
 }
 
-"DISPLAY"  {printf("%s : KEYWORD\n", yytext);
+(?i:display)  {printf("%s : KEYWORD\n", yytext);
     return DISPLAY;
 }
 
-"ACCEPT"  {printf("%s : KEYWORD\n", yytext);
+(?i:accept)  {printf("%s : KEYWORD\n", yytext);
     return ACCEPT;
 }
 
-"STOP"  {printf("%s : KEYWORD\n", yytext);
+(?i:stop)  {printf("%s : KEYWORD\n", yytext);
     return STOP;
 }
 
-"RUN"  {printf("%s : KEYWORD\n", yytext);
+(?i:run)  {printf("%s : KEYWORD\n", yytext);
     return RUN;
 }
 
-"IF"  {printf("%s : KEYWORD\n", yytext);
+(?i:if)  {printf("%s : KEYWORD\n", yytext);
     return IF;
 }
 
-"PERFORM" {printf("%s : KEYWORD\n", yytext);
+(?i:perform) {printf("%s : KEYWORD\n", yytext);
     return PERFORM;
 }
 
-"UNTIL" {printf("%s : KEYWORD\n", yytext);
+(?i:until) {printf("%s : KEYWORD\n", yytext);
     return UNTIL;
 }
 
-"COUNT" {printf("%s : KEYWORD\n", yytext);
+(?i:count) {printf("%s : KEYWORD\n", yytext);
     return COUNT;
 }
 
-"THEN"  {printf("%s : KEYWORD\n", yytext);
+(?i:then)  {printf("%s : KEYWORD\n", yytext);
     return THEN;
 }
 
-"TIMES"  {printf("%s : KEYWORD\n", yytext);
+(?i:times)  {printf("%s : KEYWORD\n", yytext);
     return TIMES;
 }
 
-"END-IF"  {printf("%s : KEYWORD\n", yytext);
+(?i:end-if)  {printf("%s : KEYWORD\n", yytext);
     return ENDIF;
 }
 
-"PICTURE"  {printf("%s : KEYWORD\n", yytext);
+(?i:picture)  {printf("%s : KEYWORD\n", yytext);
     return PICTURE;
 }
 
-"PIC"  {printf("%s : KEYWORD\n", yytext);
+(?i:pic)  {printf("%s : KEYWORD\n", yytext);
     return PIC;
 }
 
-"IS"  {printf("%s : KEYWORD\n", yytext);
+(?i:is)  {printf("%s : KEYWORD\n", yytext);
     return IS;
 }
 
@@ -171,11 +172,11 @@ STRING  ['"][A-Za-z0-9:, ]*['"]
     return LETTERX;
 }
 
-"ADD" {printf("%s : KEYWORD\n", yytext);
+(?i:add) {printf("%s : KEYWORD\n", yytext);
     return ADD;
 }
 
-"TO" {printf("%s : KEYWORD\n", yytext);
+(?i:to) {printf("%s : KEYWORD\n", yytext);
     return TO;
 }
 
