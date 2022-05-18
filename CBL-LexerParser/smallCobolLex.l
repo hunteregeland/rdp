@@ -181,18 +181,22 @@ STRING  ['"][A-Za-z0-9:, ]*['"]
 }
 
 {NUMBER}     {printf("%s : NUMBER\n", yytext);
+    yylval.number = atoi(strdup(yytext));
     return NUMBER;
 }
 
 {DIGIT}     {printf("%s : NUMBER\n", yytext);
+    yylval.number = atoi(strdup(yytext));
     return DIGIT;
 }
 
 {STRING}     {printf("%s : STRING\n", yytext);
+    yylval.string = strdup(yytext);
     return STRING;
 }
 
 {ID}        {printf("%s : ID\n", yytext);
+    yylval.string = strdup(yytext);
     return ID;
 } 
 

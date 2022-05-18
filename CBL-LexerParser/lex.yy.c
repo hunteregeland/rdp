@@ -1186,47 +1186,51 @@ case 40:
 YY_RULE_SETUP
 #line 183 "smallCobolLex.l"
 {printf("%s : NUMBER\n", yytext);
+    yylval.number = atoi(strdup(yytext));
     return NUMBER;
 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 187 "smallCobolLex.l"
+#line 188 "smallCobolLex.l"
 {printf("%s : NUMBER\n", yytext);
+    yylval.number = atoi(strdup(yytext));
     return DIGIT;
 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 191 "smallCobolLex.l"
+#line 193 "smallCobolLex.l"
 {printf("%s : STRING\n", yytext);
+    yylval.string = strdup(yytext);
     return STRING;
 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 195 "smallCobolLex.l"
+#line 198 "smallCobolLex.l"
 {printf("%s : ID\n", yytext);
+    yylval.string = strdup(yytext);
     return ID;
 } 
 	YY_BREAK
 case 44:
 /* rule 44 can match eol */
 YY_RULE_SETUP
-#line 199 "smallCobolLex.l"
+#line 203 "smallCobolLex.l"
 {}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 201 "smallCobolLex.l"
+#line 205 "smallCobolLex.l"
 {printf("%s: anything\n", yytext);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 204 "smallCobolLex.l"
+#line 208 "smallCobolLex.l"
 ECHO;
 	YY_BREAK
-#line 1230 "lex.yy.c"
+#line 1234 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2243,6 +2247,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 204 "smallCobolLex.l"
+#line 208 "smallCobolLex.l"
 
 
