@@ -24,7 +24,7 @@ STRING  ['"][A-Za-z0-9:, ]*['"]
 
 %%  
 
-">"  {printf("%s :  OPERATOR\n", yytext);
+">"  {printf("%s : OPERATOR\n", yytext);
     yylval.string = strdup(yytext);
     return GT_OP;
 }
