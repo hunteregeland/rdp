@@ -79,7 +79,7 @@ char currentScope[50]; /* global or the name of the function */
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 %printer { fprintf(yyoutput, "%d", $$); } DIGIT;
 
-%type <ast> Program Module1 Module2 Module3 IDDiv EnvDiv DataDiv ProcDiv FileSec WSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs
+%type <ast> Program Modules Module Module1 Module2 Module3 IDDiv EnvDiv DataDiv ProcDiv FileSec WSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
 
 %start Program
 
@@ -91,14 +91,41 @@ char currentScope[50]; /* global or the name of the function */
 
 /* basic structure of the current cobol test program */
 
-Program:	Module1 Module2 Module3 { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
+Program:	Modules { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
+					  printf("------------Start of AST------------\n");
+					   $$ = $1;
+					   printAST($$,0);
+					  printf("------------End of AST------------\n");
+									  
 };
 
+/*Modules can be recursive to implement any amount of modules in any order or a single module*/
+Modules: Module Modules{printf("\n MODULE MODULES: Module End\n\n");
+						 $1->left = $2;
+						 $$ = $1;
+						}
+		| Module {  printf("\n MODULE: Module End\n\n");
+					// $$ = $1;
+					}
+;
+
+Module: Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
+				//$$ = $1;
+				}
+		| Module2{printf("\n RECOGNIZED MODULE: Module2 End\n\n");
+				//$$ = $1;
+				}
+		| Module3{printf("\n RECOGNIZED MODULE: Module3 End\n\n");
+				//$$ = $1;
+				}
+;
 
 /* part of the program including the identification division and the program id declaration */
 /* lines 1 & 2 */
 
 Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identification Division\n\n"); 
+						   //$1->left = $2;
+						   //$$ = $1;
 };
 
 
@@ -106,7 +133,9 @@ Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identificati
 /* part of the program that contains the environment division */
 /* line 3 */
 
-Module2:	EnvDiv DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Environment & Data Division\n\n"); } | DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Data Division (No Env Division)\n\n");
+Module2:	EnvDiv DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Environment & Data Division\n\n"); } 
+			| DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Data Division (No Env Division)\n\n");}
+			| EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division (No Data Division)\n\n");
 };
 
 
@@ -362,7 +391,9 @@ int main(int argc, char**argv)
 	#ifdef YYDEBUG
 		yydebug = 1;
 	#endif
-*/
+
+	*/
+
 	printf("\n\n##### COMPILER STARTED #####\n\n");
 	
 	if (argc > 1){
