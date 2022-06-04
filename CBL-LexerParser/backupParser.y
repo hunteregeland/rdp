@@ -13,7 +13,7 @@ extern int yyparse();
 extern FILE* yyin;
 
 void yyerror(const char* s);
-char currentScope[50]; /* global or the name of the function */
+char currentScope[50]; /* global or the name of the function (test for lauren)*/
 
 %}
 

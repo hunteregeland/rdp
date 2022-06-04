@@ -7,12 +7,10 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": true,
-      "cwd": "/Users/hunteregeland/Desktop/classes/rdp/git/rdp-18",
-      "environment": [],
-      "program": "/Users/hunteregeland/Desktop/classes/rdp/git/rdp-18/build/Debug/outDebug",
-      "internalConsoleOptions": "openOnSessionStart",
-      "MIMode": "lldb",
-      "console": "integratedTerminal"
+      "externalConsole": false,
+      "cwd": "/Users/hunteregeland/Desktop/classes/rdp/git/rdp-19",
+      "program": "/Users/hunteregeland/Desktop/classes/rdp/git/rdp-19/build/Debug/outDebug",
+      "MIMode": "lldb"
     }
   ]
 }

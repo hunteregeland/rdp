@@ -1,0 +1,268 @@
+State 0 conflicts: 4 shift/reduce
+State 7 conflicts: 4 shift/reduce, 1 reduce/reduce
+State 10 conflicts: 3 shift/reduce
+
+
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: DeclList
+
+    2 DeclList: Decl DeclList
+    3         | Decl
+
+    4 Decl: VarDecl
+    5     | StmtList
+
+    6 VarDecl: TYPE ID SEMICOLON
+
+    7 StmtList: /* empty */
+    8         | Stmt StmtList
+
+    9 Stmt: SEMICOLON
+   10     | Expr SEMICOLON
+
+   11 Expr: ID
+   12     | ID EQ ID
+   13     | ID EQ NUMBER
+   14     | WRITE ID
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+TYPE (258) 6
+ID (259) 6 11 12 13 14
+SEMICOLON (260) 6 9 10
+EQ (261) 12 13
+NUMBER (262) 13
+WRITE (263) 14
+
+
+Nonterminals, with rules where they appear
+
+$accept (9)
+    on left: 0
+Program (10)
+    on left: 1, on right: 0
+DeclList (11)
+    on left: 2 3, on right: 1 2
+Decl (12)
+    on left: 4 5, on right: 2 3
+VarDecl (13)
+    on left: 6, on right: 4
+StmtList (14)
+    on left: 7 8, on right: 5 8
+Stmt (15)
+    on left: 9 10, on right: 8
+Expr (16)
+    on left: 11 12 13 14, on right: 10
+
+
+state 0
+
+    0 $accept: . Program $end
+
+    TYPE       shift, and go to state 1
+    ID         shift, and go to state 2
+    SEMICOLON  shift, and go to state 3
+    WRITE      shift, and go to state 4
+
+    TYPE       [reduce using rule 7 (StmtList)]
+    ID         [reduce using rule 7 (StmtList)]
+    SEMICOLON  [reduce using rule 7 (StmtList)]
+    WRITE      [reduce using rule 7 (StmtList)]
+    $default   reduce using rule 7 (StmtList)
+
+    Program   go to state 5
+    DeclList  go to state 6
+    Decl      go to state 7
+    VarDecl   go to state 8
+    StmtList  go to state 9
+    Stmt      go to state 10
+    Expr      go to state 11
+
+
+state 1
+
+    6 VarDecl: TYPE . ID SEMICOLON
+
+    ID  shift, and go to state 12
+
+
+state 2
+
+   11 Expr: ID .
+   12     | ID . EQ ID
+   13     | ID . EQ NUMBER
+
+    EQ  shift, and go to state 13
+
+    $default  reduce using rule 11 (Expr)
+
+
+state 3
+
+    9 Stmt: SEMICOLON .
+
+    $default  reduce using rule 9 (Stmt)
+
+
+state 4
+
+   14 Expr: WRITE . ID
+
+    ID  shift, and go to state 14
+
+
+state 5
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 15
+
+
+state 6
+
+    1 Program: DeclList .
+
+    $default  reduce using rule 1 (Program)
+
+
+state 7
+
+    2 DeclList: Decl . DeclList
+    3         | Decl .
+
+    TYPE       shift, and go to state 1
+    ID         shift, and go to state 2
+    SEMICOLON  shift, and go to state 3
+    WRITE      shift, and go to state 4
+
+    $end       reduce using rule 3 (DeclList)
+    $end       [reduce using rule 7 (StmtList)]
+    TYPE       [reduce using rule 7 (StmtList)]
+    ID         [reduce using rule 7 (StmtList)]
+    SEMICOLON  [reduce using rule 7 (StmtList)]
+    WRITE      [reduce using rule 7 (StmtList)]
+    $default   reduce using rule 3 (DeclList)
+
+    DeclList  go to state 16
+    Decl      go to state 7
+    VarDecl   go to state 8
+    StmtList  go to state 9
+    Stmt      go to state 10
+    Expr      go to state 11
+
+
+state 8
+
+    4 Decl: VarDecl .
+
+    $default  reduce using rule 4 (Decl)
+
+
+state 9
+
+    5 Decl: StmtList .
+
+    $default  reduce using rule 5 (Decl)
+
+
+state 10
+
+    8 StmtList: Stmt . StmtList
+
+    ID         shift, and go to state 2
+    SEMICOLON  shift, and go to state 3
+    WRITE      shift, and go to state 4
+
+    ID         [reduce using rule 7 (StmtList)]
+    SEMICOLON  [reduce using rule 7 (StmtList)]
+    WRITE      [reduce using rule 7 (StmtList)]
+    $default   reduce using rule 7 (StmtList)
+
+    StmtList  go to state 17
+    Stmt      go to state 10
+    Expr      go to state 11
+
+
+state 11
+
+   10 Stmt: Expr . SEMICOLON
+
+    SEMICOLON  shift, and go to state 18
+
+
+state 12
+
+    6 VarDecl: TYPE ID . SEMICOLON
+
+    SEMICOLON  shift, and go to state 19
+
+
+state 13
+
+   12 Expr: ID EQ . ID
+   13     | ID EQ . NUMBER
+
+    ID      shift, and go to state 20
+    NUMBER  shift, and go to state 21
+
+
+state 14
+
+   14 Expr: WRITE ID .
+
+    $default  reduce using rule 14 (Expr)
+
+
+state 15
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+state 16
+
+    2 DeclList: Decl DeclList .
+
+    $default  reduce using rule 2 (DeclList)
+
+
+state 17
+
+    8 StmtList: Stmt StmtList .
+
+    $default  reduce using rule 8 (StmtList)
+
+
+state 18
+
+   10 Stmt: Expr SEMICOLON .
+
+    $default  reduce using rule 10 (Stmt)
+
+
+state 19
+
+    6 VarDecl: TYPE ID SEMICOLON .
+
+    $default  reduce using rule 6 (VarDecl)
+
+
+state 20
+
+   12 Expr: ID EQ ID .
+
+    $default  reduce using rule 12 (Expr)
+
+
+state 21
+
+   13 Expr: ID EQ NUMBER .
+
+    $default  reduce using rule 13 (Expr)

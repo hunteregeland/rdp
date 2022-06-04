@@ -1,0 +1,6 @@
+int x;
+x = 23;
+write x;
+int y;
+y = 12;
+write y;
