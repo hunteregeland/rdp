@@ -296,12 +296,24 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
 		/* variables aren't really defined fully in java until they get called in the procedure division so this might be a mess to translate to java */
 		| DoubleDigit ID PICTURE IS Nines { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
 			printf("JAVA: int $2 = $5");
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 5 = ");
+			printf($5);
 		}
 		| DoubleDigit ID PIC Nines { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
 			printf("JAVA: int $2 = $4");
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 		| DoubleDigit ID PIC IntPicClause { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
 			printf("JAVA: int $2 = $4");
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 
 		/* define any byte-sized float variable in cobol */
@@ -309,9 +321,17 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
 		/* similar problem as above, is V called as a character or LETTERV? */
 		| DoubleDigit ID PICTURE IS FloatClause { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 1");
 			printf("JAVA: float %s = $5", $2);
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 5 = ");
+			printf($5);
 		}
 		| DoubleDigit ID PIC FloatClause { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 2");
 			printf("JAVA: float %s = $4", $2);
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 
 		/* define any byte-sized un-signed variable in cobol */
@@ -327,12 +347,24 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
 		/* strings aren't assigned to the variable in cobol until they do so in the procedure division, so translating this to java will be a mess */
 		| DoubleDigit ID PICTURE IS Xs { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
 			printf("JAVA: String %s = $5", $2);
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 5 = ");
+			printf($5);
 		}
 		| DoubleDigit ID PIC Xs { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
 			printf("JAVA: String %s = $4", $2);
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 		| DoubleDigit ID PIC StringPicClause { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
 			printf("JAVA: String %s = $4", $2);
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 
 		/* add statement */
@@ -340,34 +372,66 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
 		/* using a single literal input */
 		| ADD NUMBER TO ID { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input");
 			printf("JAVA: %s = %s + %i", $4, $4, $2);
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 		/* using a single id input */
 		| ADD ID TO ID { printf("\n RECOGNIZED RULE: Add Statement: Single ID Input");
 			printf("JAVA: %s = %s + %s", $4, $4, $2); 
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 		/* using multiple literal inputs */
 		| ADD NumberClause TO ID { printf("\n RECOGNIZED RULE: Add Statement: Multiple Literal Inputs");
 			printf("JAVA: %s = %s + $2", $4, $4); 
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 		/* using multiple id inputs */
 		| ADD IDClause TO ID { printf("\n RECOGNIZED RULE: Add Statement: Multiple ID Inputs");
 			printf("JAVA: %s = %s + $2", $4, $4); 
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 		/* using a single literal input & multiple id outputs */
 		| ADD NUMBER TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input & Multiple ID Outputs");
 			printf("JAVA: $4 = $4 + %i", $2); 
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 		/* using multiple literal inputs & multiple id outputs */
 		| ADD NumberClause TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Multiple Literal Inputs & Multiple ID Outputs");
 			printf("JAVA: $4 = $4 + $2"); 
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 		/* using a single id input & multiple id outputs */
 		| ADD ID TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Single ID Inputs & Multiple ID Outputs");
 			printf("JAVA: $4 = $4 + %s", $2); 
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 		/* using multiple id inputs & multiple id outputs */
 		| ADD IDClause TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Single ID Inputs & Multiple ID Outputs");
 			printf("JAVA: $4 = $4 + $2"); 
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 		}
 
 ;
