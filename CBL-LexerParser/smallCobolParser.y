@@ -79,7 +79,7 @@ char currentScope[50]; /* global or the name of the function */
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 %printer { fprintf(yyoutput, "%d", $$); } DIGIT;
 
-%type <ast> Program Modules Module Module1 Module2 Module3 IDDiv EnvDiv DataDiv ProcDiv FileSec WSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
+%type <ast> Program Modules Module Module1 Module2 Module3 IDDiv EnvDiv DataDiv ProcDiv ProcID FileSec WSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
 
 %start Program
 
@@ -95,27 +95,38 @@ Program:	Modules { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
 					  printf("------------Start of AST------------\n");
 					   $$ = $1;
 					   printAST($$,0);
-					  printf("------------End of AST------------\n");
+					  printf("\n------------End of AST------------\n");
 									  
 };
 
 /*Modules can be recursive to implement any amount of modules in any order or a single module*/
 Modules: Module Modules{printf("\n MODULE MODULES: Module End\n\n");
-						 $1->left = $2;
+						 printf("\nDollar 1 = ");
+						 printf($1);
+						 printf("\nDollar 2 = ");
+						 printf($2);
+						 //$1->left = $2;
 						 $$ = $1;
 						}
 		| Module {  printf("\n MODULE: Module End\n\n");
-					// $$ = $1;
-					}
-;
+					printf("\nDollar 1 = ");
+					printf($1);
+					 $$ = $1;
+};
 
 Module: Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
+				printf("\nDollar 1 = ");
+				printf($1);
 				//$$ = $1;
 				}
 		| Module2{printf("\n RECOGNIZED MODULE: Module2 End\n\n");
+				printf("\nDollar 1 = ");
+				printf($1);		
 				//$$ = $1;
 				}
 		| Module3{printf("\n RECOGNIZED MODULE: Module3 End\n\n");
+				printf("\nDollar 1 = ");
+				printf($1);
 				//$$ = $1;
 				}
 ;
@@ -124,6 +135,11 @@ Module: Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
 /* lines 1 & 2 */
 
 Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identification Division\n\n"); 
+						   printf("\nDollar 1 = ");
+						   printf($1);
+						   printf("\nDollar 2 = ");
+						   printf($2);
+						   
 						   //$1->left = $2;
 						   //$$ = $1;
 };
@@ -133,17 +149,39 @@ Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identificati
 /* part of the program that contains the environment division */
 /* line 3 */
 
-Module2:	EnvDiv DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Environment & Data Division\n\n"); } 
-			| DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Data Division (No Env Division)\n\n");}
+Module2:	EnvDiv DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Environment & Data Division\n\n"); 
+						 	 printf("\nDollar 1 = ");
+						 	 printf($1);
+						 	 printf("\nDollar 2 = ");
+						 	 printf($2);} 
+			| DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Data Division (No Env Division)\n\n");
+						printf("\nDollar 1 = ");
+						printf($1);
+			}
 			| EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division (No Data Division)\n\n");
+					   printf("\nDollar 1 = ");
+					   printf($1);
 };
 
 
 /* part of the program that contains the procedure division and everything that is inside it, which is statements since this is where all executable code is written */
 /* lines 4-6 */
 
-Module3:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n"); }
+Module3:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n");
+							 printf("\nDollar 1 = ");
+						 	 printf($1);
+						 	 printf("\nDollar 2 = ");
+						 	 printf($2); 
+							 printf("\nDollar 3 = ");
+						 	 printf($3);
+ }
 			| ProcDiv ProcID StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division (no statements)\n\n");
+							 printf("\nDollar 1 = ");
+						 	 printf($1);
+						 	 printf("\nDollar 2 = ");
+						 	 printf($2); 
+							 printf("\nDollar 3 = ");
+						 	 printf($3);
 };
 
 
@@ -152,16 +190,33 @@ Module3:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End M
 /* this needs to be fixed, we cannot recognize PROGRAM-ID currently */
 
 ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID Declaration\n\n");
+							printf("\nDollar 1 = ");
+						 	 printf($1);
+						 	 printf("\nDollar 3 = ");
+						 	 printf($3); 
 };
 
 ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
+							 printf("\nDollar 1 = ");
+						 	 printf($1);
+
 };
 
 
 /* this is a recursive way to read however many statements in the procedure division */
 
-Statements:	Statement {$$ = $1;}
-	| Statement Statements {$$ = $2;}
+Statements:	Statement {//$$ = $1;
+							 printf("\nDollar 1 = ");
+						 	 printf($1);
+
+}
+	| Statement Statements {//$$ = $2;
+							 printf("\nDollar 1 = ");
+						 	 printf($1);
+							 printf("\nDollar 2 = ");
+						 	 printf($2);
+
+	}
 ;
 
 
@@ -172,7 +227,10 @@ Statements:	Statement {$$ = $1;}
 
 
 /* A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into */
-Statement:	Expr PERIOD {$$ = $1; }
+Statement:	Expr PERIOD {//$$ = $1; 
+							 printf("\nDollar 1 = ");
+						 	 printf($1);
+}
 							
 				/* this needs to be redone, as we need to check for a period inside each
 				expression, not up here. if we don't check in each expression, we will not
@@ -181,11 +239,17 @@ Statement:	Expr PERIOD {$$ = $1; }
 
 
 Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
+						  printf("\nDollar 2 = ");
+						  printf($2);
             printf(" JAVA: system.out.println('%s');\n\n",$2);
 			/* this doesn't put the string in the java 'code' currently */
 		}
 		| DISPLAY STRING COMMA ID { printf("\n RECOGNIZED RULE: Display Call With Concatenation\n");
             printf(" JAVA: system.out.println('%s' + ID);\n\n",$2);
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 			/* for some reason only the DISPLAY STRING worked without including PERIOD */
 			/* this and all below require it for period to be parsed inside the function call */
 			/* this means that all function calls only work with periods. */
@@ -193,19 +257,37 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
 
 		| ACCEPT ID {printf("\n RECOGNIZED RULE: Accept ID\n");
 			printf(" JAVA: %s = input.nextLine();\n\n", $2);
+			printf("\nDollar 2 = ");
+		    printf($2);
 		}
 
 		| IF Condition THEN Statement ENDIF { printf("\n RECOGNIZED RULE: If Statement");
 			printf("JAVA: if($2) {$4}");
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 4 = ");
+			printf($4);
 			/* makeTree(,,) */
 		}
 
 		| PERFORM Statement UNTIL COUNT Operator NUMBER {printf("\n RECOGNIZED RULE: While loop");
 			printf("JAVA: while($4 $5 %i) $2}",$6);
+			printf("JAVA: if($2) {$4}");
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 5 = ");
+			printf($5);
+			printf("\nDollar 6 = ");
+			printf($6);
 		}
 		
 		| PERFORM Statement NUMBER TIMES {printf("\n RECOGNIZED RULE: For loop");
 			printf("JAVA: for(int i=0; i<%i;i++) {$2}",$3);
+			printf("JAVA: if($2) {$4}");
+			printf("\nDollar 2 = ");
+			printf($2);
+			printf("\nDollar 3 = ");
+			printf($3);
 		}
 
 		/* define any byte-sized integer variable in cobol */
@@ -387,12 +469,12 @@ StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run\n\n");
 
 int main(int argc, char**argv)	
 {
-/*
+	/*
 	#ifdef YYDEBUG
 		yydebug = 1;
 	#endif
-
 	*/
+	
 
 	printf("\n\n##### COMPILER STARTED #####\n\n");
 	
