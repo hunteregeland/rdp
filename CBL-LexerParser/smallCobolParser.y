@@ -100,34 +100,44 @@ Program:	Modules { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
 };
 
 /*Modules can be recursive to implement any amount of modules in any order or a single module*/
-Modules: Module Modules{printf("\n MODULE MODULES: Module End\n\n");
-						 printf("\nDollar 1 = ");
-						 printf($1);
-						 printf("\nDollar 2 = ");
-						 printf($2);
-						 //$1->left = $2;
-						 $$ = $1;
-						}
-		| Module {  printf("\n MODULE: Module End\n\n");
-					printf("\nDollar 1 = ");
-					printf($1);
-					 $$ = $1;
-};
+Modules: 	
 
-Module: Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
+		Module Modules{
+				printf("\n MODULE MODULES: Module End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
-				//$$ = $1;
+				printf("\nDollar 2 = ");
+				printf($2);
+				$1->left = $2;
+				$$ = $1;
+			}
+		| Module {  
+				printf("\n MODULE: Module End\n\n");
+				printf("\nDollar 1 = ");
+				printf($1);
+				$$ = $1;
+};
+
+Module: 
+		ID PERIOD{$$ = $1;}
+		|
+		Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
+				printf("\nDollar 1 = ");
+				printf($1);
+				$$ = $1;
+				
 				}
 		| Module2{printf("\n RECOGNIZED MODULE: Module2 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);		
-				//$$ = $1;
+				$$ = $1;
+				
 				}
 		| Module3{printf("\n RECOGNIZED MODULE: Module3 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
-				//$$ = $1;
+				$$ = $1;
+				
 				}
 ;
 
@@ -141,7 +151,7 @@ Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identificati
 						   printf($2);
 						   
 						   //$1->left = $2;
-						   //$$ = $1;
+						   $$ = $1;
 };
 
 
@@ -205,12 +215,12 @@ ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
 
 /* this is a recursive way to read however many statements in the procedure division */
 
-Statements:	Statement {//$$ = $1;
+Statements:	Statement {		$$ = $1;
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 
 }
-	| Statement Statements {//$$ = $2;
+	| Statement Statements { $$ = $1;
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 							 printf("\nDollar 2 = ");
@@ -227,7 +237,7 @@ Statements:	Statement {//$$ = $1;
 
 
 /* A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into */
-Statement:	Expr PERIOD {//$$ = $1; 
+Statement:	Expr PERIOD {	$$ = $1; 
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 }
@@ -238,13 +248,17 @@ Statement:	Expr PERIOD {//$$ = $1;
 ;
 
 
-Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
-						  printf("\nDollar 2 = ");
-						  printf($2);
+Expr:    DISPLAY STRING { 
+			$$ = $1;
+			printf("\n RECOGNIZED RULE: Display Call\n");
+			printf($2);
+			printf("\nDollar 2 = ");
             printf(" JAVA: system.out.println('%s');\n\n",$2);
 			/* this doesn't put the string in the java 'code' currently */
 		}
-		| DISPLAY STRING COMMA ID { printf("\n RECOGNIZED RULE: Display Call With Concatenation\n");
+		| DISPLAY STRING COMMA ID { 
+			$$ = $1;
+			printf("\n RECOGNIZED RULE: Display Call With Concatenation\n");
             printf(" JAVA: system.out.println('%s' + ID);\n\n",$2);
 			printf("\nDollar 2 = ");
 			printf($2);
@@ -255,13 +269,17 @@ Expr:    DISPLAY STRING { printf("\n RECOGNIZED RULE: Display Call\n");
 			/* this means that all function calls only work with periods. */
 		}
 
-		| ACCEPT ID {printf("\n RECOGNIZED RULE: Accept ID\n");
+		| ACCEPT ID {
+			$$ = $1;
+			printf("\n RECOGNIZED RULE: Accept ID\n");
 			printf(" JAVA: %s = input.nextLine();\n\n", $2);
 			printf("\nDollar 2 = ");
 		    printf($2);
 		}
 
-		| IF Condition THEN Statement ENDIF { printf("\n RECOGNIZED RULE: If Statement");
+		| IF Condition THEN Statement ENDIF { 
+			$$ = $2;
+			printf("\n RECOGNIZED RULE: If Statement");
 			printf("JAVA: if($2) {$4}");
 			printf("\nDollar 2 = ");
 			printf($2);
@@ -419,7 +437,9 @@ IDClause:	ID COMMA IDClause {} | ID { printf("\n RECOGNIZED RULE: ID Clause\n");
 /* recognize an identification division declaration if line is in order: */
 /* IDENTIFICATION, DIVISION, . */
 
-IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
+IDDiv:	IDENTIFICATION DIVISION PERIOD { 
+	$$ = $1;
+	printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
 };
 
 

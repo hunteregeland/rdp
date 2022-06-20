@@ -84,7 +84,6 @@ void printDots(int num)
 void printAST(struct AST* tree, int level){
 	if (tree == NULL) {printf("Empty Tree");return;}
 	printDots(level);
-	printf("got here\n"); //debug
 	printf("%s\n", tree->nodeType);
 	printDots(level);
 	printf("%s %s\n", tree->LHS, tree->RHS);
