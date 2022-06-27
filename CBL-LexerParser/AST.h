@@ -81,13 +81,54 @@ void printDots(int num)
 		printf("      ");
 }
 
-void printAST(struct AST* tree, int level){
-	if (tree == NULL) {printf("Empty Tree");return;}
+
+void printASTtest(struct AST* tree, int level){
+	if (tree == NULL) return;
 	printDots(level);
 	printf("%s\n", tree->nodeType);
 	printDots(level);
 	printf("%s %s\n", tree->LHS, tree->RHS);
 	if(tree->left != NULL) printAST(tree->left, level+1); else return;
 	if(tree->right != NULL) printAST(tree->right, level+1); else return;
+	
+}
+
+
+
+void printAST(struct AST* tree, int level){
+
+	
+	if(strcmp(tree->nodeType, "STOP") == 0){
+		printDots(level);
+		printf(tree->nodeType);
+		printf("\n------------End of AST------------\n");
+		exit(0);
+	}
+	
+
+	if (tree == NULL) {printf("\nEmpty Tree\n"); return;}
+	printDots(level);
+	printf("%s\n", tree->nodeType);
+	printDots(level);
+	printf("%s %s\n", tree->LHS, tree->RHS);
+	if(tree->left != NULL) {
+		//printf("\n92 Not Null\n");
+		//printf(tree->left); 
+		printAST(tree->left, level+1);} 
+	else {
+		//printf("\n92 NULL\n"); 
+		return;
+	}
+
+
+	if(tree->right != NULL) {
+		//printf("\n101 Not Null\n"); 
+		//printf(tree->right); 
+		printAST(tree->right, level+1);
+	} 
+	else {
+		//printf("\n101 NULL\n"); 
+		return;
+	}
 	
 }

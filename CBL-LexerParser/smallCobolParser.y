@@ -119,24 +119,33 @@ Modules:
 };
 
 Module: 
-		ID PERIOD{$$ = $1;}
+		STOP{
+			$$ = $1;
+			printf("EOF");
+		}
 		|
+		ID PERIOD{
+			$$ = $1;
+			}
+		|
+		
+		
 		Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
-				$$ = $1;
+				//$$ = $1;
 				
 				}
 		| Module2{printf("\n RECOGNIZED MODULE: Module2 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);		
-				$$ = $1;
+				//$$ = $1;
 				
 				}
 		| Module3{printf("\n RECOGNIZED MODULE: Module3 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
-				$$ = $1;
+				//$$ = $1;
 				
 				}
 ;
@@ -151,7 +160,7 @@ Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identificati
 						   printf($2);
 						   
 						   //$1->left = $2;
-						   $$ = $1;
+						   //$$ = $1;
 };
 
 
@@ -215,12 +224,12 @@ ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
 
 /* this is a recursive way to read however many statements in the procedure division */
 
-Statements:	Statement {		$$ = $1;
+Statements:	Statement {		//$$ = $1;
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 
 }
-	| Statement Statements { $$ = $1;
+	| Statement Statements { //$$ = $1;
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 							 printf("\nDollar 2 = ");
@@ -237,7 +246,7 @@ Statements:	Statement {		$$ = $1;
 
 
 /* A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into */
-Statement:	Expr PERIOD {	$$ = $1; 
+Statement:	Expr PERIOD {	//$$ = $1; 
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 }
@@ -249,7 +258,7 @@ Statement:	Expr PERIOD {	$$ = $1;
 
 
 Expr:    DISPLAY STRING { 
-			$$ = $1;
+			//$$ = $1;
 			printf("\n RECOGNIZED RULE: Display Call\n");
 			printf($2);
 			printf("\nDollar 2 = ");
@@ -257,7 +266,7 @@ Expr:    DISPLAY STRING {
 			/* this doesn't put the string in the java 'code' currently */
 		}
 		| DISPLAY STRING COMMA ID { 
-			$$ = $1;
+			//$$ = $1;
 			printf("\n RECOGNIZED RULE: Display Call With Concatenation\n");
             printf(" JAVA: system.out.println('%s' + ID);\n\n",$2);
 			printf("\nDollar 2 = ");
@@ -270,7 +279,7 @@ Expr:    DISPLAY STRING {
 		}
 
 		| ACCEPT ID {
-			$$ = $1;
+			//$$ = $1;
 			printf("\n RECOGNIZED RULE: Accept ID\n");
 			printf(" JAVA: %s = input.nextLine();\n\n", $2);
 			printf("\nDollar 2 = ");
@@ -278,7 +287,7 @@ Expr:    DISPLAY STRING {
 		}
 
 		| IF Condition THEN Statement ENDIF { 
-			$$ = $2;
+			//$$ = $2;
 			printf("\n RECOGNIZED RULE: If Statement");
 			printf("JAVA: if($2) {$4}");
 			printf("\nDollar 2 = ");
