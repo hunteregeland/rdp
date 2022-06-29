@@ -107,6 +107,7 @@ void printAST(struct AST* tree, int level){
 	
 
 	if (tree == NULL) {printf("\nEmpty Tree\n"); return;}
+	
 	printDots(level);
 	printf("%s\n", tree->nodeType);
 	printDots(level);

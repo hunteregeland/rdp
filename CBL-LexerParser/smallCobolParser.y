@@ -119,27 +119,29 @@ Modules:
 };
 
 Module: 
+		
 		STOP{
 			$$ = $1;
-			printf("EOF");
+			printf("\nEOF\n");
 		}
 		|
+		/*
 		ID PERIOD{
 			$$ = $1;
 			}
 		|
-		
+		*/
 		
 		Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
-				//$$ = $1;
+				$$ = $1;
 				
 				}
 		| Module2{printf("\n RECOGNIZED MODULE: Module2 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);		
-				//$$ = $1;
+				$$ = $1;
 				
 				}
 		| Module3{printf("\n RECOGNIZED MODULE: Module3 End\n\n");
@@ -158,9 +160,10 @@ Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identificati
 						   printf($1);
 						   printf("\nDollar 2 = ");
 						   printf($2);
-						   
 						   //$1->left = $2;
 						   //$$ = $1;
+						   $$->left = $1;
+						   $$->right = $2;
 };
 
 
@@ -172,14 +175,20 @@ Module2:	EnvDiv DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Environmen
 						 	 printf("\nDollar 1 = ");
 						 	 printf($1);
 						 	 printf("\nDollar 2 = ");
-						 	 printf($2);} 
+						 	 printf($2);
+							 $$->left = $1;
+						   	 $$->right = $2;
+							 }
+							  
 			| DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Data Division (No Env Division)\n\n");
 						printf("\nDollar 1 = ");
 						printf($1);
+						$$ = $1;
 			}
 			| EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division (No Data Division)\n\n");
 					   printf("\nDollar 1 = ");
 					   printf($1);
+					   $$ = $1;
 };
 
 
@@ -212,7 +221,9 @@ ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID Dec
 							printf("\nDollar 1 = ");
 						 	 printf($1);
 						 	 printf("\nDollar 3 = ");
-						 	 printf($3); 
+						 	 printf($3);
+							 $$->left = $3;
+							 $$->right = $1;
 };
 
 ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
@@ -511,7 +522,8 @@ IDClause:	ID COMMA IDClause {} | ID { printf("\n RECOGNIZED RULE: ID Clause\n");
 /* IDENTIFICATION, DIVISION, . */
 
 IDDiv:	IDENTIFICATION DIVISION PERIOD { 
-	$$ = $1;
+	$$->left = $1;
+	$$->right = $2;
 	printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
 };
 
@@ -520,14 +532,22 @@ IDDiv:	IDENTIFICATION DIVISION PERIOD {
 /* recognize an environment division declaration if line is in order: */
 /* ENVIRONMENT, DIVISION, . */
 
-EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Environment Division Declaration\n\n");
+EnvDiv:	ENVIRIONMENT DIVISION PERIOD { 
+	printf("\n RECOGNIZED DIVISION: Environment Division Declaration\n\n");
+	$$ = $1;
 };
 
 /* data division declaration in cobol */
 /* recognize an environment division declaration if line is in order: */
 /* DATA, DIVISION, . */
 
-DataDiv: 	DATA DIVISION PERIOD FileSec WSSec { printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
+DataDiv: 	DATA DIVISION PERIOD FileSec WSSec { 
+	printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
+	
+	$4->left = $1;
+	$4->right = $5;
+	$$ = $4;
+	
 };
 /* THIS ONLY WORKS IF ALL SECTIONS ARE INCLUDED CURRENTLY */
 
@@ -536,9 +556,11 @@ DataDiv: 	DATA DIVISION PERIOD FileSec WSSec { printf("\n RECOGNIZED DIVISION: D
 /* linkage section. these are defined below */
 
 FileSec:	FILEE SECTION PERIOD { printf("\n RECOGNIZED SECTION: File Section Declaration\n\n");
+	$$ = $1;
 };
 
 WSSec:	WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED SECTION: Working-Storage Section Declaration\n\n");
+	$$ = $1;
 };
 
 /* procedure division declaration in cobol */

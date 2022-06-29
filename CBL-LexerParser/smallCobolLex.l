@@ -64,7 +64,7 @@ STRING  ['"][A-Za-z0-9:, ]*['"]
     return IDENTIFICATION;
 }
 
-(?i:program-id)  {printf("%s : PROGRAMID\n", yytext);
+(?i:program-id)  {printf("%s : PROGRAM-ID\n", yytext);
     yylval.string = strdup(yytext);
     return PROGRAMID;
 }
