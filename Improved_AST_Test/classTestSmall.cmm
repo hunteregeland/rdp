@@ -1,0 +1,10 @@
+int x;
+
+void myFunction(){
+    x = 5;
+    write x;
+}
+
+void main(){
+    myFunction();
+}

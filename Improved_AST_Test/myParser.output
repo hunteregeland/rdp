@@ -1,0 +1,2072 @@
+Terminals unused in grammar
+
+    NEWLINE
+
+
+State 9 conflicts: 2 shift/reduce
+State 17 conflicts: 1 shift/reduce
+State 27 conflicts: 2 shift/reduce
+State 43 conflicts: 3 shift/reduce
+State 46 conflicts: 2 reduce/reduce
+State 51 conflicts: 3 shift/reduce
+State 52 conflicts: 3 shift/reduce
+State 53 conflicts: 4 shift/reduce
+State 54 conflicts: 3 shift/reduce
+State 55 conflicts: 8 shift/reduce
+State 57 conflicts: 8 shift/reduce
+State 63 conflicts: 1 shift/reduce
+State 68 conflicts: 1 shift/reduce
+State 69 conflicts: 9 shift/reduce
+State 72 conflicts: 12 shift/reduce
+State 73 conflicts: 1 shift/reduce
+State 75 conflicts: 12 shift/reduce
+State 83 conflicts: 3 shift/reduce
+State 85 conflicts: 3 shift/reduce
+State 87 conflicts: 3 shift/reduce
+State 94 conflicts: 1 shift/reduce
+State 96 conflicts: 1 shift/reduce
+State 98 conflicts: 3 shift/reduce
+State 101 conflicts: 3 shift/reduce
+State 107 conflicts: 1 shift/reduce
+State 112 conflicts: 1 shift/reduce
+State 114 conflicts: 4 shift/reduce
+State 117 conflicts: 3 shift/reduce
+State 119 conflicts: 3 shift/reduce
+State 123 conflicts: 1 shift/reduce
+State 125 conflicts: 1 shift/reduce
+State 127 conflicts: 1 shift/reduce, 15 reduce/reduce
+State 128 conflicts: 3 shift/reduce
+State 132 conflicts: 4 shift/reduce
+
+
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: DeclList
+
+    2 DeclList: VarDecl DeclList
+    3         | FunDecl DeclList
+    4         | VarDecl
+    5         | FunDecl
+
+    6 VarDecl: ID EQ Expr SEMICOLON
+    7        | ID OPENSQUARE Expr CLOSEDSQUARE EQ Expr SEMICOLON
+    8        | TYPE ID
+    9        | TYPE ID EQ Expr
+   10        | TYPE ID EQ Expr SEMICOLON
+   11        | TYPE ID SEMICOLON
+   12        | TYPE ID OPENSQUARE Expr CLOSEDSQUARE
+   13        | TYPE ID OPENSQUARE Expr CLOSEDSQUARE SEMICOLON
+
+   14 FunDecl: ID OPENPAREN ParamDeclList CLOSEDPAREN Block
+   15        | TYPE ID OPENPAREN ParamDeclList CLOSEDPAREN
+   16        | TYPE ID OPENPAREN ParamDeclList Block
+   17        | TYPE ID ParamDeclList Block
+   18        | TYPE ID OPENPAREN ParamDeclList CLOSEDPAREN Block
+   19        | VOID ID OPENPAREN ParamDeclList CLOSEDPAREN Block
+
+   20 ParamDeclList: %empty
+   21              | ParamDeclListTail
+
+   22 ParamDeclListTail: ParamDecl
+   23                  | ParamDecl COMMA ParamDeclListTail
+   24                  | ParamDecl COMMA
+   25                  | COMMA
+   26                  | ParamDecl ParamDeclListTail
+
+   27 ParamDecl: TYPE
+   28          | ID
+   29          | TYPE ID
+   30          | TYPE ID OPENSQUARE CLOSEDSQUARE
+
+   31 BlockBody: VarDecl BlockBody
+   32          | Stmt BlockBody
+   33          | VarDecl
+   34          | Stmt
+
+   35 Block: OPENCURLY BlockBody CLOSEDCURLY
+   36      | OPENCURLY CLOSEDCURLY
+   37      | OPENCURLY BlockBody
+
+   38 Stmt: SEMICOLON
+   39     | Expr SEMICOLON
+   40     | KEYWORD Expr
+   41     | KEYWORD Expr SEMICOLON
+   42     | KEYWORD ID SEMICOLON
+   43     | KEYWORD
+   44     | KEYWORD SEMICOLON
+   45     | KEYWORD OPENPAREN Expr CLOSEDPAREN Block KEYWORD Block SEMICOLON
+   46     | KEYWORD OPENPAREN Expr CLOSEDPAREN Block SEMICOLON
+   47     | KEYWORD OPENPAREN Expr CLOSEDPAREN
+   48     | KEYWORD OPENPAREN CLOSEDPAREN Block
+   49     | ID OPENPAREN CLOSEDPAREN SEMICOLON
+   50     | ID OPENPAREN CLOSEDPAREN
+   51     | ID OPENPAREN ExprList CLOSEDPAREN SEMICOLON
+   52     | Block
+
+   53 Expr: Primary
+   54     | UNARYOP Expr
+   55     | MINUS Expr
+   56     | Expr BINARYOP Expr
+   57     | Expr BINARYOP
+   58     | BINARYOP Expr
+   59     | Expr MINUS Expr
+   60     | Expr MINUS
+   61     | ID EQ Expr
+   62     | Expr EQ ID
+   63     | ID OPENSQUARE Expr CLOSEDSQUARE EQ Expr
+   64     | ID OPENSQUARE CLOSEDSQUARE EQ Expr
+   65     | ID OPENPAREN ExprList CLOSEDPAREN
+   66     | OPENPAREN Expr CLOSEDPAREN
+   67     | OPENPAREN Expr
+   68     | ID OPENSQUARE Expr CLOSEDSQUARE
+
+   69 Primary: ID
+   70        | NUMBER
+   71        | STRING
+   72        | CHAR
+
+   73 ExprList: %empty
+   74         | ExprListTail
+
+   75 ExprListTail: Expr
+   76             | Expr COMMA ExprListTail
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    VOID <token> (258) 19
+    TYPE <token> (259) 8 9 10 11 12 13 15 16 17 18 27 29 30
+    ID <token> (260) 6 7 8 9 10 11 12 13 14 15 16 17 18 19 28 29 30 42 49 50 51 61 62 63 64 65 68 69
+    KEYWORD <token> (261) 40 41 42 43 44 45 46 47 48
+    STRING <token> (262) 71
+    UNARYOP <token> (263) 54
+    BINARYOP <token> (264) 56 57 58
+    OPENSQUARE <token> (265) 7 12 13 30 63 64 68
+    CLOSEDSQUARE <token> (266) 7 12 13 30 63 64 68
+    OPENCURLY <token> (267) 35 36 37
+    CLOSEDCURLY <token> (268) 35 36
+    OPENPAREN <token> (269) 14 15 16 18 19 45 46 47 48 49 50 51 65 66 67
+    CLOSEDPAREN <token> (270) 14 15 18 19 45 46 47 48 49 50 51 65 66
+    MINUS <token> (271) 55 59 60
+    SEMICOLON <token> (272) 6 7 10 11 13 38 39 41 42 44 45 46 49 51
+    EQ <token> (273) 6 7 9 10 61 62 63 64
+    CHAR <token> (274) 72
+    COMMA <token> (275) 23 24 25 76
+    NEWLINE <token> (276)
+    NUMBER <token> (277) 70
+
+
+Nonterminals, with rules where they appear
+
+    $accept (23)
+        on left: 0
+    Program <ast> (24)
+        on left: 1
+        on right: 0
+    DeclList <ast> (25)
+        on left: 2 3 4 5
+        on right: 1 2 3
+    VarDecl <ast> (26)
+        on left: 6 7 8 9 10 11 12 13
+        on right: 2 4 31 33
+    FunDecl <ast> (27)
+        on left: 14 15 16 17 18 19
+        on right: 3 5
+    ParamDeclList <ast> (28)
+        on left: 20 21
+        on right: 14 15 16 17 18 19
+    ParamDeclListTail <ast> (29)
+        on left: 22 23 24 25 26
+        on right: 21 23 26
+    ParamDecl <ast> (30)
+        on left: 27 28 29 30
+        on right: 22 23 24 26
+    BlockBody <ast> (31)
+        on left: 31 32 33 34
+        on right: 31 32 35 37
+    Block <ast> (32)
+        on left: 35 36 37
+        on right: 14 16 17 18 19 45 46 48 52
+    Stmt <ast> (33)
+        on left: 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52
+        on right: 32 34
+    Expr <ast> (34)
+        on left: 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68
+        on right: 6 7 9 10 12 13 39 40 41 45 46 47 54 55 56 57 58 59 60 61 62 63 64 66 67 68 75 76
+    Primary <token> (35)
+        on left: 69 70 71 72
+        on right: 53
+    ExprList <ast> (36)
+        on left: 73 74
+        on right: 51 65
+    ExprListTail <ast> (37)
+        on left: 75 76
+        on right: 74 76
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    VOID  shift, and go to state 1
+    TYPE  shift, and go to state 2
+    ID    shift, and go to state 3
+
+    Program   go to state 4
+    DeclList  go to state 5
+    VarDecl   go to state 6
+    FunDecl   go to state 7
+
+
+State 1
+
+   19 FunDecl: VOID . ID OPENPAREN ParamDeclList CLOSEDPAREN Block
+
+    ID  shift, and go to state 8
+
+
+State 2
+
+    8 VarDecl: TYPE . ID
+    9        | TYPE . ID EQ Expr
+   10        | TYPE . ID EQ Expr SEMICOLON
+   11        | TYPE . ID SEMICOLON
+   12        | TYPE . ID OPENSQUARE Expr CLOSEDSQUARE
+   13        | TYPE . ID OPENSQUARE Expr CLOSEDSQUARE SEMICOLON
+   15 FunDecl: TYPE . ID OPENPAREN ParamDeclList CLOSEDPAREN
+   16        | TYPE . ID OPENPAREN ParamDeclList Block
+   17        | TYPE . ID ParamDeclList Block
+   18        | TYPE . ID OPENPAREN ParamDeclList CLOSEDPAREN Block
+
+    ID  shift, and go to state 9
+
+
+State 3
+
+    6 VarDecl: ID . EQ Expr SEMICOLON
+    7        | ID . OPENSQUARE Expr CLOSEDSQUARE EQ Expr SEMICOLON
+   14 FunDecl: ID . OPENPAREN ParamDeclList CLOSEDPAREN Block
+
+    OPENSQUARE  shift, and go to state 10
+    OPENPAREN   shift, and go to state 11
+    EQ          shift, and go to state 12
+
+
+State 4
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 13
+
+
+State 5
+
+    1 Program: DeclList .
+
+    $default  reduce using rule 1 (Program)
+
+
+State 6
+
+    2 DeclList: VarDecl . DeclList
+    4         | VarDecl .
+
+    VOID  shift, and go to state 1
+    TYPE  shift, and go to state 2
+    ID    shift, and go to state 3
+
+    $default  reduce using rule 4 (DeclList)
+
+    DeclList  go to state 14
+    VarDecl   go to state 6
+    FunDecl   go to state 7
+
+
+State 7
+
+    3 DeclList: FunDecl . DeclList
+    5         | FunDecl .
+
+    VOID  shift, and go to state 1
+    TYPE  shift, and go to state 2
+    ID    shift, and go to state 3
+
+    $default  reduce using rule 5 (DeclList)
+
+    DeclList  go to state 15
+    VarDecl   go to state 6
+    FunDecl   go to state 7
+
+
+State 8
+
+   19 FunDecl: VOID ID . OPENPAREN ParamDeclList CLOSEDPAREN Block
+
+    OPENPAREN  shift, and go to state 16
+
+
+State 9
+
+    8 VarDecl: TYPE ID .
+    9        | TYPE ID . EQ Expr
+   10        | TYPE ID . EQ Expr SEMICOLON
+   11        | TYPE ID . SEMICOLON
+   12        | TYPE ID . OPENSQUARE Expr CLOSEDSQUARE
+   13        | TYPE ID . OPENSQUARE Expr CLOSEDSQUARE SEMICOLON
+   15 FunDecl: TYPE ID . OPENPAREN ParamDeclList CLOSEDPAREN
+   16        | TYPE ID . OPENPAREN ParamDeclList Block
+   17        | TYPE ID . ParamDeclList Block
+   18        | TYPE ID . OPENPAREN ParamDeclList CLOSEDPAREN Block
+
+    TYPE        shift, and go to state 17
+    ID          shift, and go to state 18
+    OPENSQUARE  shift, and go to state 19
+    OPENPAREN   shift, and go to state 20
+    SEMICOLON   shift, and go to state 21
+    EQ          shift, and go to state 22
+    COMMA       shift, and go to state 23
+
+    TYPE       [reduce using rule 8 (VarDecl)]
+    ID         [reduce using rule 8 (VarDecl)]
+    OPENCURLY  reduce using rule 20 (ParamDeclList)
+    $default   reduce using rule 8 (VarDecl)
+
+    ParamDeclList      go to state 24
+    ParamDeclListTail  go to state 25
+    ParamDecl          go to state 26
+
+
+State 10
+
+    7 VarDecl: ID OPENSQUARE . Expr CLOSEDSQUARE EQ Expr SEMICOLON
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 35
+    Primary  go to state 36
+
+
+State 11
+
+   14 FunDecl: ID OPENPAREN . ParamDeclList CLOSEDPAREN Block
+
+    TYPE   shift, and go to state 17
+    ID     shift, and go to state 18
+    COMMA  shift, and go to state 23
+
+    $default  reduce using rule 20 (ParamDeclList)
+
+    ParamDeclList      go to state 37
+    ParamDeclListTail  go to state 25
+    ParamDecl          go to state 26
+
+
+State 12
+
+    6 VarDecl: ID EQ . Expr SEMICOLON
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 38
+    Primary  go to state 36
+
+
+State 13
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+State 14
+
+    2 DeclList: VarDecl DeclList .
+
+    $default  reduce using rule 2 (DeclList)
+
+
+State 15
+
+    3 DeclList: FunDecl DeclList .
+
+    $default  reduce using rule 3 (DeclList)
+
+
+State 16
+
+   19 FunDecl: VOID ID OPENPAREN . ParamDeclList CLOSEDPAREN Block
+
+    TYPE   shift, and go to state 17
+    ID     shift, and go to state 18
+    COMMA  shift, and go to state 23
+
+    $default  reduce using rule 20 (ParamDeclList)
+
+    ParamDeclList      go to state 39
+    ParamDeclListTail  go to state 25
+    ParamDecl          go to state 26
+
+
+State 17
+
+   27 ParamDecl: TYPE .
+   29          | TYPE . ID
+   30          | TYPE . ID OPENSQUARE CLOSEDSQUARE
+
+    ID  shift, and go to state 40
+
+    ID        [reduce using rule 27 (ParamDecl)]
+    $default  reduce using rule 27 (ParamDecl)
+
+
+State 18
+
+   28 ParamDecl: ID .
+
+    $default  reduce using rule 28 (ParamDecl)
+
+
+State 19
+
+   12 VarDecl: TYPE ID OPENSQUARE . Expr CLOSEDSQUARE
+   13        | TYPE ID OPENSQUARE . Expr CLOSEDSQUARE SEMICOLON
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 41
+    Primary  go to state 36
+
+
+State 20
+
+   15 FunDecl: TYPE ID OPENPAREN . ParamDeclList CLOSEDPAREN
+   16        | TYPE ID OPENPAREN . ParamDeclList Block
+   18        | TYPE ID OPENPAREN . ParamDeclList CLOSEDPAREN Block
+
+    TYPE   shift, and go to state 17
+    ID     shift, and go to state 18
+    COMMA  shift, and go to state 23
+
+    $default  reduce using rule 20 (ParamDeclList)
+
+    ParamDeclList      go to state 42
+    ParamDeclListTail  go to state 25
+    ParamDecl          go to state 26
+
+
+State 21
+
+   11 VarDecl: TYPE ID SEMICOLON .
+
+    $default  reduce using rule 11 (VarDecl)
+
+
+State 22
+
+    9 VarDecl: TYPE ID EQ . Expr
+   10        | TYPE ID EQ . Expr SEMICOLON
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 43
+    Primary  go to state 36
+
+
+State 23
+
+   25 ParamDeclListTail: COMMA .
+
+    $default  reduce using rule 25 (ParamDeclListTail)
+
+
+State 24
+
+   17 FunDecl: TYPE ID ParamDeclList . Block
+
+    OPENCURLY  shift, and go to state 44
+
+    Block  go to state 45
+
+
+State 25
+
+   21 ParamDeclList: ParamDeclListTail .
+
+    $default  reduce using rule 21 (ParamDeclList)
+
+
+State 26
+
+   22 ParamDeclListTail: ParamDecl .
+   23                  | ParamDecl . COMMA ParamDeclListTail
+   24                  | ParamDecl . COMMA
+   26                  | ParamDecl . ParamDeclListTail
+
+    TYPE   shift, and go to state 17
+    ID     shift, and go to state 18
+    COMMA  shift, and go to state 46
+
+    $default  reduce using rule 22 (ParamDeclListTail)
+
+    ParamDeclListTail  go to state 47
+    ParamDecl          go to state 26
+
+
+State 27
+
+   61 Expr: ID . EQ Expr
+   63     | ID . OPENSQUARE Expr CLOSEDSQUARE EQ Expr
+   64     | ID . OPENSQUARE CLOSEDSQUARE EQ Expr
+   65     | ID . OPENPAREN ExprList CLOSEDPAREN
+   68     | ID . OPENSQUARE Expr CLOSEDSQUARE
+   69 Primary: ID .
+
+    OPENSQUARE  shift, and go to state 48
+    OPENPAREN   shift, and go to state 49
+    EQ          shift, and go to state 50
+
+    OPENPAREN  [reduce using rule 69 (Primary)]
+    EQ         [reduce using rule 69 (Primary)]
+    $default   reduce using rule 69 (Primary)
+
+
+State 28
+
+   71 Primary: STRING .
+
+    $default  reduce using rule 71 (Primary)
+
+
+State 29
+
+   54 Expr: UNARYOP . Expr
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 51
+    Primary  go to state 36
+
+
+State 30
+
+   58 Expr: BINARYOP . Expr
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 52
+    Primary  go to state 36
+
+
+State 31
+
+   66 Expr: OPENPAREN . Expr CLOSEDPAREN
+   67     | OPENPAREN . Expr
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 53
+    Primary  go to state 36
+
+
+State 32
+
+   55 Expr: MINUS . Expr
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 54
+    Primary  go to state 36
+
+
+State 33
+
+   72 Primary: CHAR .
+
+    $default  reduce using rule 72 (Primary)
+
+
+State 34
+
+   70 Primary: NUMBER .
+
+    $default  reduce using rule 70 (Primary)
+
+
+State 35
+
+    7 VarDecl: ID OPENSQUARE Expr . CLOSEDSQUARE EQ Expr SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP      shift, and go to state 55
+    CLOSEDSQUARE  shift, and go to state 56
+    MINUS         shift, and go to state 57
+    EQ            shift, and go to state 58
+
+
+State 36
+
+   53 Expr: Primary .
+
+    $default  reduce using rule 53 (Expr)
+
+
+State 37
+
+   14 FunDecl: ID OPENPAREN ParamDeclList . CLOSEDPAREN Block
+
+    CLOSEDPAREN  shift, and go to state 59
+
+
+State 38
+
+    6 VarDecl: ID EQ Expr . SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP   shift, and go to state 55
+    MINUS      shift, and go to state 57
+    SEMICOLON  shift, and go to state 60
+    EQ         shift, and go to state 58
+
+
+State 39
+
+   19 FunDecl: VOID ID OPENPAREN ParamDeclList . CLOSEDPAREN Block
+
+    CLOSEDPAREN  shift, and go to state 61
+
+
+State 40
+
+   29 ParamDecl: TYPE ID .
+   30          | TYPE ID . OPENSQUARE CLOSEDSQUARE
+
+    OPENSQUARE  shift, and go to state 62
+
+    $default  reduce using rule 29 (ParamDecl)
+
+
+State 41
+
+   12 VarDecl: TYPE ID OPENSQUARE Expr . CLOSEDSQUARE
+   13        | TYPE ID OPENSQUARE Expr . CLOSEDSQUARE SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP      shift, and go to state 55
+    CLOSEDSQUARE  shift, and go to state 63
+    MINUS         shift, and go to state 57
+    EQ            shift, and go to state 58
+
+
+State 42
+
+   15 FunDecl: TYPE ID OPENPAREN ParamDeclList . CLOSEDPAREN
+   16        | TYPE ID OPENPAREN ParamDeclList . Block
+   18        | TYPE ID OPENPAREN ParamDeclList . CLOSEDPAREN Block
+
+    OPENCURLY    shift, and go to state 44
+    CLOSEDPAREN  shift, and go to state 64
+
+    Block  go to state 65
+
+
+State 43
+
+    9 VarDecl: TYPE ID EQ Expr .
+   10        | TYPE ID EQ Expr . SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP   shift, and go to state 55
+    MINUS      shift, and go to state 57
+    SEMICOLON  shift, and go to state 66
+    EQ         shift, and go to state 58
+
+    BINARYOP   [reduce using rule 9 (VarDecl)]
+    MINUS      [reduce using rule 9 (VarDecl)]
+    SEMICOLON  [reduce using rule 9 (VarDecl)]
+    $default   reduce using rule 9 (VarDecl)
+
+
+State 44
+
+   35 Block: OPENCURLY . BlockBody CLOSEDCURLY
+   36      | OPENCURLY . CLOSEDCURLY
+   37      | OPENCURLY . BlockBody
+
+    TYPE         shift, and go to state 67
+    ID           shift, and go to state 68
+    KEYWORD      shift, and go to state 69
+    STRING       shift, and go to state 28
+    UNARYOP      shift, and go to state 29
+    BINARYOP     shift, and go to state 30
+    OPENCURLY    shift, and go to state 44
+    CLOSEDCURLY  shift, and go to state 70
+    OPENPAREN    shift, and go to state 31
+    MINUS        shift, and go to state 32
+    SEMICOLON    shift, and go to state 71
+    CHAR         shift, and go to state 33
+    NUMBER       shift, and go to state 34
+
+    VarDecl    go to state 72
+    BlockBody  go to state 73
+    Block      go to state 74
+    Stmt       go to state 75
+    Expr       go to state 76
+    Primary    go to state 36
+
+
+State 45
+
+   17 FunDecl: TYPE ID ParamDeclList Block .
+
+    $default  reduce using rule 17 (FunDecl)
+
+
+State 46
+
+   23 ParamDeclListTail: ParamDecl COMMA . ParamDeclListTail
+   24                  | ParamDecl COMMA .
+   25                  | COMMA .
+
+    TYPE   shift, and go to state 17
+    ID     shift, and go to state 18
+    COMMA  shift, and go to state 23
+
+    OPENCURLY    reduce using rule 24 (ParamDeclListTail)
+    OPENCURLY    [reduce using rule 25 (ParamDeclListTail)]
+    CLOSEDPAREN  reduce using rule 24 (ParamDeclListTail)
+    CLOSEDPAREN  [reduce using rule 25 (ParamDeclListTail)]
+    $default     reduce using rule 24 (ParamDeclListTail)
+
+    ParamDeclListTail  go to state 77
+    ParamDecl          go to state 26
+
+
+State 47
+
+   26 ParamDeclListTail: ParamDecl ParamDeclListTail .
+
+    $default  reduce using rule 26 (ParamDeclListTail)
+
+
+State 48
+
+   63 Expr: ID OPENSQUARE . Expr CLOSEDSQUARE EQ Expr
+   64     | ID OPENSQUARE . CLOSEDSQUARE EQ Expr
+   68     | ID OPENSQUARE . Expr CLOSEDSQUARE
+
+    ID            shift, and go to state 27
+    STRING        shift, and go to state 28
+    UNARYOP       shift, and go to state 29
+    BINARYOP      shift, and go to state 30
+    CLOSEDSQUARE  shift, and go to state 78
+    OPENPAREN     shift, and go to state 31
+    MINUS         shift, and go to state 32
+    CHAR          shift, and go to state 33
+    NUMBER        shift, and go to state 34
+
+    Expr     go to state 79
+    Primary  go to state 36
+
+
+State 49
+
+   65 Expr: ID OPENPAREN . ExprList CLOSEDPAREN
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    $default  reduce using rule 73 (ExprList)
+
+    Expr          go to state 80
+    Primary       go to state 36
+    ExprList      go to state 81
+    ExprListTail  go to state 82
+
+
+State 50
+
+   61 Expr: ID EQ . Expr
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 83
+    Primary  go to state 36
+
+
+State 51
+
+   54 Expr: UNARYOP Expr .
+   56     | Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP  shift, and go to state 55
+    MINUS     shift, and go to state 57
+    EQ        shift, and go to state 58
+
+    BINARYOP  [reduce using rule 54 (Expr)]
+    MINUS     [reduce using rule 54 (Expr)]
+    EQ        [reduce using rule 54 (Expr)]
+    $default  reduce using rule 54 (Expr)
+
+
+State 52
+
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   58     | BINARYOP Expr .
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP  shift, and go to state 55
+    MINUS     shift, and go to state 57
+    EQ        shift, and go to state 58
+
+    BINARYOP  [reduce using rule 58 (Expr)]
+    MINUS     [reduce using rule 58 (Expr)]
+    EQ        [reduce using rule 58 (Expr)]
+    $default  reduce using rule 58 (Expr)
+
+
+State 53
+
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+   66     | OPENPAREN Expr . CLOSEDPAREN
+   67     | OPENPAREN Expr .
+
+    BINARYOP     shift, and go to state 55
+    CLOSEDPAREN  shift, and go to state 84
+    MINUS        shift, and go to state 57
+    EQ           shift, and go to state 58
+
+    BINARYOP     [reduce using rule 67 (Expr)]
+    CLOSEDPAREN  [reduce using rule 67 (Expr)]
+    MINUS        [reduce using rule 67 (Expr)]
+    EQ           [reduce using rule 67 (Expr)]
+    $default     reduce using rule 67 (Expr)
+
+
+State 54
+
+   55 Expr: MINUS Expr .
+   56     | Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP  shift, and go to state 55
+    MINUS     shift, and go to state 57
+    EQ        shift, and go to state 58
+
+    BINARYOP  [reduce using rule 55 (Expr)]
+    MINUS     [reduce using rule 55 (Expr)]
+    EQ        [reduce using rule 55 (Expr)]
+    $default  reduce using rule 55 (Expr)
+
+
+State 55
+
+   56 Expr: Expr BINARYOP . Expr
+   57     | Expr BINARYOP .
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    ID         [reduce using rule 57 (Expr)]
+    STRING     [reduce using rule 57 (Expr)]
+    UNARYOP    [reduce using rule 57 (Expr)]
+    BINARYOP   [reduce using rule 57 (Expr)]
+    OPENPAREN  [reduce using rule 57 (Expr)]
+    MINUS      [reduce using rule 57 (Expr)]
+    CHAR       [reduce using rule 57 (Expr)]
+    NUMBER     [reduce using rule 57 (Expr)]
+    $default   reduce using rule 57 (Expr)
+
+    Expr     go to state 85
+    Primary  go to state 36
+
+
+State 56
+
+    7 VarDecl: ID OPENSQUARE Expr CLOSEDSQUARE . EQ Expr SEMICOLON
+
+    EQ  shift, and go to state 86
+
+
+State 57
+
+   59 Expr: Expr MINUS . Expr
+   60     | Expr MINUS .
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    ID         [reduce using rule 60 (Expr)]
+    STRING     [reduce using rule 60 (Expr)]
+    UNARYOP    [reduce using rule 60 (Expr)]
+    BINARYOP   [reduce using rule 60 (Expr)]
+    OPENPAREN  [reduce using rule 60 (Expr)]
+    MINUS      [reduce using rule 60 (Expr)]
+    CHAR       [reduce using rule 60 (Expr)]
+    NUMBER     [reduce using rule 60 (Expr)]
+    $default   reduce using rule 60 (Expr)
+
+    Expr     go to state 87
+    Primary  go to state 36
+
+
+State 58
+
+   62 Expr: Expr EQ . ID
+
+    ID  shift, and go to state 88
+
+
+State 59
+
+   14 FunDecl: ID OPENPAREN ParamDeclList CLOSEDPAREN . Block
+
+    OPENCURLY  shift, and go to state 44
+
+    Block  go to state 89
+
+
+State 60
+
+    6 VarDecl: ID EQ Expr SEMICOLON .
+
+    $default  reduce using rule 6 (VarDecl)
+
+
+State 61
+
+   19 FunDecl: VOID ID OPENPAREN ParamDeclList CLOSEDPAREN . Block
+
+    OPENCURLY  shift, and go to state 44
+
+    Block  go to state 90
+
+
+State 62
+
+   30 ParamDecl: TYPE ID OPENSQUARE . CLOSEDSQUARE
+
+    CLOSEDSQUARE  shift, and go to state 91
+
+
+State 63
+
+   12 VarDecl: TYPE ID OPENSQUARE Expr CLOSEDSQUARE .
+   13        | TYPE ID OPENSQUARE Expr CLOSEDSQUARE . SEMICOLON
+
+    SEMICOLON  shift, and go to state 92
+
+    SEMICOLON  [reduce using rule 12 (VarDecl)]
+    $default   reduce using rule 12 (VarDecl)
+
+
+State 64
+
+   15 FunDecl: TYPE ID OPENPAREN ParamDeclList CLOSEDPAREN .
+   18        | TYPE ID OPENPAREN ParamDeclList CLOSEDPAREN . Block
+
+    OPENCURLY  shift, and go to state 44
+
+    $default  reduce using rule 15 (FunDecl)
+
+    Block  go to state 93
+
+
+State 65
+
+   16 FunDecl: TYPE ID OPENPAREN ParamDeclList Block .
+
+    $default  reduce using rule 16 (FunDecl)
+
+
+State 66
+
+   10 VarDecl: TYPE ID EQ Expr SEMICOLON .
+
+    $default  reduce using rule 10 (VarDecl)
+
+
+State 67
+
+    8 VarDecl: TYPE . ID
+    9        | TYPE . ID EQ Expr
+   10        | TYPE . ID EQ Expr SEMICOLON
+   11        | TYPE . ID SEMICOLON
+   12        | TYPE . ID OPENSQUARE Expr CLOSEDSQUARE
+   13        | TYPE . ID OPENSQUARE Expr CLOSEDSQUARE SEMICOLON
+
+    ID  shift, and go to state 94
+
+
+State 68
+
+    6 VarDecl: ID . EQ Expr SEMICOLON
+    7        | ID . OPENSQUARE Expr CLOSEDSQUARE EQ Expr SEMICOLON
+   49 Stmt: ID . OPENPAREN CLOSEDPAREN SEMICOLON
+   50     | ID . OPENPAREN CLOSEDPAREN
+   51     | ID . OPENPAREN ExprList CLOSEDPAREN SEMICOLON
+   61 Expr: ID . EQ Expr
+   63     | ID . OPENSQUARE Expr CLOSEDSQUARE EQ Expr
+   64     | ID . OPENSQUARE CLOSEDSQUARE EQ Expr
+   65     | ID . OPENPAREN ExprList CLOSEDPAREN
+   68     | ID . OPENSQUARE Expr CLOSEDSQUARE
+   69 Primary: ID .
+
+    OPENSQUARE  shift, and go to state 95
+    OPENPAREN   shift, and go to state 96
+    EQ          shift, and go to state 97
+
+    EQ        [reduce using rule 69 (Primary)]
+    $default  reduce using rule 69 (Primary)
+
+
+State 69
+
+   40 Stmt: KEYWORD . Expr
+   41     | KEYWORD . Expr SEMICOLON
+   42     | KEYWORD . ID SEMICOLON
+   43     | KEYWORD .
+   44     | KEYWORD . SEMICOLON
+   45     | KEYWORD . OPENPAREN Expr CLOSEDPAREN Block KEYWORD Block SEMICOLON
+   46     | KEYWORD . OPENPAREN Expr CLOSEDPAREN Block SEMICOLON
+   47     | KEYWORD . OPENPAREN Expr CLOSEDPAREN
+   48     | KEYWORD . OPENPAREN CLOSEDPAREN Block
+
+    ID         shift, and go to state 98
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 99
+    MINUS      shift, and go to state 32
+    SEMICOLON  shift, and go to state 100
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    ID         [reduce using rule 43 (Stmt)]
+    STRING     [reduce using rule 43 (Stmt)]
+    UNARYOP    [reduce using rule 43 (Stmt)]
+    BINARYOP   [reduce using rule 43 (Stmt)]
+    OPENPAREN  [reduce using rule 43 (Stmt)]
+    MINUS      [reduce using rule 43 (Stmt)]
+    SEMICOLON  [reduce using rule 43 (Stmt)]
+    CHAR       [reduce using rule 43 (Stmt)]
+    NUMBER     [reduce using rule 43 (Stmt)]
+    $default   reduce using rule 43 (Stmt)
+
+    Expr     go to state 101
+    Primary  go to state 36
+
+
+State 70
+
+   36 Block: OPENCURLY CLOSEDCURLY .
+
+    $default  reduce using rule 36 (Block)
+
+
+State 71
+
+   38 Stmt: SEMICOLON .
+
+    $default  reduce using rule 38 (Stmt)
+
+
+State 72
+
+   31 BlockBody: VarDecl . BlockBody
+   33          | VarDecl .
+
+    TYPE       shift, and go to state 67
+    ID         shift, and go to state 68
+    KEYWORD    shift, and go to state 69
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENCURLY  shift, and go to state 44
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    SEMICOLON  shift, and go to state 71
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    TYPE       [reduce using rule 33 (BlockBody)]
+    ID         [reduce using rule 33 (BlockBody)]
+    KEYWORD    [reduce using rule 33 (BlockBody)]
+    STRING     [reduce using rule 33 (BlockBody)]
+    UNARYOP    [reduce using rule 33 (BlockBody)]
+    BINARYOP   [reduce using rule 33 (BlockBody)]
+    OPENCURLY  [reduce using rule 33 (BlockBody)]
+    OPENPAREN  [reduce using rule 33 (BlockBody)]
+    MINUS      [reduce using rule 33 (BlockBody)]
+    SEMICOLON  [reduce using rule 33 (BlockBody)]
+    CHAR       [reduce using rule 33 (BlockBody)]
+    NUMBER     [reduce using rule 33 (BlockBody)]
+    $default   reduce using rule 33 (BlockBody)
+
+    VarDecl    go to state 72
+    BlockBody  go to state 102
+    Block      go to state 74
+    Stmt       go to state 75
+    Expr       go to state 76
+    Primary    go to state 36
+
+
+State 73
+
+   35 Block: OPENCURLY BlockBody . CLOSEDCURLY
+   37      | OPENCURLY BlockBody .
+
+    CLOSEDCURLY  shift, and go to state 103
+
+    CLOSEDCURLY  [reduce using rule 37 (Block)]
+    $default     reduce using rule 37 (Block)
+
+
+State 74
+
+   52 Stmt: Block .
+
+    $default  reduce using rule 52 (Stmt)
+
+
+State 75
+
+   32 BlockBody: Stmt . BlockBody
+   34          | Stmt .
+
+    TYPE       shift, and go to state 67
+    ID         shift, and go to state 68
+    KEYWORD    shift, and go to state 69
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENCURLY  shift, and go to state 44
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    SEMICOLON  shift, and go to state 71
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    TYPE       [reduce using rule 34 (BlockBody)]
+    ID         [reduce using rule 34 (BlockBody)]
+    KEYWORD    [reduce using rule 34 (BlockBody)]
+    STRING     [reduce using rule 34 (BlockBody)]
+    UNARYOP    [reduce using rule 34 (BlockBody)]
+    BINARYOP   [reduce using rule 34 (BlockBody)]
+    OPENCURLY  [reduce using rule 34 (BlockBody)]
+    OPENPAREN  [reduce using rule 34 (BlockBody)]
+    MINUS      [reduce using rule 34 (BlockBody)]
+    SEMICOLON  [reduce using rule 34 (BlockBody)]
+    CHAR       [reduce using rule 34 (BlockBody)]
+    NUMBER     [reduce using rule 34 (BlockBody)]
+    $default   reduce using rule 34 (BlockBody)
+
+    VarDecl    go to state 72
+    BlockBody  go to state 104
+    Block      go to state 74
+    Stmt       go to state 75
+    Expr       go to state 76
+    Primary    go to state 36
+
+
+State 76
+
+   39 Stmt: Expr . SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP   shift, and go to state 55
+    MINUS      shift, and go to state 57
+    SEMICOLON  shift, and go to state 105
+    EQ         shift, and go to state 58
+
+
+State 77
+
+   23 ParamDeclListTail: ParamDecl COMMA ParamDeclListTail .
+
+    $default  reduce using rule 23 (ParamDeclListTail)
+
+
+State 78
+
+   64 Expr: ID OPENSQUARE CLOSEDSQUARE . EQ Expr
+
+    EQ  shift, and go to state 106
+
+
+State 79
+
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+   63     | ID OPENSQUARE Expr . CLOSEDSQUARE EQ Expr
+   68     | ID OPENSQUARE Expr . CLOSEDSQUARE
+
+    BINARYOP      shift, and go to state 55
+    CLOSEDSQUARE  shift, and go to state 107
+    MINUS         shift, and go to state 57
+    EQ            shift, and go to state 58
+
+
+State 80
+
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+   75 ExprListTail: Expr .
+   76             | Expr . COMMA ExprListTail
+
+    BINARYOP  shift, and go to state 55
+    MINUS     shift, and go to state 57
+    EQ        shift, and go to state 58
+    COMMA     shift, and go to state 108
+
+    $default  reduce using rule 75 (ExprListTail)
+
+
+State 81
+
+   65 Expr: ID OPENPAREN ExprList . CLOSEDPAREN
+
+    CLOSEDPAREN  shift, and go to state 109
+
+
+State 82
+
+   74 ExprList: ExprListTail .
+
+    $default  reduce using rule 74 (ExprList)
+
+
+State 83
+
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   61     | ID EQ Expr .
+   62     | Expr . EQ ID
+
+    BINARYOP  shift, and go to state 55
+    MINUS     shift, and go to state 57
+    EQ        shift, and go to state 58
+
+    BINARYOP  [reduce using rule 61 (Expr)]
+    MINUS     [reduce using rule 61 (Expr)]
+    EQ        [reduce using rule 61 (Expr)]
+    $default  reduce using rule 61 (Expr)
+
+
+State 84
+
+   66 Expr: OPENPAREN Expr CLOSEDPAREN .
+
+    $default  reduce using rule 66 (Expr)
+
+
+State 85
+
+   56 Expr: Expr . BINARYOP Expr
+   56     | Expr BINARYOP Expr .
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP  shift, and go to state 55
+    MINUS     shift, and go to state 57
+    EQ        shift, and go to state 58
+
+    BINARYOP  [reduce using rule 56 (Expr)]
+    MINUS     [reduce using rule 56 (Expr)]
+    EQ        [reduce using rule 56 (Expr)]
+    $default  reduce using rule 56 (Expr)
+
+
+State 86
+
+    7 VarDecl: ID OPENSQUARE Expr CLOSEDSQUARE EQ . Expr SEMICOLON
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 110
+    Primary  go to state 36
+
+
+State 87
+
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   59     | Expr MINUS Expr .
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP  shift, and go to state 55
+    MINUS     shift, and go to state 57
+    EQ        shift, and go to state 58
+
+    BINARYOP  [reduce using rule 59 (Expr)]
+    MINUS     [reduce using rule 59 (Expr)]
+    EQ        [reduce using rule 59 (Expr)]
+    $default  reduce using rule 59 (Expr)
+
+
+State 88
+
+   62 Expr: Expr EQ ID .
+
+    $default  reduce using rule 62 (Expr)
+
+
+State 89
+
+   14 FunDecl: ID OPENPAREN ParamDeclList CLOSEDPAREN Block .
+
+    $default  reduce using rule 14 (FunDecl)
+
+
+State 90
+
+   19 FunDecl: VOID ID OPENPAREN ParamDeclList CLOSEDPAREN Block .
+
+    $default  reduce using rule 19 (FunDecl)
+
+
+State 91
+
+   30 ParamDecl: TYPE ID OPENSQUARE CLOSEDSQUARE .
+
+    $default  reduce using rule 30 (ParamDecl)
+
+
+State 92
+
+   13 VarDecl: TYPE ID OPENSQUARE Expr CLOSEDSQUARE SEMICOLON .
+
+    $default  reduce using rule 13 (VarDecl)
+
+
+State 93
+
+   18 FunDecl: TYPE ID OPENPAREN ParamDeclList CLOSEDPAREN Block .
+
+    $default  reduce using rule 18 (FunDecl)
+
+
+State 94
+
+    8 VarDecl: TYPE ID .
+    9        | TYPE ID . EQ Expr
+   10        | TYPE ID . EQ Expr SEMICOLON
+   11        | TYPE ID . SEMICOLON
+   12        | TYPE ID . OPENSQUARE Expr CLOSEDSQUARE
+   13        | TYPE ID . OPENSQUARE Expr CLOSEDSQUARE SEMICOLON
+
+    OPENSQUARE  shift, and go to state 19
+    SEMICOLON   shift, and go to state 21
+    EQ          shift, and go to state 22
+
+    SEMICOLON  [reduce using rule 8 (VarDecl)]
+    $default   reduce using rule 8 (VarDecl)
+
+
+State 95
+
+    7 VarDecl: ID OPENSQUARE . Expr CLOSEDSQUARE EQ Expr SEMICOLON
+   63 Expr: ID OPENSQUARE . Expr CLOSEDSQUARE EQ Expr
+   64     | ID OPENSQUARE . CLOSEDSQUARE EQ Expr
+   68     | ID OPENSQUARE . Expr CLOSEDSQUARE
+
+    ID            shift, and go to state 27
+    STRING        shift, and go to state 28
+    UNARYOP       shift, and go to state 29
+    BINARYOP      shift, and go to state 30
+    CLOSEDSQUARE  shift, and go to state 78
+    OPENPAREN     shift, and go to state 31
+    MINUS         shift, and go to state 32
+    CHAR          shift, and go to state 33
+    NUMBER        shift, and go to state 34
+
+    Expr     go to state 111
+    Primary  go to state 36
+
+
+State 96
+
+   49 Stmt: ID OPENPAREN . CLOSEDPAREN SEMICOLON
+   50     | ID OPENPAREN . CLOSEDPAREN
+   51     | ID OPENPAREN . ExprList CLOSEDPAREN SEMICOLON
+   65 Expr: ID OPENPAREN . ExprList CLOSEDPAREN
+
+    ID           shift, and go to state 27
+    STRING       shift, and go to state 28
+    UNARYOP      shift, and go to state 29
+    BINARYOP     shift, and go to state 30
+    OPENPAREN    shift, and go to state 31
+    CLOSEDPAREN  shift, and go to state 112
+    MINUS        shift, and go to state 32
+    CHAR         shift, and go to state 33
+    NUMBER       shift, and go to state 34
+
+    CLOSEDPAREN  [reduce using rule 73 (ExprList)]
+
+    Expr          go to state 80
+    Primary       go to state 36
+    ExprList      go to state 113
+    ExprListTail  go to state 82
+
+
+State 97
+
+    6 VarDecl: ID EQ . Expr SEMICOLON
+   61 Expr: ID EQ . Expr
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 114
+    Primary  go to state 36
+
+
+State 98
+
+   42 Stmt: KEYWORD ID . SEMICOLON
+   61 Expr: ID . EQ Expr
+   63     | ID . OPENSQUARE Expr CLOSEDSQUARE EQ Expr
+   64     | ID . OPENSQUARE CLOSEDSQUARE EQ Expr
+   65     | ID . OPENPAREN ExprList CLOSEDPAREN
+   68     | ID . OPENSQUARE Expr CLOSEDSQUARE
+   69 Primary: ID .
+
+    OPENSQUARE  shift, and go to state 48
+    OPENPAREN   shift, and go to state 49
+    SEMICOLON   shift, and go to state 115
+    EQ          shift, and go to state 50
+
+    OPENPAREN  [reduce using rule 69 (Primary)]
+    SEMICOLON  [reduce using rule 69 (Primary)]
+    EQ         [reduce using rule 69 (Primary)]
+    $default   reduce using rule 69 (Primary)
+
+
+State 99
+
+   45 Stmt: KEYWORD OPENPAREN . Expr CLOSEDPAREN Block KEYWORD Block SEMICOLON
+   46     | KEYWORD OPENPAREN . Expr CLOSEDPAREN Block SEMICOLON
+   47     | KEYWORD OPENPAREN . Expr CLOSEDPAREN
+   48     | KEYWORD OPENPAREN . CLOSEDPAREN Block
+   66 Expr: OPENPAREN . Expr CLOSEDPAREN
+   67     | OPENPAREN . Expr
+
+    ID           shift, and go to state 27
+    STRING       shift, and go to state 28
+    UNARYOP      shift, and go to state 29
+    BINARYOP     shift, and go to state 30
+    OPENPAREN    shift, and go to state 31
+    CLOSEDPAREN  shift, and go to state 116
+    MINUS        shift, and go to state 32
+    CHAR         shift, and go to state 33
+    NUMBER       shift, and go to state 34
+
+    Expr     go to state 117
+    Primary  go to state 36
+
+
+State 100
+
+   44 Stmt: KEYWORD SEMICOLON .
+
+    $default  reduce using rule 44 (Stmt)
+
+
+State 101
+
+   40 Stmt: KEYWORD Expr .
+   41     | KEYWORD Expr . SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP   shift, and go to state 55
+    MINUS      shift, and go to state 57
+    SEMICOLON  shift, and go to state 118
+    EQ         shift, and go to state 58
+
+    BINARYOP   [reduce using rule 40 (Stmt)]
+    MINUS      [reduce using rule 40 (Stmt)]
+    SEMICOLON  [reduce using rule 40 (Stmt)]
+    $default   reduce using rule 40 (Stmt)
+
+
+State 102
+
+   31 BlockBody: VarDecl BlockBody .
+
+    $default  reduce using rule 31 (BlockBody)
+
+
+State 103
+
+   35 Block: OPENCURLY BlockBody CLOSEDCURLY .
+
+    $default  reduce using rule 35 (Block)
+
+
+State 104
+
+   32 BlockBody: Stmt BlockBody .
+
+    $default  reduce using rule 32 (BlockBody)
+
+
+State 105
+
+   39 Stmt: Expr SEMICOLON .
+
+    $default  reduce using rule 39 (Stmt)
+
+
+State 106
+
+   64 Expr: ID OPENSQUARE CLOSEDSQUARE EQ . Expr
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 119
+    Primary  go to state 36
+
+
+State 107
+
+   63 Expr: ID OPENSQUARE Expr CLOSEDSQUARE . EQ Expr
+   68     | ID OPENSQUARE Expr CLOSEDSQUARE .
+
+    EQ  shift, and go to state 120
+
+    EQ        [reduce using rule 68 (Expr)]
+    $default  reduce using rule 68 (Expr)
+
+
+State 108
+
+   76 ExprListTail: Expr COMMA . ExprListTail
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr          go to state 80
+    Primary       go to state 36
+    ExprListTail  go to state 121
+
+
+State 109
+
+   65 Expr: ID OPENPAREN ExprList CLOSEDPAREN .
+
+    $default  reduce using rule 65 (Expr)
+
+
+State 110
+
+    7 VarDecl: ID OPENSQUARE Expr CLOSEDSQUARE EQ Expr . SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+
+    BINARYOP   shift, and go to state 55
+    MINUS      shift, and go to state 57
+    SEMICOLON  shift, and go to state 122
+    EQ         shift, and go to state 58
+
+
+State 111
+
+    7 VarDecl: ID OPENSQUARE Expr . CLOSEDSQUARE EQ Expr SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+   63     | ID OPENSQUARE Expr . CLOSEDSQUARE EQ Expr
+   68     | ID OPENSQUARE Expr . CLOSEDSQUARE
+
+    BINARYOP      shift, and go to state 55
+    CLOSEDSQUARE  shift, and go to state 123
+    MINUS         shift, and go to state 57
+    EQ            shift, and go to state 58
+
+
+State 112
+
+   49 Stmt: ID OPENPAREN CLOSEDPAREN . SEMICOLON
+   50     | ID OPENPAREN CLOSEDPAREN .
+
+    SEMICOLON  shift, and go to state 124
+
+    SEMICOLON  [reduce using rule 50 (Stmt)]
+    $default   reduce using rule 50 (Stmt)
+
+
+State 113
+
+   51 Stmt: ID OPENPAREN ExprList . CLOSEDPAREN SEMICOLON
+   65 Expr: ID OPENPAREN ExprList . CLOSEDPAREN
+
+    CLOSEDPAREN  shift, and go to state 125
+
+
+State 114
+
+    6 VarDecl: ID EQ Expr . SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   61     | ID EQ Expr .
+   62     | Expr . EQ ID
+
+    BINARYOP   shift, and go to state 55
+    MINUS      shift, and go to state 57
+    SEMICOLON  shift, and go to state 60
+    EQ         shift, and go to state 58
+
+    BINARYOP   [reduce using rule 61 (Expr)]
+    MINUS      [reduce using rule 61 (Expr)]
+    SEMICOLON  [reduce using rule 61 (Expr)]
+    EQ         [reduce using rule 61 (Expr)]
+
+
+State 115
+
+   42 Stmt: KEYWORD ID SEMICOLON .
+
+    $default  reduce using rule 42 (Stmt)
+
+
+State 116
+
+   48 Stmt: KEYWORD OPENPAREN CLOSEDPAREN . Block
+
+    OPENCURLY  shift, and go to state 44
+
+    Block  go to state 126
+
+
+State 117
+
+   45 Stmt: KEYWORD OPENPAREN Expr . CLOSEDPAREN Block KEYWORD Block SEMICOLON
+   46     | KEYWORD OPENPAREN Expr . CLOSEDPAREN Block SEMICOLON
+   47     | KEYWORD OPENPAREN Expr . CLOSEDPAREN
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+   66     | OPENPAREN Expr . CLOSEDPAREN
+   67     | OPENPAREN Expr .
+
+    BINARYOP     shift, and go to state 55
+    CLOSEDPAREN  shift, and go to state 127
+    MINUS        shift, and go to state 57
+    EQ           shift, and go to state 58
+
+    BINARYOP  [reduce using rule 67 (Expr)]
+    MINUS     [reduce using rule 67 (Expr)]
+    EQ        [reduce using rule 67 (Expr)]
+    $default  reduce using rule 67 (Expr)
+
+
+State 118
+
+   41 Stmt: KEYWORD Expr SEMICOLON .
+
+    $default  reduce using rule 41 (Stmt)
+
+
+State 119
+
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+   64     | ID OPENSQUARE CLOSEDSQUARE EQ Expr .
+
+    BINARYOP  shift, and go to state 55
+    MINUS     shift, and go to state 57
+    EQ        shift, and go to state 58
+
+    BINARYOP  [reduce using rule 64 (Expr)]
+    MINUS     [reduce using rule 64 (Expr)]
+    EQ        [reduce using rule 64 (Expr)]
+    $default  reduce using rule 64 (Expr)
+
+
+State 120
+
+   63 Expr: ID OPENSQUARE Expr CLOSEDSQUARE EQ . Expr
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 128
+    Primary  go to state 36
+
+
+State 121
+
+   76 ExprListTail: Expr COMMA ExprListTail .
+
+    $default  reduce using rule 76 (ExprListTail)
+
+
+State 122
+
+    7 VarDecl: ID OPENSQUARE Expr CLOSEDSQUARE EQ Expr SEMICOLON .
+
+    $default  reduce using rule 7 (VarDecl)
+
+
+State 123
+
+    7 VarDecl: ID OPENSQUARE Expr CLOSEDSQUARE . EQ Expr SEMICOLON
+   63 Expr: ID OPENSQUARE Expr CLOSEDSQUARE . EQ Expr
+   68     | ID OPENSQUARE Expr CLOSEDSQUARE .
+
+    EQ  shift, and go to state 129
+
+    EQ        [reduce using rule 68 (Expr)]
+    $default  reduce using rule 68 (Expr)
+
+
+State 124
+
+   49 Stmt: ID OPENPAREN CLOSEDPAREN SEMICOLON .
+
+    $default  reduce using rule 49 (Stmt)
+
+
+State 125
+
+   51 Stmt: ID OPENPAREN ExprList CLOSEDPAREN . SEMICOLON
+   65 Expr: ID OPENPAREN ExprList CLOSEDPAREN .
+
+    SEMICOLON  shift, and go to state 130
+
+    SEMICOLON  [reduce using rule 65 (Expr)]
+    $default   reduce using rule 65 (Expr)
+
+
+State 126
+
+   48 Stmt: KEYWORD OPENPAREN CLOSEDPAREN Block .
+
+    $default  reduce using rule 48 (Stmt)
+
+
+State 127
+
+   45 Stmt: KEYWORD OPENPAREN Expr CLOSEDPAREN . Block KEYWORD Block SEMICOLON
+   46     | KEYWORD OPENPAREN Expr CLOSEDPAREN . Block SEMICOLON
+   47     | KEYWORD OPENPAREN Expr CLOSEDPAREN .
+   66 Expr: OPENPAREN Expr CLOSEDPAREN .
+
+    OPENCURLY  shift, and go to state 44
+
+    $end         reduce using rule 47 (Stmt)
+    $end         [reduce using rule 66 (Expr)]
+    VOID         reduce using rule 47 (Stmt)
+    VOID         [reduce using rule 66 (Expr)]
+    TYPE         reduce using rule 47 (Stmt)
+    TYPE         [reduce using rule 66 (Expr)]
+    ID           reduce using rule 47 (Stmt)
+    ID           [reduce using rule 66 (Expr)]
+    KEYWORD      reduce using rule 47 (Stmt)
+    KEYWORD      [reduce using rule 66 (Expr)]
+    STRING       reduce using rule 47 (Stmt)
+    STRING       [reduce using rule 66 (Expr)]
+    UNARYOP      reduce using rule 47 (Stmt)
+    UNARYOP      [reduce using rule 66 (Expr)]
+    BINARYOP     reduce using rule 47 (Stmt)
+    BINARYOP     [reduce using rule 66 (Expr)]
+    OPENCURLY    [reduce using rule 47 (Stmt)]
+    OPENCURLY    [reduce using rule 66 (Expr)]
+    CLOSEDCURLY  reduce using rule 47 (Stmt)
+    CLOSEDCURLY  [reduce using rule 66 (Expr)]
+    OPENPAREN    reduce using rule 47 (Stmt)
+    OPENPAREN    [reduce using rule 66 (Expr)]
+    MINUS        reduce using rule 47 (Stmt)
+    MINUS        [reduce using rule 66 (Expr)]
+    SEMICOLON    reduce using rule 47 (Stmt)
+    SEMICOLON    [reduce using rule 66 (Expr)]
+    EQ           reduce using rule 66 (Expr)
+    CHAR         reduce using rule 47 (Stmt)
+    CHAR         [reduce using rule 66 (Expr)]
+    NUMBER       reduce using rule 47 (Stmt)
+    NUMBER       [reduce using rule 66 (Expr)]
+    $default     reduce using rule 47 (Stmt)
+
+    Block  go to state 131
+
+
+State 128
+
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+   63     | ID OPENSQUARE Expr CLOSEDSQUARE EQ Expr .
+
+    BINARYOP  shift, and go to state 55
+    MINUS     shift, and go to state 57
+    EQ        shift, and go to state 58
+
+    BINARYOP  [reduce using rule 63 (Expr)]
+    MINUS     [reduce using rule 63 (Expr)]
+    EQ        [reduce using rule 63 (Expr)]
+    $default  reduce using rule 63 (Expr)
+
+
+State 129
+
+    7 VarDecl: ID OPENSQUARE Expr CLOSEDSQUARE EQ . Expr SEMICOLON
+   63 Expr: ID OPENSQUARE Expr CLOSEDSQUARE EQ . Expr
+
+    ID         shift, and go to state 27
+    STRING     shift, and go to state 28
+    UNARYOP    shift, and go to state 29
+    BINARYOP   shift, and go to state 30
+    OPENPAREN  shift, and go to state 31
+    MINUS      shift, and go to state 32
+    CHAR       shift, and go to state 33
+    NUMBER     shift, and go to state 34
+
+    Expr     go to state 132
+    Primary  go to state 36
+
+
+State 130
+
+   51 Stmt: ID OPENPAREN ExprList CLOSEDPAREN SEMICOLON .
+
+    $default  reduce using rule 51 (Stmt)
+
+
+State 131
+
+   45 Stmt: KEYWORD OPENPAREN Expr CLOSEDPAREN Block . KEYWORD Block SEMICOLON
+   46     | KEYWORD OPENPAREN Expr CLOSEDPAREN Block . SEMICOLON
+
+    KEYWORD    shift, and go to state 133
+    SEMICOLON  shift, and go to state 134
+
+
+State 132
+
+    7 VarDecl: ID OPENSQUARE Expr CLOSEDSQUARE EQ Expr . SEMICOLON
+   56 Expr: Expr . BINARYOP Expr
+   57     | Expr . BINARYOP
+   59     | Expr . MINUS Expr
+   60     | Expr . MINUS
+   62     | Expr . EQ ID
+   63     | ID OPENSQUARE Expr CLOSEDSQUARE EQ Expr .
+
+    BINARYOP   shift, and go to state 55
+    MINUS      shift, and go to state 57
+    SEMICOLON  shift, and go to state 122
+    EQ         shift, and go to state 58
+
+    BINARYOP   [reduce using rule 63 (Expr)]
+    MINUS      [reduce using rule 63 (Expr)]
+    SEMICOLON  [reduce using rule 63 (Expr)]
+    EQ         [reduce using rule 63 (Expr)]
+
+
+State 133
+
+   45 Stmt: KEYWORD OPENPAREN Expr CLOSEDPAREN Block KEYWORD . Block SEMICOLON
+
+    OPENCURLY  shift, and go to state 44
+
+    Block  go to state 135
+
+
+State 134
+
+   46 Stmt: KEYWORD OPENPAREN Expr CLOSEDPAREN Block SEMICOLON .
+
+    $default  reduce using rule 46 (Stmt)
+
+
+State 135
+
+   45 Stmt: KEYWORD OPENPAREN Expr CLOSEDPAREN Block KEYWORD Block . SEMICOLON
+
+    SEMICOLON  shift, and go to state 136
+
+
+State 136
+
+   45 Stmt: KEYWORD OPENPAREN Expr CLOSEDPAREN Block KEYWORD Block SEMICOLON .
+
+    $default  reduce using rule 45 (Stmt)
