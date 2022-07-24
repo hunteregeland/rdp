@@ -99,6 +99,16 @@ STRING  ['"][A-Za-z0-9:, ]*['"]
     return WORKINGSTORAGE;
 }
 
+(?i:local-storage)  {printf("%s : LOCAL-STORAGE\n", yytext);
+    yylval.string = strdup(yytext);
+    return LOCALSTORAGE;
+}
+
+(?i:linkage)  {printf("%s : LINKAGE\n", yytext);
+    yylval.string = strdup(yytext);
+    return LINKAGE;
+}
+
 (?i:section)  {printf("%s : SECTION\n", yytext);
     yylval.string = strdup(yytext);
     return SECTION;

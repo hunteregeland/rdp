@@ -38,6 +38,8 @@ char currentScope[50]; /* global or the name of the function */
 
 %token <string> FILEE
 %token <string> WORKINGSTORAGE
+%token <string> LOCALSTORAGE
+%token <string> LINKAGE
 %token <string> SECTION
 
 %token <string> PROGRAMID
@@ -79,7 +81,7 @@ char currentScope[50]; /* global or the name of the function */
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 %printer { fprintf(yyoutput, "%d", $$); } DIGIT;
 
-%type <ast> CobolProgram Modules Module Module1 Module2 Module3 IDDiv EnvDiv DataDiv ProcDiv ProcID FileSec WSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
+%type <ast> CobolProgram Modules Module Module1 Module2 Module3 Module4 IDDiv EnvDiv Sections Section DataSection DataDiv ProcDiv ProcID FileSec WSSec LinkageSec LocalStorageSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
 
 %start CobolProgram
 
@@ -153,6 +155,12 @@ Module:
 				$$ = $1;
 				
 				}
+		| Module4{printf("\n RECOGNIZED MODULE: Module4 End\n\n");
+				printf("\nDollar 1 = ");
+				printf($1);
+				$$ = $1;
+				
+				}
 ;
 
 /* part of the program including the identification division and the program id declaration */
@@ -174,38 +182,37 @@ Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identificati
 /* part of the program that contains the environment division */
 /* line 3 */
 
-Module2:	EnvDiv DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Environment & Data Division\n\n"); 
-						 	 printf("\nDollar 1 = ");
-						 	 printf($1);
-						 	 printf("\nDollar 2 = ");
-						 	 printf($2);
-							 $$->left = $1;
-						   	 $$->right = $2;
-							 }
-							  
-			| DataDiv { printf("\n RECOGNIZED MODULE: End Module 2: Data Division (No Env Division)\n\n");
+Module2:	DataSection { printf("\n RECOGNIZED MODULE: End Module 2: Data Division\n\n");
 						printf("\nDollar 1 = ");
 						printf($1);
 						$$ = $1;
 			}
-			| EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division (No Data Division)\n\n");
+			| 
+};
+
+
+Module3:	EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division\n\n");
 					   printf("\nDollar 1 = ");
 					   printf($1);
 					   $$ = $1;
+					   
+					   }
 };
+
+
 
 
 /* part of the program that contains the procedure division and everything that is inside it, which is statements since this is where all executable code is written */
 /* lines 4-6 */
 
-Module3:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n");
+Module4:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n");
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 						 	 printf("\nDollar 2 = ");
 						 	 printf($2); 
 							 printf("\nDollar 3 = ");
 						 	 printf($3);
-}
+ }
 			| ProcDiv ProcID StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division (no statements)\n\n");
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
@@ -265,7 +272,7 @@ Statements:
 
 
 /* A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into */
-Statement:	Expr PERIOD {	 
+Statement:	Expr PERIOD {
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 							 $$->right = $1;
@@ -543,21 +550,44 @@ IDDiv:	IDENTIFICATION DIVISION PERIOD {
 
 EnvDiv:	ENVIRIONMENT DIVISION PERIOD { 
 	printf("\n RECOGNIZED DIVISION: Environment Division Declaration\n\n");
-	$$ = $1;
+	$$->left = $1;
+	$$->right = $2;
 };
 
 /* data division declaration in cobol */
 /* recognize an environment division declaration if line is in order: */
 /* DATA, DIVISION, . */
 
-DataDiv: 	DATA DIVISION PERIOD FileSec WSSec { 
-	printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
+
+
+DataSection: DataDiv Sections{
+	$$->left = $1;
+	$$->right = $2;
 	
-	$4->left = $1;
-	$4->right = $5;
-	$$ = $4;
 	
 };
+
+Sections: Section Sections {
+		$1->left = $2;
+		$$ = $1;
+	}
+	| Section {
+		$$ = $1;
+	}
+
+Section:	LocalStorageSec{$$ = $1;}
+	| FileSec {$$ = $1;}
+	| LinkageSec {$$ = $1;}
+	| WSSec {$$ = $1;};		
+
+DataDiv:	DATA DIVISION PERIOD {
+	printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
+	$$->left = $1;
+	$$->right = $2;
+
+};	
+
+
 /* THIS ONLY WORKS IF ALL SECTIONS ARE INCLUDED CURRENTLY */
 
 /* sections of the data division include the file section, */
@@ -565,11 +595,23 @@ DataDiv: 	DATA DIVISION PERIOD FileSec WSSec {
 /* linkage section. these are defined below */
 
 FileSec:	FILEE SECTION PERIOD { printf("\n RECOGNIZED SECTION: File Section Declaration\n\n");
-	$$ = $1;
+	$$->left = $1;
+	$$->right = $2;
+};
+
+LinkageSec:	LINKAGE SECTION PERIOD {printf("\n RECOGNIZED SECTION: Linkage Section Declaration\n\n");
+	$$->left = $1;
+	$$->right = $2;
+};
+
+LocalStorageSec: LOCALSTORAGE SECTION PERIOD {printf("\n RECOGNIZED SECTION: Local-Storage Section Declaration\n\n");
+	$$->left = $1;
+	$$->right = $2;
 };
 
 WSSec:	WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED SECTION: Working-Storage Section Declaration\n\n");
-	$$ = $1;
+	$$->left = $1;
+	$$->right = $2;
 };
 
 /* procedure division declaration in cobol */
