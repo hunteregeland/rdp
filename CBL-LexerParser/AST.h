@@ -94,6 +94,14 @@ void printASTtest(struct AST* tree, int level){
 }
 
 
+void manualAST(struct AST* tree){
+	printf(tree->nodeType);
+	printf("1: %s \n",tree->left->LHS);
+	printf("2: %s \n",tree->left->RHS);
+	printf("3: %s \n",tree->right->LHS);
+	printf("4: %s \n",tree->right->RHS);
+}
+
 
 void printAST(struct AST* tree, int level){
 
@@ -109,27 +117,23 @@ void printAST(struct AST* tree, int level){
 	if (tree == NULL) {printf("\nEmpty Tree\n"); return;}
 	
 	printDots(level);
-	printf("%s\n", tree->nodeType);
+	printf("%s   ==    %d\n ", tree->nodeType, strlen(tree->nodeType));
+	
 	printDots(level);
-	printf("%s %s\n", tree->LHS, tree->RHS);
-	if(tree->left != NULL) {
-		//printf("\n92 Not Null\n");
-		//printf(tree->left); 
-		printAST(tree->left, level+1);} 
-	else {
-		//printf("\n92 NULL\n"); 
-		return;
-	}
+	printf("%s   ==    %d %s   ==    %d\n", tree->LHS, strlen(tree->LHS) ,tree->RHS,strlen(tree->RHS));
+	
+	FILE *ptr;
+	ptr = fopen("exampleoutput.txt","w");
+	fprintf(ptr, "%s %s\n", tree->LHS, tree->RHS);
+	
 
+
+	if(tree->left != NULL) {
+		printAST(tree->left, level+1);} 
 
 	if(tree->right != NULL) {
-		//printf("\n101 Not Null\n"); 
-		//printf(tree->right); 
 		printAST(tree->right, level+1);
 	} 
-	else {
-		//printf("\n101 NULL\n"); 
-		return;
-	}
+
 	
 }

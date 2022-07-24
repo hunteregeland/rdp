@@ -79,9 +79,9 @@ char currentScope[50]; /* global or the name of the function */
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 %printer { fprintf(yyoutput, "%d", $$); } DIGIT;
 
-%type <ast> Program Modules Module Module1 Module2 Module3 IDDiv EnvDiv DataDiv ProcDiv ProcID FileSec WSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
+%type <ast> CobolProgram Modules Module Module1 Module2 Module3 IDDiv EnvDiv DataDiv ProcDiv ProcID FileSec WSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
 
-%start Program
+%start CobolProgram
 
 %%
 
@@ -91,10 +91,13 @@ char currentScope[50]; /* global or the name of the function */
 
 /* basic structure of the current cobol test program */
 
-Program:	Modules { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
+CobolProgram:	Modules { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
 					  printf("------------Start of AST------------\n");
-					   $$ = $1;
-					   printAST($$,0);
+					  $$ = $1;
+					  //printAST($$,0);
+					  
+					  //manualAST($$);
+					  
 					  printf("\n------------End of AST------------\n");
 									  
 };
@@ -218,7 +221,7 @@ Module3:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End M
 /* this needs to be fixed, we cannot recognize PROGRAM-ID currently */
 
 ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID Declaration\n\n");
-							printf("\nDollar 1 = ");
+							 printf("\nDollar 1 = ");
 						 	 printf($1);
 						 	 printf("\nDollar 3 = ");
 						 	 printf($3);
