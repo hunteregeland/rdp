@@ -105,7 +105,7 @@ CobolProgram:	Modules { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
 /*Modules can be recursive to implement any amount of modules in any order or a single module*/
 Modules: 	
 
-		Module Modules{
+		Module Modules {
 				printf("\n MODULE MODULES: Module End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
@@ -150,7 +150,7 @@ Module:
 		| Module3{printf("\n RECOGNIZED MODULE: Module3 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
-				//$$ = $1;
+				$$ = $1;
 				
 				}
 ;
@@ -205,7 +205,7 @@ Module3:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End M
 						 	 printf($2); 
 							 printf("\nDollar 3 = ");
 						 	 printf($3);
- }
+}
 			| ProcDiv ProcID StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division (no statements)\n\n");
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
@@ -232,25 +232,30 @@ ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID Dec
 ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
+							 $$ = $1;
 
 };
 
 
 /* this is a recursive way to read however many statements in the procedure division */
 
-Statements:	Statement {		//$$ = $1;
-							 printf("\nDollar 1 = ");
-						 	 printf($1);
-
-}
-	| Statement Statements { //$$ = $1;
+Statements:	
+		
+		Statement Statements { 
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 							 printf("\nDollar 2 = ");
 						 	 printf($2);
+							 $1->left = $2;
+							 $$ = $1;
+		}
 
-	}
-;
+		| Statement {	
+							 printf("\nDollar 1 = ");
+						 	 printf($1);
+							 $$ = $1;
+
+};
 
 
 /* statements in cobol, currently only contains the one used in the test program and one extra */
@@ -260,9 +265,10 @@ Statements:	Statement {		//$$ = $1;
 
 
 /* A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into */
-Statement:	Expr PERIOD {	//$$ = $1; 
+Statement:	Expr PERIOD {	 
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
+							 $$->right = $1;
 }
 							
 				/* this needs to be redone, as we need to check for a period inside each
@@ -571,6 +577,8 @@ WSSec:	WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED SECTION: Working-St
 /* PROCEDURE, DIVISION, . */
 
 ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Procedure Division Declaration\n\n");
+	$$->left = $1;
+	$$->right = $2;
 };
 
 
@@ -579,6 +587,8 @@ ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Procedure D
 /* STOP, RUN, . */
 
 StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run\n\n");
+	$$->left = $1;
+	$$->right = $2;
 };
 
 

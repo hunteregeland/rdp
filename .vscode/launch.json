@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": true,
       "externalConsole": false,
-      "cwd": "/Users/hunteregeland/Desktop/classes/rdp/git/rdp-19",
-      "program": "/Users/hunteregeland/Desktop/classes/rdp/git/rdp-19/build/Debug/outDebug",
+      "cwd": "/Users/hunteregeland/Desktop/classes/rdp/backups/rdp-3",
+      "program": "/Users/hunteregeland/Desktop/classes/rdp/backups/rdp-3/build/Debug/outDebug",
       "MIMode": "lldb"
     }
   ]
