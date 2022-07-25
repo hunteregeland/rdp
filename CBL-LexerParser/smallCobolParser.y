@@ -186,8 +186,8 @@ Module2:	DataSection { printf("\n RECOGNIZED MODULE: End Module 2: Data Division
 						printf("\nDollar 1 = ");
 						printf($1);
 						$$ = $1;
-			}
-			| 
+			
+			
 };
 
 
@@ -196,7 +196,7 @@ Module3:	EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division\n\n")
 					   printf($1);
 					   $$ = $1;
 					   
-					   }
+					   
 };
 
 
