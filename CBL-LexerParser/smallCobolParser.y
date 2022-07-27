@@ -53,7 +53,6 @@ char currentScope[50]; /* global or the name of the function */
 %token <string> ENDIF
 %token <string> PERFORM
 %token <string> UNTIL
-%token <string> COUNT
 %token <string> TIMES
 %token <string> PICTURE
 %token <string> PIC
@@ -81,7 +80,7 @@ char currentScope[50]; /* global or the name of the function */
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 %printer { fprintf(yyoutput, "%d", $$); } DIGIT;
 
-%type <ast> CobolProgram Modules Module Module1 Module2 Module3 Module4 IDDiv EnvDiv Sections Section DataSection DataDiv ProcDiv ProcID FileSec WSSec LinkageSec LocalStorageSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
+%type <ast> CobolProgram Modules Module Module1 Module2 Module3 Module4 IDDiv EnvDiv Sections Section DataSection DataDiv ProcDiv ProcID FileSec WSSec LinkageSec LSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
 
 %start CobolProgram
 
@@ -185,24 +184,14 @@ Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identificati
 Module2:	DataSection { printf("\n RECOGNIZED MODULE: End Module 2: Data Division\n\n");
 						printf("\nDollar 1 = ");
 						printf($1);
-						$$ = $1;
-<<<<<<< HEAD
-			
-			
-=======
->>>>>>> bc6601386c8836d5d6ae81703b876b1f2d741e9b
+						$$ = $1;	
 };
 
 
 Module3:	EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division\n\n");
 					   printf("\nDollar 1 = ");
 					   printf($1);
-					   $$ = $1;
-<<<<<<< HEAD
-					   
-					   
-=======
->>>>>>> bc6601386c8836d5d6ae81703b876b1f2d741e9b
+					   $$ = $1;					   
 };
 
 
@@ -282,6 +271,7 @@ Statement:	Expr PERIOD {
 							 printf("\nDollar 1 = ");
 						 	 printf($1);
 							 $$->right = $1;
+
 }
 							
 				/* this needs to be redone, as we need to check for a period inside each
@@ -290,16 +280,26 @@ Statement:	Expr PERIOD {
 ;
 
 
-Expr:    DISPLAY STRING { 
-			//$$ = $1;
+Expr:   | DISPLAY STRING { 
+
 			printf("\n RECOGNIZED RULE: Display Call\n");
 			printf($2);
 			printf("\nDollar 2 = ");
             printf(" JAVA: system.out.println('%s');\n\n",$2);
 			/* this doesn't put the string in the java 'code' currently */
+
+			// ast
+			$$->left = $1;
+			$$->right = $2;
+			/*
+
+					Expr
+			DISPLAY	     STRING
+
+			*/
 		}
 		| DISPLAY STRING COMMA ID { 
-			//$$ = $1;
+
 			printf("\n RECOGNIZED RULE: Display Call With Concatenation\n");
             printf(" JAVA: system.out.println('%s' + ID);\n\n",$2);
 			printf("\nDollar 2 = ");
@@ -309,189 +309,411 @@ Expr:    DISPLAY STRING {
 			/* for some reason only the DISPLAY STRING worked without including PERIOD */
 			/* this and all below require it for period to be parsed inside the function call */
 			/* this means that all function calls only work with periods. */
+
+			// ast
+			$$->left = $1;
+			$1-left = $2;
+			$1-right = $4;
+			/*
+
+							Expr
+					DISPLAY		 NULL
+	 		 STRING		   ID
+			
+			*/
 		}
 
 		| ACCEPT ID {
-			//$$ = $1;
+
 			printf("\n RECOGNIZED RULE: Accept ID\n");
 			printf(" JAVA: %s = input.nextLine();\n\n", $2);
 			printf("\nDollar 2 = ");
 		    printf($2);
+
+			// ast
+			$$->left = $1;
+			$$->right = $2;
+			/*
+
+					Expr
+			 ACCEPT	     ID
+
+			*/
+
 		}
 
 		| IF Condition THEN Statement ENDIF { 
-			//$$ = $2;
+
 			printf("\n RECOGNIZED RULE: If Statement");
 			printf("JAVA: if($2) {$4}");
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
-			/* makeTree(,,) */
+
+			// ast
+			$$ = $1;
+			$1->left = $2;
+			$1->right = $4;
+
+			/*
+
+							Expr
+					 		 |
+			 		 		 IF
+					Condition   \------------Statement
+						|							   Expr
+		(e.g EQ-OP)  Operator						...    ...
+		 		  ID         ID
+
+			*/
+			
 		}
 
-		| PERFORM Statement UNTIL COUNT Operator NUMBER {printf("\n RECOGNIZED RULE: While loop");
-			printf("JAVA: while($4 $5 %i) $2}",$6);
-			printf("JAVA: if($2) {$4}");
-			printf("\nDollar 2 = ");
-			printf($2);
-			printf("\nDollar 5 = ");
-			printf($5);
-			printf("\nDollar 6 = ");
-			printf($6);
+		| PERFORM Statement UNTIL Condition {printf("\n RECOGNIZED RULE: While loop");
+
+			// this is kinda iffy
+
+			// ast
+			$$->left = $4;
+			$$->right = $2;
+
+			/*
+
+								Expr
+					  Condition     \------------Statement
+						  |							       Expr
+		  (e.g EQ-OP)  Operator							...    ...
+			 		ID         ID
+
+			*/
+
 		}
 		
 		| PERFORM Statement NUMBER TIMES {printf("\n RECOGNIZED RULE: For loop");
+
 			printf("JAVA: for(int i=0; i<%i;i++) {$2}",$3);
 			printf("JAVA: if($2) {$4}");
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 3 = ");
 			printf($3);
+
+			// ast
+			
+			/*
+
+											Expr
+						 LT_EQ_OP---------/     \--Statement
+			   iteration		 NUMBER				        Expr
+					  									 ...    ...
+
+			*/
+			
 		}
 
+
 		/* define any byte-sized integer variable in cobol */
+
 		/* to define an integer in cobol you use 9's as how many bytes you want the integer to be in the range of, e.g. 999 means 0-999 */
 		/* only problem here is it seeing a 9 and making sure it calls it a NINE and not a NUMBER, but maybe that doesn't matter? */
 		/* variables aren't really defined fully in java until they get called in the procedure division so this might be a mess to translate to java */
 		| DoubleDigit ID PICTURE IS Nines { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
+
 			printf("JAVA: int $2 = $5");
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 5 = ");
 			printf($5);
+			
 		}
 		| DoubleDigit ID PIC Nines { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
+
 			printf("JAVA: int $2 = $4");
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
 		}
 		| DoubleDigit ID PIC IntPicClause { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
+
 			printf("JAVA: int $2 = $4");
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
 		}
 
 		/* define any byte-sized float variable in cobol */
 		/* to do this you put a V between 9's wherever you want the decimal to be located, e.g. 99V999 allows for 00.000-99.999 */
 		/* similar problem as above, is V called as a character or LETTERV? */
 		| DoubleDigit ID PICTURE IS FloatClause { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 1");
+
 			printf("JAVA: float %s = $5", $2);
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 5 = ");
 			printf($5);
+
 		}
 		| DoubleDigit ID PIC FloatClause { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 2");
+
 			printf("JAVA: float %s = $4", $2);
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
 		}
 
 		/* define any byte-sized un-signed variable in cobol */
 		/* to do this you put an S before however many 9's as bytes, e.g. S999 allows for 0-999 bytes while being un-signed */
 		| DoubleDigit ID PICTURE IS UnsignedClause { printf("\n RECOGNIZED RULE: Any-Digit Un-Signed Variable Declaration: Type 1");
+
 			printf("JAVA: needs extra package");
+
 		}
 		| DoubleDigit ID PIC UnsignedClause { printf("\n RECOGNIZED RULE: Any-Digit Un-Signed Variable Declaration: Type 2");
+
 			printf("JAVA: needs extra package");
+
 		}
 
 		/* define any byte-sized string variable in cobol */
 		/* strings aren't assigned to the variable in cobol until they do so in the procedure division, so translating this to java will be a mess */
 		| DoubleDigit ID PICTURE IS Xs { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
+
 			printf("JAVA: String %s = $5", $2);
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 5 = ");
 			printf($5);
+
 		}
 		| DoubleDigit ID PIC Xs { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
+
 			printf("JAVA: String %s = $4", $2);
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
 		}
 		| DoubleDigit ID PIC StringPicClause { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
+
 			printf("JAVA: String %s = $4", $2);
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
 		}
+
 
 		/* add statement */
 
 		/* using a single literal input */
 		| ADD NUMBER TO ID { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input");
+
 			printf("JAVA: %s = %s + %i", $4, $4, $2);
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
+			// ast
+			$$ = $1;
+			$1->left = $2;
+			$1->right = $4;
+
+			/*
+
+						Expr
+						 |
+						ADD
+				 NUMBER    ID
+
+			*/
+
 		}
 		/* using a single id input */
 		| ADD ID TO ID { printf("\n RECOGNIZED RULE: Add Statement: Single ID Input");
+
 			printf("JAVA: %s = %s + %s", $4, $4, $2); 
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
+			// ast
+			$$ = $1;
+			$1->left = $2;
+			$1->right = $4;
+
+			/*
+
+						Expr
+						 |
+						ADD
+				     ID    ID
+
+			*/
 		}
 		/* using multiple literal inputs */
 		| ADD NumberClause TO ID { printf("\n RECOGNIZED RULE: Add Statement: Multiple Literal Inputs");
+
 			printf("JAVA: %s = %s + $2", $4, $4); 
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
+			// ast
+			$$ = $1;
+			$1->left = $2;
+			$1->right = $4;
+
+			/*
+
+														Expr
+														 |
+														ADD
+									NumberClause-------/   \---------ID
+						NumberClause	        NUMBER
+			NumberClause            NUMBER
+		 ...
+
+			*/
 		}
 		/* using multiple id inputs */
 		| ADD IDClause TO ID { printf("\n RECOGNIZED RULE: Add Statement: Multiple ID Inputs");
+
 			printf("JAVA: %s = %s + $2", $4, $4); 
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
+			// ast
+			$$ = $1;
+			$1->left = $2;
+			$1->right = $4;
+
+			/*
+
+												Expr
+												 |
+												ADD
+								IDClause-------/   \---------ID
+						IDClause	    ID
+			    IDClause        ID
+			 ...
+
+			*/
+
 		}
 		/* using a single literal input & multiple id outputs */
 		| ADD NUMBER TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input & Multiple ID Outputs");
+
 			printf("JAVA: $4 = $4 + %i", $2); 
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
+			// ast
+			$$ = $1;
+			$1->left = $4;
+			$1->right = $2;
+
+			/*
+
+												Expr
+												 |
+												ADD
+								IDClause-------/   \---------NUMBER
+						IDClause	    ID
+			    IDClause        ID
+			 ...
+
+			*/
 		}
 		/* using multiple literal inputs & multiple id outputs */
 		| ADD NumberClause TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Multiple Literal Inputs & Multiple ID Outputs");
+
 			printf("JAVA: $4 = $4 + $2"); 
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
+			/*
+
+														Expr
+														 |
+														ADD
+									NumberClause-------/   \--------------IDClause
+						NumberClause	        NUMBER      	  IDClause        ID
+			NumberClause            NUMBER                IDClause		  ID
+		 ...										   ...
+
+			*/
 		}
 		/* using a single id input & multiple id outputs */
 		| ADD ID TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Single ID Inputs & Multiple ID Outputs");
+
 			printf("JAVA: $4 = $4 + %s", $2); 
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
+			// ast
+			$$ = $1;
+			$1->left = $4;
+			$1->right = $2;
+
+			/*
+
+												Expr
+												 |
+												ADD
+								IDClause-------/   \---------ID
+						IDClause	    ID
+			    IDClause        ID
+			 ...
+
+			*/
+
 		}
 		/* using multiple id inputs & multiple id outputs */
 		| ADD IDClause TO IDClause { printf("\n RECOGNIZED RULE: Add Statement: Single ID Inputs & Multiple ID Outputs");
+
 			printf("JAVA: $4 = $4 + $2"); 
 			printf("\nDollar 2 = ");
 			printf($2);
 			printf("\nDollar 4 = ");
 			printf($4);
+
+			// ast
+			$$ = $1;
+			$1->left = $2;
+			$1->right = $4;
+
+			/*
+
+													Expr
+													 |
+													ADD
+									IDClause-------/   \--------------IDClause
+						    IDClause	    ID      	      IDClause        ID
+			        IDClause        ID                IDClause		  ID
+		         ...							   ...
+
+			*/
+
 		}
 
 ;
@@ -499,19 +721,45 @@ Expr:    DISPLAY STRING {
 
 /* Need to figure out how to set up Condition */
 Condition:	ID Operator ID {
-			//makeTree(,,)
+		
+			// ast
+			$$ = $2;
+			$2->left = $1;
+			$2->right = $3;
+
+			/*
+
+					Operator
+			 	 ID	        ID
+
+			*/
+
 		} 
 		| ID Operator NUMBER {
 
-		}/* add? -> $$ = $1, $2, $3*/
+			// ast
+			$$ = $2;
+			$2->left = $1;
+			$2->right = $3;
+
+			/*
+
+					Operator
+			 	 ID	        NUMBER
+
+			*/
+
+		}
 ;
 
 /* Need to list all operators. Can be >, <, =, ==, >=, <=, != */
-Operator:	GT_OP {} | LT_OP {} | EQ_OP {} | DOUBLE_EQ_OP {} | GT_EQ_OP {} | LT_EQ_OP {
-};
+Operator:	GT_OP {$$ = $1;} | LT_OP {$$ = $1;} | EQ_OP {$$ = $1;} | DOUBLE_EQ_OP {$$ = $1;} | GT_EQ_OP {$$ = $1;} | LT_EQ_OP {$$ = $1;}
+;
 
 DoubleDigit: {printf("DOUBLEDIGIT EMPTY RULE");}	
+
 	| DIGIT DIGIT { printf("\n RECOGNIZED RULE: Double Digit\n");
+	
 };
 
 Nines:	| NINE Nines { printf("\n RECOGNIZED RULE: Nines\n");
@@ -532,10 +780,55 @@ UnsignedClause:	LETTERS Nines { printf("\n RECOGNIZED RULE: Un-signed Clause\n")
 StringPicClause:	LETTERX OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES { printf("\n RECOGNIZED RULE: String Pic Clause\n");
 };
 
-NumberClause:	| NUMBER COMMA NumberClause {} | NUMBER { printf("\n RECOGNIZED RULE: Number Clause\n");
+NumberClause:	NUMBER COMMA NumberClause {
+				printf("\n RECOGNIZED RULE: Number Clause\n");
+
+				// ast
+				$$->left = $3;
+				$$->right = $1;
+
+				/*
+
+													NumberClause
+										NumberClause            NUMBER
+							NumberClause            NUMBER
+				NumberClause            NUMBER
+			 ...
+
+				*/
+
+			}   | NUMBER { 
+				printf("\n RECOGNIZED RULE: Number Clause\n");
+
+				// ast
+				$$ = $1;
+
 };
 
-IDClause:	ID COMMA IDClause {} | ID { printf("\n RECOGNIZED RULE: ID Clause\n");
+IDClause:	ID COMMA IDClause {
+			printf("\n RECOGNIZED RULE: ID Clause\n");
+
+			// ast
+			$$->left = $3;
+			$$->right = $1;
+
+			/*
+
+											IDClause
+								   IDClause         ID
+					      IDClause         ID
+		         IDClause         ID
+			  ...
+
+			*/
+
+
+		}   | ID { 
+			printf("\n RECOGNIZED RULE: ID Clause\n");
+
+			// ast
+			$$ = $1;
+
 };
 
 
@@ -544,9 +837,19 @@ IDClause:	ID COMMA IDClause {} | ID { printf("\n RECOGNIZED RULE: ID Clause\n");
 /* IDENTIFICATION, DIVISION, . */
 
 IDDiv:	IDENTIFICATION DIVISION PERIOD { 
+	printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
+
+	// ast
 	$$->left = $1;
 	$$->right = $2;
-	printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
+
+	/*
+
+				   IDDiv
+ 	 IDENTIFICATION     DIVISION
+
+	*/
+
 };
 
 
@@ -556,68 +859,159 @@ IDDiv:	IDENTIFICATION DIVISION PERIOD {
 
 EnvDiv:	ENVIRIONMENT DIVISION PERIOD { 
 	printf("\n RECOGNIZED DIVISION: Environment Division Declaration\n\n");
+
+	// ast
 	$$->left = $1;
 	$$->right = $2;
+
+	/*
+
+				   EnvDiv
+ 	    ENVIRONMENT      DIVISION
+
+	*/
+
 };
 
 /* data division declaration in cobol */
 /* recognize an environment division declaration if line is in order: */
-/* DATA, DIVISION, . */
+/* DATA, DIVISION, . */		
 
+DataDiv:	DATA DIVISION PERIOD {
+	printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
 
-
-DataSection: DataDiv Sections{
+	// ast
 	$$->left = $1;
 	$$->right = $2;
-	
+
+	/*
+
+		   DataDiv
+	   DATA       DIVISION
+
+	*/
+
+};	
+
+DataSection: DataDiv Sections{
+
+	// ast
+	$$->left = $1;
+	$$->right = $2;
+
+	/*
+
+				   DataSection
+ 	    	DataDiv           \--------------------Sections
+		DATA       DIVISION						       |
+											    	Section
+											Sections
+										 	   |
+					 						Section
+									Sections
+										|
+			 						 Section
+		 						  ...		
+	*/
 	
 };
 
 Sections: Section Sections {
+
+		// ast
 		$1->left = $2;
 		$$ = $1;
+
+		/*
+
+							Sections
+							    |
+							 Section
+					 Sections
+					 	|
+					 Section
+			 Sections
+				|
+			 Section
+		  ...
+
+		*/
+
+		// ^^^^ THIS MIGHT NEED TO BE CHANGED, I THINK THE WAY NumberClause WORKS MAKES MORE SENSE, THIS MIGHT BE WHY OUR DISPLAY BREAKS?
+		// ALTHOUGH THEY COULD BOTH BE VIABLE SOLUTIONS TO THE SAME RECURSION
+
 	}
 	| Section {
+
+		// ast
 		$$ = $1;
+
 	}
 
-Section:	LocalStorageSec{$$ = $1;}
-	| FileSec {$$ = $1;}
-	| LinkageSec {$$ = $1;}
-	| WSSec {$$ = $1;};		
+Section:	LSSec {$$ = $1;} | FileSec {$$ = $1;} | LinkageSec {$$ = $1;} | WSSec {$$ = $1;}
+;	
 
-DataDiv:	DATA DIVISION PERIOD {
-	printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
-	$$->left = $1;
-	$$->right = $2;
-
-};	
-
-
-/* THIS ONLY WORKS IF ALL SECTIONS ARE INCLUDED CURRENTLY */
 
 /* sections of the data division include the file section, */
-/* working-storage section, local-storage section, and */
-/* linkage section. these are defined below */
 
 FileSec:	FILEE SECTION PERIOD { printf("\n RECOGNIZED SECTION: File Section Declaration\n\n");
+
+	// ast
 	$$->left = $1;
 	$$->right = $2;
+
+	/*
+
+			FileSec
+	  FILEE		   SECTION
+
+	*/
+
 };
 
 LinkageSec:	LINKAGE SECTION PERIOD {printf("\n RECOGNIZED SECTION: Linkage Section Declaration\n\n");
+
+	// ast
 	$$->left = $1;
 	$$->right = $2;
+
+	/*
+
+			LinkageSec
+	 LINKAGE		  SECTION
+
+	*/
+
 };
 
-LocalStorageSec: LOCALSTORAGE SECTION PERIOD {printf("\n RECOGNIZED SECTION: Local-Storage Section Declaration\n\n");
+LSSec: LOCALSTORAGE SECTION PERIOD {printf("\n RECOGNIZED SECTION: Local-Storage Section Declaration\n\n");
+
+	// ast
 	$$->left = $1;
 	$$->right = $2;
+
+	/*
+
+				  LSSec
+	  LOCALSTORAGE     SECTION
+
+	*/
+
 };
 
 WSSec:	WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED SECTION: Working-Storage Section Declaration\n\n");
+
+	// ast
 	$$->left = $1;
 	$$->right = $2;
+
+	/*
+
+					WSSec
+	  WORKINGSTORAGE     SECTION
+
+	*/
+
 };
 
 /* procedure division declaration in cobol */
@@ -625,18 +1019,36 @@ WSSec:	WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED SECTION: Working-St
 /* PROCEDURE, DIVISION, . */
 
 ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Procedure Division Declaration\n\n");
+
+	// ast
 	$$->left = $1;
 	$$->right = $2;
+
+	/*
+
+		        ProcDiv
+	   PROCEDURE       DIVISION
+
+	*/
+
 };
 
 
-/* stop run call in cobol (line 6) */
-/* recognize display if the line is in order: */
-/* STOP, RUN, . */
+/* stop run call in cobol */
 
 StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run\n\n");
+
+	// ast
 	$$->left = $1;
 	$$->right = $2;
+
+	/*
+
+		   StopRun
+	   STOP       RUN
+
+	*/
+
 };
 
 
