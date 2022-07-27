@@ -72,9 +72,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 /* #include "symbolTable.h" */
 #include "AST.h"
+#include "cobolToText.h"
 
 
 extern int yylex();
@@ -85,7 +87,7 @@ void yyerror(const char* s);
 char currentScope[50]; /* global or the name of the function */
 
 
-#line 89 "smallCobolParser.tab.c"
+#line 91 "smallCobolParser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -185,14 +187,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 21 "smallCobolParser.y"
+#line 23 "smallCobolParser.y"
 
 	int number;
 	char character;
 	char* string;
 	struct AST* ast;
 
-#line 196 "smallCobolParser.tab.c"
+#line 198 "smallCobolParser.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -572,15 +574,15 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    96,    96,   110,   119,   128,   140,   146,   152,   158,
-     169,   185,   194,   208,   216,   230,   239,   251,   260,   275,
-     287,   295,   308,   316,   327,   338,   351,   358,   365,   376,
-     383,   393,   396,   402,   409,   416,   427,   435,   443,   451,
-     459,   467,   475,   483,   495,   498,   504,   504,   504,   504,
-     504,   504,   507,   508,   511,   511,   514,   514,   517,   520,
-     523,   526,   529,   529,   529,   532,   532,   540,   551,   563,
-     570,   574,   578,   579,   580,   581,   583,   597,   602,   607,
-     612,   621,   631
+       0,    98,    98,   112,   121,   130,   142,   148,   154,   160,
+     171,   187,   196,   210,   218,   232,   243,   255,   264,   279,
+     291,   299,   312,   320,   331,   342,   355,   362,   369,   380,
+     387,   397,   400,   406,   413,   420,   431,   439,   447,   455,
+     463,   471,   479,   487,   499,   502,   508,   508,   508,   508,
+     508,   508,   511,   512,   515,   515,   518,   518,   521,   524,
+     527,   530,   533,   533,   533,   536,   536,   544,   556,   568,
+     575,   579,   583,   584,   585,   586,   588,   603,   609,   615,
+     621,   631,   641
 };
 #endif
 
@@ -869,21 +871,21 @@ yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)
   switch (yytype)
     {
     case 3: /* NUMBER  */
-#line 81 "smallCobolParser.y"
+#line 83 "smallCobolParser.y"
          { fprintf(yyoutput, "%d", ((*yyvaluep).number)); }
-#line 875 "smallCobolParser.tab.c"
+#line 877 "smallCobolParser.tab.c"
         break;
 
     case 4: /* DIGIT  */
-#line 82 "smallCobolParser.y"
+#line 84 "smallCobolParser.y"
          { fprintf(yyoutput, "%d", ((*yyvaluep).number)); }
-#line 881 "smallCobolParser.tab.c"
+#line 883 "smallCobolParser.tab.c"
         break;
 
     case 5: /* ID  */
-#line 80 "smallCobolParser.y"
+#line 82 "smallCobolParser.y"
          { fprintf(yyoutput, "%s", ((*yyvaluep).string)); }
-#line 887 "smallCobolParser.tab.c"
+#line 889 "smallCobolParser.tab.c"
         break;
 
       default:
@@ -1497,7 +1499,7 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 96 "smallCobolParser.y"
+#line 98 "smallCobolParser.y"
                         { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
 					  printf("------------Start of AST------------\n");
 					  (yyval.ast) = (yyvsp[0].ast);
@@ -1508,11 +1510,11 @@ yyreduce:
 					  printf("\n------------End of AST------------\n");
 									  
 }
-#line 1512 "smallCobolParser.tab.c"
+#line 1514 "smallCobolParser.tab.c"
     break;
 
   case 3:
-#line 110 "smallCobolParser.y"
+#line 112 "smallCobolParser.y"
                                {
 				printf("\n MODULE MODULES: Module End\n\n");
 				printf("\nDollar 1 = ");
@@ -1522,75 +1524,75 @@ yyreduce:
 				(yyvsp[-1].ast)->left = (yyvsp[0].ast);
 				(yyval.ast) = (yyvsp[-1].ast);
 			}
-#line 1526 "smallCobolParser.tab.c"
+#line 1528 "smallCobolParser.tab.c"
     break;
 
   case 4:
-#line 119 "smallCobolParser.y"
+#line 121 "smallCobolParser.y"
                          {  
 				printf("\n MODULE: Module End\n\n");
 				printf("\nDollar 1 = ");
 				printf((yyvsp[0].ast));
 				(yyval.ast) = (yyvsp[0].ast);
 }
-#line 1537 "smallCobolParser.tab.c"
+#line 1539 "smallCobolParser.tab.c"
     break;
 
   case 5:
-#line 128 "smallCobolParser.y"
+#line 130 "smallCobolParser.y"
                     {
 			(yyval.ast) = (yyvsp[0].string);
 			printf("\nEOF\n");
 		}
-#line 1546 "smallCobolParser.tab.c"
+#line 1548 "smallCobolParser.tab.c"
     break;
 
   case 6:
-#line 140 "smallCobolParser.y"
+#line 142 "smallCobolParser.y"
                        {printf("\n RECOGNIZED MODULE: Module1 End\n\n");
 				printf("\nDollar 1 = ");
 				printf((yyvsp[0].ast));
 				(yyval.ast) = (yyvsp[0].ast);
 				
 				}
-#line 1557 "smallCobolParser.tab.c"
+#line 1559 "smallCobolParser.tab.c"
     break;
 
   case 7:
-#line 146 "smallCobolParser.y"
+#line 148 "smallCobolParser.y"
                          {printf("\n RECOGNIZED MODULE: Module2 End\n\n");
 				printf("\nDollar 1 = ");
 				printf((yyvsp[0].ast));		
 				(yyval.ast) = (yyvsp[0].ast);
 				
 				}
-#line 1568 "smallCobolParser.tab.c"
+#line 1570 "smallCobolParser.tab.c"
     break;
 
   case 8:
-#line 152 "smallCobolParser.y"
+#line 154 "smallCobolParser.y"
                          {printf("\n RECOGNIZED MODULE: Module3 End\n\n");
 				printf("\nDollar 1 = ");
 				printf((yyvsp[0].ast));
 				(yyval.ast) = (yyvsp[0].ast);
 				
 				}
-#line 1579 "smallCobolParser.tab.c"
+#line 1581 "smallCobolParser.tab.c"
     break;
 
   case 9:
-#line 158 "smallCobolParser.y"
+#line 160 "smallCobolParser.y"
                          {printf("\n RECOGNIZED MODULE: Module4 End\n\n");
 				printf("\nDollar 1 = ");
 				printf((yyvsp[0].ast));
 				(yyval.ast) = (yyvsp[0].ast);
 				
 				}
-#line 1590 "smallCobolParser.tab.c"
+#line 1592 "smallCobolParser.tab.c"
     break;
 
   case 10:
-#line 169 "smallCobolParser.y"
+#line 171 "smallCobolParser.y"
                              { printf("\n RECOGNIZED MODULE: End Module 1: Identification Division\n\n"); 
 						   printf("\nDollar 1 = ");
 						   printf((yyvsp[-1].ast));
@@ -1601,11 +1603,11 @@ yyreduce:
 						   (yyval.ast)->left = (yyvsp[-1].ast);
 						   (yyval.ast)->right = (yyvsp[0].ast);
 }
-#line 1605 "smallCobolParser.tab.c"
+#line 1607 "smallCobolParser.tab.c"
     break;
 
   case 11:
-#line 185 "smallCobolParser.y"
+#line 187 "smallCobolParser.y"
                             { printf("\n RECOGNIZED MODULE: End Module 2: Data Division\n\n");
 						printf("\nDollar 1 = ");
 						printf((yyvsp[0].ast));
@@ -1613,11 +1615,11 @@ yyreduce:
 			
 			
 }
-#line 1617 "smallCobolParser.tab.c"
+#line 1619 "smallCobolParser.tab.c"
     break;
 
   case 12:
-#line 194 "smallCobolParser.y"
+#line 196 "smallCobolParser.y"
                        { printf("\n RECOGNIZED MODULE: End Module 2: Env Division\n\n");
 					   printf("\nDollar 1 = ");
 					   printf((yyvsp[0].ast));
@@ -1625,11 +1627,11 @@ yyreduce:
 					   
 					   
 }
-#line 1629 "smallCobolParser.tab.c"
+#line 1631 "smallCobolParser.tab.c"
     break;
 
   case 13:
-#line 208 "smallCobolParser.y"
+#line 210 "smallCobolParser.y"
                                                   { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n");
 							 printf("\nDollar 1 = ");
 						 	 printf((yyvsp[-3].ast));
@@ -1638,11 +1640,11 @@ yyreduce:
 							 printf("\nDollar 3 = ");
 						 	 printf((yyvsp[-1].ast));
  }
-#line 1642 "smallCobolParser.tab.c"
+#line 1644 "smallCobolParser.tab.c"
     break;
 
   case 14:
-#line 216 "smallCobolParser.y"
+#line 218 "smallCobolParser.y"
                                                  { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division (no statements)\n\n");
 							 printf("\nDollar 1 = ");
 						 	 printf((yyvsp[-2].ast));
@@ -1651,11 +1653,11 @@ yyreduce:
 							 printf("\nDollar 3 = ");
 						 	 printf((yyvsp[0].ast));
 }
-#line 1655 "smallCobolParser.tab.c"
+#line 1657 "smallCobolParser.tab.c"
     break;
 
   case 15:
-#line 230 "smallCobolParser.y"
+#line 232 "smallCobolParser.y"
                                            { printf("\n RECOGNIZED RULE: Program ID Declaration\n\n");
 							 printf("\nDollar 1 = ");
 						 	 printf((yyvsp[-3].string));
@@ -1663,23 +1665,25 @@ yyreduce:
 						 	 printf((yyvsp[-1].string));
 							 (yyval.ast)->left = (yyvsp[-1].string);
 							 (yyval.ast)->right = (yyvsp[-3].string);
+
+							 callCobolToCobol("PROGRAM-ID. ID.");
 }
-#line 1668 "smallCobolParser.tab.c"
+#line 1672 "smallCobolParser.tab.c"
     break;
 
   case 16:
-#line 239 "smallCobolParser.y"
+#line 243 "smallCobolParser.y"
                   { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
 							 printf("\nDollar 1 = ");
 						 	 printf((yyvsp[-1].string));
 							 (yyval.ast) = (yyvsp[-1].string);
 
 }
-#line 1679 "smallCobolParser.tab.c"
+#line 1683 "smallCobolParser.tab.c"
     break;
 
   case 17:
-#line 251 "smallCobolParser.y"
+#line 255 "smallCobolParser.y"
                                      { 
 							 printf("\nDollar 1 = ");
 						 	 printf((yyvsp[-1].ast));
@@ -1688,32 +1692,32 @@ yyreduce:
 							 (yyvsp[-1].ast)->left = (yyvsp[0].ast);
 							 (yyval.ast) = (yyvsp[-1].ast);
 		}
-#line 1692 "smallCobolParser.tab.c"
+#line 1696 "smallCobolParser.tab.c"
     break;
 
   case 18:
-#line 260 "smallCobolParser.y"
+#line 264 "smallCobolParser.y"
                             {	
 							 printf("\nDollar 1 = ");
 						 	 printf((yyvsp[0].ast));
 							 (yyval.ast) = (yyvsp[0].ast);
 
 }
-#line 1703 "smallCobolParser.tab.c"
+#line 1707 "smallCobolParser.tab.c"
     break;
 
   case 19:
-#line 275 "smallCobolParser.y"
+#line 279 "smallCobolParser.y"
                             {
 							 printf("\nDollar 1 = ");
 						 	 printf((yyvsp[-1].ast));
 							 (yyval.ast)->right = (yyvsp[-1].ast);
 }
-#line 1713 "smallCobolParser.tab.c"
+#line 1717 "smallCobolParser.tab.c"
     break;
 
   case 20:
-#line 287 "smallCobolParser.y"
+#line 291 "smallCobolParser.y"
                         { 
 			//$$ = $1;
 			printf("\n RECOGNIZED RULE: Display Call\n");
@@ -1722,11 +1726,11 @@ yyreduce:
             printf(" JAVA: system.out.println('%s');\n\n",(yyvsp[0].string));
 			/* this doesn't put the string in the java 'code' currently */
 		}
-#line 1726 "smallCobolParser.tab.c"
+#line 1730 "smallCobolParser.tab.c"
     break;
 
   case 21:
-#line 295 "smallCobolParser.y"
+#line 299 "smallCobolParser.y"
                                           { 
 			//$$ = $1;
 			printf("\n RECOGNIZED RULE: Display Call With Concatenation\n");
@@ -1739,11 +1743,11 @@ yyreduce:
 			/* this and all below require it for period to be parsed inside the function call */
 			/* this means that all function calls only work with periods. */
 		}
-#line 1743 "smallCobolParser.tab.c"
+#line 1747 "smallCobolParser.tab.c"
     break;
 
   case 22:
-#line 308 "smallCobolParser.y"
+#line 312 "smallCobolParser.y"
                             {
 			//$$ = $1;
 			printf("\n RECOGNIZED RULE: Accept ID\n");
@@ -1751,11 +1755,11 @@ yyreduce:
 			printf("\nDollar 2 = ");
 		    printf((yyvsp[0].string));
 		}
-#line 1755 "smallCobolParser.tab.c"
+#line 1759 "smallCobolParser.tab.c"
     break;
 
   case 23:
-#line 316 "smallCobolParser.y"
+#line 320 "smallCobolParser.y"
                                                     { 
 			//$$ = $2;
 			printf("\n RECOGNIZED RULE: If Statement");
@@ -1766,11 +1770,11 @@ yyreduce:
 			printf((yyvsp[-1].ast));
 			/* makeTree(,,) */
 		}
-#line 1770 "smallCobolParser.tab.c"
+#line 1774 "smallCobolParser.tab.c"
     break;
 
   case 24:
-#line 327 "smallCobolParser.y"
+#line 331 "smallCobolParser.y"
                                                                 {printf("\n RECOGNIZED RULE: While loop");
 			printf("JAVA: while($4 $5 %i) $2}",(yyvsp[0].number));
 			printf("JAVA: if($2) {$4}");
@@ -1781,11 +1785,11 @@ yyreduce:
 			printf("\nDollar 6 = ");
 			printf((yyvsp[0].number));
 		}
-#line 1785 "smallCobolParser.tab.c"
+#line 1789 "smallCobolParser.tab.c"
     break;
 
   case 25:
-#line 338 "smallCobolParser.y"
+#line 342 "smallCobolParser.y"
                                                  {printf("\n RECOGNIZED RULE: For loop");
 			printf("JAVA: for(int i=0; i<%i;i++) {$2}",(yyvsp[-1].number));
 			printf("JAVA: if($2) {$4}");
@@ -1794,11 +1798,11 @@ yyreduce:
 			printf("\nDollar 3 = ");
 			printf((yyvsp[-1].number));
 		}
-#line 1798 "smallCobolParser.tab.c"
+#line 1802 "smallCobolParser.tab.c"
     break;
 
   case 26:
-#line 351 "smallCobolParser.y"
+#line 355 "smallCobolParser.y"
                                                   { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
 			printf("JAVA: int $2 = $5");
 			printf("\nDollar 2 = ");
@@ -1806,11 +1810,11 @@ yyreduce:
 			printf("\nDollar 5 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1810 "smallCobolParser.tab.c"
+#line 1814 "smallCobolParser.tab.c"
     break;
 
   case 27:
-#line 358 "smallCobolParser.y"
+#line 362 "smallCobolParser.y"
                                            { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
 			printf("JAVA: int $2 = $4");
 			printf("\nDollar 2 = ");
@@ -1818,11 +1822,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1822 "smallCobolParser.tab.c"
+#line 1826 "smallCobolParser.tab.c"
     break;
 
   case 28:
-#line 365 "smallCobolParser.y"
+#line 369 "smallCobolParser.y"
                                                   { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
 			printf("JAVA: int $2 = $4");
 			printf("\nDollar 2 = ");
@@ -1830,11 +1834,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1834 "smallCobolParser.tab.c"
+#line 1838 "smallCobolParser.tab.c"
     break;
 
   case 29:
-#line 376 "smallCobolParser.y"
+#line 380 "smallCobolParser.y"
                                                         { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 1");
 			printf("JAVA: float %s = $5", (yyvsp[-3].string));
 			printf("\nDollar 2 = ");
@@ -1842,11 +1846,11 @@ yyreduce:
 			printf("\nDollar 5 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1846 "smallCobolParser.tab.c"
+#line 1850 "smallCobolParser.tab.c"
     break;
 
   case 30:
-#line 383 "smallCobolParser.y"
+#line 387 "smallCobolParser.y"
                                                  { printf("\n RECOGNIZED RULE: Any-Digit Float Variable Declaration: Type 2");
 			printf("JAVA: float %s = $4", (yyvsp[-2].string));
 			printf("\nDollar 2 = ");
@@ -1854,27 +1858,27 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1858 "smallCobolParser.tab.c"
+#line 1862 "smallCobolParser.tab.c"
     break;
 
   case 31:
-#line 393 "smallCobolParser.y"
+#line 397 "smallCobolParser.y"
                                                            { printf("\n RECOGNIZED RULE: Any-Digit Un-Signed Variable Declaration: Type 1");
 			printf("JAVA: needs extra package");
 		}
-#line 1866 "smallCobolParser.tab.c"
+#line 1870 "smallCobolParser.tab.c"
     break;
 
   case 32:
-#line 396 "smallCobolParser.y"
+#line 400 "smallCobolParser.y"
                                                     { printf("\n RECOGNIZED RULE: Any-Digit Un-Signed Variable Declaration: Type 2");
 			printf("JAVA: needs extra package");
 		}
-#line 1874 "smallCobolParser.tab.c"
+#line 1878 "smallCobolParser.tab.c"
     break;
 
   case 33:
-#line 402 "smallCobolParser.y"
+#line 406 "smallCobolParser.y"
                                                { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 1");
 			printf("JAVA: String %s = $5", (yyvsp[-3].string));
 			printf("\nDollar 2 = ");
@@ -1882,11 +1886,11 @@ yyreduce:
 			printf("\nDollar 5 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1886 "smallCobolParser.tab.c"
+#line 1890 "smallCobolParser.tab.c"
     break;
 
   case 34:
-#line 409 "smallCobolParser.y"
+#line 413 "smallCobolParser.y"
                                         { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 2");
 			printf("JAVA: String %s = $4", (yyvsp[-2].string));
 			printf("\nDollar 2 = ");
@@ -1894,11 +1898,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1898 "smallCobolParser.tab.c"
+#line 1902 "smallCobolParser.tab.c"
     break;
 
   case 35:
-#line 416 "smallCobolParser.y"
+#line 420 "smallCobolParser.y"
                                                      { printf("\n RECOGNIZED RULE: Any-Digit Integer Variable Declaration: Type 3");
 			printf("JAVA: String %s = $4", (yyvsp[-2].string));
 			printf("\nDollar 2 = ");
@@ -1906,11 +1910,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1910 "smallCobolParser.tab.c"
+#line 1914 "smallCobolParser.tab.c"
     break;
 
   case 36:
-#line 427 "smallCobolParser.y"
+#line 431 "smallCobolParser.y"
                                    { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input");
 			printf("JAVA: %s = %s + %i", (yyvsp[0].string), (yyvsp[0].string), (yyvsp[-2].number));
 			printf("\nDollar 2 = ");
@@ -1918,11 +1922,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].string));
 		}
-#line 1922 "smallCobolParser.tab.c"
+#line 1926 "smallCobolParser.tab.c"
     break;
 
   case 37:
-#line 435 "smallCobolParser.y"
+#line 439 "smallCobolParser.y"
                                { printf("\n RECOGNIZED RULE: Add Statement: Single ID Input");
 			printf("JAVA: %s = %s + %s", (yyvsp[0].string), (yyvsp[0].string), (yyvsp[-2].string)); 
 			printf("\nDollar 2 = ");
@@ -1930,11 +1934,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].string));
 		}
-#line 1934 "smallCobolParser.tab.c"
+#line 1938 "smallCobolParser.tab.c"
     break;
 
   case 38:
-#line 443 "smallCobolParser.y"
+#line 447 "smallCobolParser.y"
                                          { printf("\n RECOGNIZED RULE: Add Statement: Multiple Literal Inputs");
 			printf("JAVA: %s = %s + $2", (yyvsp[0].string), (yyvsp[0].string)); 
 			printf("\nDollar 2 = ");
@@ -1942,11 +1946,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].string));
 		}
-#line 1946 "smallCobolParser.tab.c"
+#line 1950 "smallCobolParser.tab.c"
     break;
 
   case 39:
-#line 451 "smallCobolParser.y"
+#line 455 "smallCobolParser.y"
                                      { printf("\n RECOGNIZED RULE: Add Statement: Multiple ID Inputs");
 			printf("JAVA: %s = %s + $2", (yyvsp[0].string), (yyvsp[0].string)); 
 			printf("\nDollar 2 = ");
@@ -1954,11 +1958,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].string));
 		}
-#line 1958 "smallCobolParser.tab.c"
+#line 1962 "smallCobolParser.tab.c"
     break;
 
   case 40:
-#line 459 "smallCobolParser.y"
+#line 463 "smallCobolParser.y"
                                          { printf("\n RECOGNIZED RULE: Add Statement: Single Literal Input & Multiple ID Outputs");
 			printf("JAVA: $4 = $4 + %i", (yyvsp[-2].number)); 
 			printf("\nDollar 2 = ");
@@ -1966,11 +1970,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1970 "smallCobolParser.tab.c"
+#line 1974 "smallCobolParser.tab.c"
     break;
 
   case 41:
-#line 467 "smallCobolParser.y"
+#line 471 "smallCobolParser.y"
                                                { printf("\n RECOGNIZED RULE: Add Statement: Multiple Literal Inputs & Multiple ID Outputs");
 			printf("JAVA: $4 = $4 + $2"); 
 			printf("\nDollar 2 = ");
@@ -1978,11 +1982,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1982 "smallCobolParser.tab.c"
+#line 1986 "smallCobolParser.tab.c"
     break;
 
   case 42:
-#line 475 "smallCobolParser.y"
+#line 479 "smallCobolParser.y"
                                      { printf("\n RECOGNIZED RULE: Add Statement: Single ID Inputs & Multiple ID Outputs");
 			printf("JAVA: $4 = $4 + %s", (yyvsp[-2].string)); 
 			printf("\nDollar 2 = ");
@@ -1990,11 +1994,11 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 1994 "smallCobolParser.tab.c"
+#line 1998 "smallCobolParser.tab.c"
     break;
 
   case 43:
-#line 483 "smallCobolParser.y"
+#line 487 "smallCobolParser.y"
                                            { printf("\n RECOGNIZED RULE: Add Statement: Single ID Inputs & Multiple ID Outputs");
 			printf("JAVA: $4 = $4 + $2"); 
 			printf("\nDollar 2 = ");
@@ -2002,282 +2006,288 @@ yyreduce:
 			printf("\nDollar 4 = ");
 			printf((yyvsp[0].ast));
 		}
-#line 2006 "smallCobolParser.tab.c"
+#line 2010 "smallCobolParser.tab.c"
     break;
 
   case 44:
-#line 495 "smallCobolParser.y"
+#line 499 "smallCobolParser.y"
                                {
 			//makeTree(,,)
 		}
-#line 2014 "smallCobolParser.tab.c"
+#line 2018 "smallCobolParser.tab.c"
     break;
 
   case 45:
-#line 498 "smallCobolParser.y"
+#line 502 "smallCobolParser.y"
                                      {
 
 		}
-#line 2022 "smallCobolParser.tab.c"
+#line 2026 "smallCobolParser.tab.c"
     break;
 
   case 46:
-#line 504 "smallCobolParser.y"
+#line 508 "smallCobolParser.y"
                       {}
-#line 2028 "smallCobolParser.tab.c"
+#line 2032 "smallCobolParser.tab.c"
     break;
 
   case 47:
-#line 504 "smallCobolParser.y"
+#line 508 "smallCobolParser.y"
                                  {}
-#line 2034 "smallCobolParser.tab.c"
+#line 2038 "smallCobolParser.tab.c"
     break;
 
   case 48:
-#line 504 "smallCobolParser.y"
+#line 508 "smallCobolParser.y"
                                             {}
-#line 2040 "smallCobolParser.tab.c"
+#line 2044 "smallCobolParser.tab.c"
     break;
 
   case 49:
-#line 504 "smallCobolParser.y"
+#line 508 "smallCobolParser.y"
                                                               {}
-#line 2046 "smallCobolParser.tab.c"
+#line 2050 "smallCobolParser.tab.c"
     break;
 
   case 50:
-#line 504 "smallCobolParser.y"
+#line 508 "smallCobolParser.y"
                                                                             {}
-#line 2052 "smallCobolParser.tab.c"
+#line 2056 "smallCobolParser.tab.c"
     break;
 
   case 51:
-#line 504 "smallCobolParser.y"
+#line 508 "smallCobolParser.y"
                                                                                           {
 }
-#line 2059 "smallCobolParser.tab.c"
+#line 2063 "smallCobolParser.tab.c"
     break;
 
   case 52:
-#line 507 "smallCobolParser.y"
+#line 511 "smallCobolParser.y"
              {printf("DOUBLEDIGIT EMPTY RULE");}
-#line 2065 "smallCobolParser.tab.c"
+#line 2069 "smallCobolParser.tab.c"
     break;
 
   case 53:
-#line 508 "smallCobolParser.y"
+#line 512 "smallCobolParser.y"
                       { printf("\n RECOGNIZED RULE: Double Digit\n");
 }
-#line 2072 "smallCobolParser.tab.c"
+#line 2076 "smallCobolParser.tab.c"
     break;
 
   case 55:
-#line 511 "smallCobolParser.y"
+#line 515 "smallCobolParser.y"
                      { printf("\n RECOGNIZED RULE: Nines\n");
 }
-#line 2079 "smallCobolParser.tab.c"
+#line 2083 "smallCobolParser.tab.c"
     break;
 
   case 57:
-#line 514 "smallCobolParser.y"
+#line 518 "smallCobolParser.y"
                      { printf("\n RECOGNIZED RULE: X's\n");
 }
-#line 2086 "smallCobolParser.tab.c"
+#line 2090 "smallCobolParser.tab.c"
     break;
 
   case 58:
-#line 517 "smallCobolParser.y"
+#line 521 "smallCobolParser.y"
                                                                { printf("\n RECOGNIZED RULE: Integer Pic Clause\n");
 }
-#line 2093 "smallCobolParser.tab.c"
+#line 2097 "smallCobolParser.tab.c"
     break;
 
   case 59:
-#line 520 "smallCobolParser.y"
+#line 524 "smallCobolParser.y"
                                  { printf("\n RECOGNIZED RULE: Float Clause\n");
 }
-#line 2100 "smallCobolParser.tab.c"
+#line 2104 "smallCobolParser.tab.c"
     break;
 
   case 60:
-#line 523 "smallCobolParser.y"
+#line 527 "smallCobolParser.y"
                               { printf("\n RECOGNIZED RULE: Un-signed Clause\n");
 }
-#line 2107 "smallCobolParser.tab.c"
+#line 2111 "smallCobolParser.tab.c"
     break;
 
   case 61:
-#line 526 "smallCobolParser.y"
+#line 530 "smallCobolParser.y"
                                                                           { printf("\n RECOGNIZED RULE: String Pic Clause\n");
 }
-#line 2114 "smallCobolParser.tab.c"
+#line 2118 "smallCobolParser.tab.c"
     break;
 
   case 63:
-#line 529 "smallCobolParser.y"
+#line 533 "smallCobolParser.y"
                                             {}
-#line 2120 "smallCobolParser.tab.c"
+#line 2124 "smallCobolParser.tab.c"
     break;
 
   case 64:
-#line 529 "smallCobolParser.y"
+#line 533 "smallCobolParser.y"
                                                         { printf("\n RECOGNIZED RULE: Number Clause\n");
 }
-#line 2127 "smallCobolParser.tab.c"
+#line 2131 "smallCobolParser.tab.c"
     break;
 
   case 65:
-#line 532 "smallCobolParser.y"
+#line 536 "smallCobolParser.y"
                                   {}
-#line 2133 "smallCobolParser.tab.c"
+#line 2137 "smallCobolParser.tab.c"
     break;
 
   case 66:
-#line 532 "smallCobolParser.y"
+#line 536 "smallCobolParser.y"
                                           { printf("\n RECOGNIZED RULE: ID Clause\n");
 }
-#line 2140 "smallCobolParser.tab.c"
+#line 2144 "smallCobolParser.tab.c"
     break;
 
   case 67:
-#line 540 "smallCobolParser.y"
+#line 544 "smallCobolParser.y"
                                        { 
 	(yyval.ast)->left = (yyvsp[-2].string);
 	(yyval.ast)->right = (yyvsp[-1].string);
+	callCobolToCobol("IDENTIFICATION DIVISION.");
 	printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
 }
-#line 2150 "smallCobolParser.tab.c"
+#line 2155 "smallCobolParser.tab.c"
     break;
 
   case 68:
-#line 551 "smallCobolParser.y"
+#line 556 "smallCobolParser.y"
                                      { 
 	printf("\n RECOGNIZED DIVISION: Environment Division Declaration\n\n");
 	(yyval.ast)->left = (yyvsp[-2].string);
 	(yyval.ast)->right = (yyvsp[-1].string);
 }
-#line 2160 "smallCobolParser.tab.c"
+#line 2165 "smallCobolParser.tab.c"
     break;
 
   case 69:
-#line 563 "smallCobolParser.y"
+#line 568 "smallCobolParser.y"
                              {
 	(yyval.ast)->left = (yyvsp[-1].ast);
 	(yyval.ast)->right = (yyvsp[0].ast);
 	
 	
 }
-#line 2171 "smallCobolParser.tab.c"
+#line 2176 "smallCobolParser.tab.c"
     break;
 
   case 70:
-#line 570 "smallCobolParser.y"
+#line 575 "smallCobolParser.y"
                            {
 		(yyvsp[-1].ast)->left = (yyvsp[0].ast);
 		(yyval.ast) = (yyvsp[-1].ast);
 	}
-#line 2180 "smallCobolParser.tab.c"
+#line 2185 "smallCobolParser.tab.c"
     break;
 
   case 71:
-#line 574 "smallCobolParser.y"
+#line 579 "smallCobolParser.y"
                   {
 		(yyval.ast) = (yyvsp[0].ast);
 	}
-#line 2188 "smallCobolParser.tab.c"
+#line 2193 "smallCobolParser.tab.c"
     break;
 
   case 72:
-#line 578 "smallCobolParser.y"
+#line 583 "smallCobolParser.y"
                                {(yyval.ast) = (yyvsp[0].ast);}
-#line 2194 "smallCobolParser.tab.c"
+#line 2199 "smallCobolParser.tab.c"
     break;
 
   case 73:
-#line 579 "smallCobolParser.y"
+#line 584 "smallCobolParser.y"
                   {(yyval.ast) = (yyvsp[0].ast);}
-#line 2200 "smallCobolParser.tab.c"
+#line 2205 "smallCobolParser.tab.c"
     break;
 
   case 74:
-#line 580 "smallCobolParser.y"
+#line 585 "smallCobolParser.y"
                      {(yyval.ast) = (yyvsp[0].ast);}
-#line 2206 "smallCobolParser.tab.c"
+#line 2211 "smallCobolParser.tab.c"
     break;
 
   case 75:
-#line 581 "smallCobolParser.y"
+#line 586 "smallCobolParser.y"
                 {(yyval.ast) = (yyvsp[0].ast);}
-#line 2212 "smallCobolParser.tab.c"
+#line 2217 "smallCobolParser.tab.c"
     break;
 
   case 76:
-#line 583 "smallCobolParser.y"
+#line 588 "smallCobolParser.y"
                                      {
 	printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
 	(yyval.ast)->left = (yyvsp[-2].string);
 	(yyval.ast)->right = (yyvsp[-1].string);
+	callCobolToCobol("DATA DIVISION.");
 
 }
-#line 2223 "smallCobolParser.tab.c"
+#line 2229 "smallCobolParser.tab.c"
     break;
 
   case 77:
-#line 597 "smallCobolParser.y"
+#line 603 "smallCobolParser.y"
                                      { printf("\n RECOGNIZED SECTION: File Section Declaration\n\n");
 	(yyval.ast)->left = (yyvsp[-2].string);
 	(yyval.ast)->right = (yyvsp[-1].string);
+	callCobolToCobol("FILE SECTION.");
 }
-#line 2232 "smallCobolParser.tab.c"
+#line 2239 "smallCobolParser.tab.c"
     break;
 
   case 78:
-#line 602 "smallCobolParser.y"
+#line 609 "smallCobolParser.y"
                                        {printf("\n RECOGNIZED SECTION: Linkage Section Declaration\n\n");
 	(yyval.ast)->left = (yyvsp[-2].string);
 	(yyval.ast)->right = (yyvsp[-1].string);
+	callCobolToCobol("LINKAGE SECTION.");
 }
-#line 2241 "smallCobolParser.tab.c"
+#line 2249 "smallCobolParser.tab.c"
     break;
 
   case 79:
-#line 607 "smallCobolParser.y"
+#line 615 "smallCobolParser.y"
                                              {printf("\n RECOGNIZED SECTION: Local-Storage Section Declaration\n\n");
 	(yyval.ast)->left = (yyvsp[-2].string);
 	(yyval.ast)->right = (yyvsp[-1].string);
-}
-#line 2250 "smallCobolParser.tab.c"
-    break;
-
-  case 80:
-#line 612 "smallCobolParser.y"
-                                      { printf("\n RECOGNIZED SECTION: Working-Storage Section Declaration\n\n");
-	(yyval.ast)->left = (yyvsp[-2].string);
-	(yyval.ast)->right = (yyvsp[-1].string);
+	callCobolToCobol("LOCALSTORAGE SECTION.");
 }
 #line 2259 "smallCobolParser.tab.c"
     break;
 
-  case 81:
+  case 80:
 #line 621 "smallCobolParser.y"
+                                      { printf("\n RECOGNIZED SECTION: Working-Storage Section Declaration\n\n");
+	(yyval.ast)->left = (yyvsp[-2].string);
+	(yyval.ast)->right = (yyvsp[-1].string);\
+	callCobolToCobol("WORKINGSTORAGE SECTION.");
+}
+#line 2269 "smallCobolParser.tab.c"
+    break;
+
+  case 81:
+#line 631 "smallCobolParser.y"
                                           { printf("\n RECOGNIZED DIVISION: Procedure Division Declaration\n\n");
 	(yyval.ast)->left = (yyvsp[-2].string);
 	(yyval.ast)->right = (yyvsp[-1].string);
 }
-#line 2268 "smallCobolParser.tab.c"
+#line 2278 "smallCobolParser.tab.c"
     break;
 
   case 82:
-#line 631 "smallCobolParser.y"
+#line 641 "smallCobolParser.y"
                                 { printf("\n RECOGNIZED RULE: Stop Run\n\n");
 	(yyval.ast)->left = (yyvsp[-2].string);
 	(yyval.ast)->right = (yyvsp[-1].string);
 }
-#line 2277 "smallCobolParser.tab.c"
+#line 2287 "smallCobolParser.tab.c"
     break;
 
 
-#line 2281 "smallCobolParser.tab.c"
+#line 2291 "smallCobolParser.tab.c"
 
       default: break;
     }
@@ -2509,7 +2519,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 638 "smallCobolParser.y"
+#line 648 "smallCobolParser.y"
 
 
 int main(int argc, char**argv)	
@@ -2519,9 +2529,9 @@ int main(int argc, char**argv)
 		yydebug = 1;
 	#endif
 	*/
-	
 
 	printf("\n\n##### COMPILER STARTED #####\n\n");
+	clear_Java_Output_File();
 	
 	if (argc > 1){
 	  if(!(yyin = fopen(argv[1], "r")))

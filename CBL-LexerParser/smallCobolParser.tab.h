@@ -101,7 +101,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 21 "smallCobolParser.y"
+#line 23 "smallCobolParser.y"
 
 	int number;
 	char character;

@@ -3,9 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 /* #include "symbolTable.h" */
 #include "AST.h"
+#include "cobolToText.h"
 
 
 extern int yylex();
@@ -186,11 +188,8 @@ Module2:	DataSection { printf("\n RECOGNIZED MODULE: End Module 2: Data Division
 						printf("\nDollar 1 = ");
 						printf($1);
 						$$ = $1;
-<<<<<<< HEAD
 			
 			
-=======
->>>>>>> bc6601386c8836d5d6ae81703b876b1f2d741e9b
 };
 
 
@@ -198,11 +197,8 @@ Module3:	EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division\n\n")
 					   printf("\nDollar 1 = ");
 					   printf($1);
 					   $$ = $1;
-<<<<<<< HEAD
 					   
 					   
-=======
->>>>>>> bc6601386c8836d5d6ae81703b876b1f2d741e9b
 };
 
 
@@ -240,6 +236,8 @@ ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID Dec
 						 	 printf($3);
 							 $$->left = $3;
 							 $$->right = $1;
+
+							 callCobolToCobol("PROGRAM-ID. ID.");
 };
 
 ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
@@ -546,6 +544,7 @@ IDClause:	ID COMMA IDClause {} | ID { printf("\n RECOGNIZED RULE: ID Clause\n");
 IDDiv:	IDENTIFICATION DIVISION PERIOD { 
 	$$->left = $1;
 	$$->right = $2;
+	callCobolToCobol("IDENTIFICATION DIVISION.");
 	printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
 };
 
@@ -590,6 +589,7 @@ DataDiv:	DATA DIVISION PERIOD {
 	printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
 	$$->left = $1;
 	$$->right = $2;
+	callCobolToCobol("DATA DIVISION.");
 
 };	
 
@@ -603,21 +603,25 @@ DataDiv:	DATA DIVISION PERIOD {
 FileSec:	FILEE SECTION PERIOD { printf("\n RECOGNIZED SECTION: File Section Declaration\n\n");
 	$$->left = $1;
 	$$->right = $2;
+	callCobolToCobol("FILE SECTION.");
 };
 
 LinkageSec:	LINKAGE SECTION PERIOD {printf("\n RECOGNIZED SECTION: Linkage Section Declaration\n\n");
 	$$->left = $1;
 	$$->right = $2;
+	callCobolToCobol("LINKAGE SECTION.");
 };
 
 LocalStorageSec: LOCALSTORAGE SECTION PERIOD {printf("\n RECOGNIZED SECTION: Local-Storage Section Declaration\n\n");
 	$$->left = $1;
 	$$->right = $2;
+	callCobolToCobol("LOCALSTORAGE SECTION.");
 };
 
 WSSec:	WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED SECTION: Working-Storage Section Declaration\n\n");
 	$$->left = $1;
-	$$->right = $2;
+	$$->right = $2;\
+	callCobolToCobol("WORKINGSTORAGE SECTION.");
 };
 
 /* procedure division declaration in cobol */
@@ -650,9 +654,9 @@ int main(int argc, char**argv)
 		yydebug = 1;
 	#endif
 	*/
-	
 
 	printf("\n\n##### COMPILER STARTED #####\n\n");
+	clear_Java_Output_File();
 	
 	if (argc > 1){
 	  if(!(yyin = fopen(argv[1], "r")))
