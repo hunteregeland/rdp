@@ -93,13 +93,14 @@ char currentScope[50]; /* global or the name of the function */
 /* basic structure of the current cobol test program */
 
 CobolProgram:	Modules { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
-					  printf("------------Start of AST------------\n");
-					  $$ = $1;
-					  //printAST($$,0);
+
+					printf("------------Start of AST------------\n");
+					$$ = $1;
+					//printAST($$,0);
 					  
-					  //manualAST($$);
+					//manualAST($$);
 					  
-					  printf("\n------------End of AST------------\n");
+					printf("\n------------End of AST------------\n");
 									  
 };
 
@@ -107,23 +108,26 @@ CobolProgram:	Modules { printf("\n RECOGNIZED PROGRAM: COBOL Program End\n\n");
 Modules: 	
 
 		Module Modules {
-				printf("\n MODULE MODULES: Module End\n\n");
-				printf("\nDollar 1 = ");
-				printf($1);
-				printf("\nDollar 2 = ");
-				printf($2);
 
-				// ast
-				$1->left = $2;
-				$$ = $1;
-			}
-		| Module {  
-				printf("\n MODULE: Module End\n\n");
-				printf("\nDollar 1 = ");
-				printf($1);
+			printf("\n MODULE MODULES: Module End\n\n");
+			printf("\nDollar 1 = ");
+			printf($1);
+			printf("\nDollar 2 = ");
+			printf($2);
 
-				// ast
-				$$ = $1;
+			// ast
+			$1->left = $2;
+			$$ = $1;
+			
+		} | Module {  
+
+			printf("\n MODULE: Module End\n\n");
+			printf("\nDollar 1 = ");
+			printf($1);
+
+			// ast
+			$$ = $1;
+
 };
 
 Module: 
@@ -140,76 +144,78 @@ Module:
 		|
 		*/
 		
-		| Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
+		| Module1 { printf("\n RECOGNIZED MODULE: Module1 End\n\n");
 
-				printf("\nDollar 1 = ");
-				printf($1);
+			printf("\nDollar 1 = ");
+			printf($1);
 
-				// ast
-				$$ = $1;
+			// ast
+			$$ = $1;
 				
-				}
-		| Module2{printf("\n RECOGNIZED MODULE: Module2 End\n\n");
-
-				printf("\nDollar 1 = ");
-				printf($1);		
-
-				// ast
-				$$ = $1;
 				
-				}
-		| Module3{printf("\n RECOGNIZED MODULE: Module3 End\n\n");
-				printf("\nDollar 1 = ");
-				printf($1);
+		} | Module2 { printf("\n RECOGNIZED MODULE: Module2 End\n\n");
 
-				// ast
-				$$ = $1;
-				
-				}
-		| Module4{printf("\n RECOGNIZED MODULE: Module4 End\n\n");
-				printf("\nDollar 1 = ");
-				printf($1);
+			printf("\nDollar 1 = ");
+			printf($1);		
 
-				// ast
-				$$ = $1;
+			// ast
+			$$ = $1;
+		
+		} | Module3 { printf("\n RECOGNIZED MODULE: Module3 End\n\n");
 				
-				}
-;
+			printf("\nDollar 1 = ");
+			printf($1);
+
+			// ast
+			$$ = $1;
+				
+		} | Module4 { printf("\n RECOGNIZED MODULE: Module4 End\n\n");
+
+			printf("\nDollar 1 = ");
+			printf($1);
+
+			// ast
+			$$ = $1;
+				
+};
 
 /* part of the program including the identification division and the program id declaration */
 
-Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identification Division\n\n"); 
-						   printf("\nDollar 1 = ");
-						   printf($1);
-						   printf("\nDollar 2 = ");
-						   printf($2);
-						   //$1->left = $2;
-						   //$$ = $1;
+Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identification Division\n\n");
 
-						   // ast
-						   $$->left = $1;
-						   $$->right = $2;
+				printf("\nDollar 1 = ");
+				printf($1);
+				printf("\nDollar 2 = ");
+				printf($2);
+				 //$1->left = $2;
+				//$$ = $1;
+
+				// ast
+				$$->left = $1;
+				$$->right = $2;
 };
 
 /* part of the program that contains the data division */
 
 Module2:	DataSection { printf("\n RECOGNIZED MODULE: End Module 2: Data Division\n\n");
-						printf("\nDollar 1 = ");
-						printf($1);
+						
+				printf("\nDollar 1 = ");
+				printf($1);
 
-						// ast
-						$$ = $1;	
+				// ast
+				$$ = $1;	
 };
 
 
 /* part of the program that contains the environment division */
 
 Module3:	EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division\n\n");
-					   printf("\nDollar 1 = ");
-					   printf($1);
 
-					   // ast
-					   $$ = $1;					   
+				printf("\nDollar 1 = ");
+				printf($1);
+
+				// ast
+				$$ = $1;					   
 };
 
 
@@ -280,14 +286,14 @@ ProcSectionLeft:	ProcDiv ProcID {
 						$$->left = $1;
 						$$->right = $2;
 
-	/*
+						/*
 
-						ProcSectionLeft
-				 ProcDiv               ProcID
-		PROCEDURE		DIVISION		 |
-										 ID
+											ProcSectionLeft
+									 ProcDiv               ProcID
+							PROCEDURE		DIVISION		 |
+															 ID
 
-	*/
+						*/
 
 };
 
@@ -297,14 +303,14 @@ ProcSectionRight:	Statements StopRun {
 						$$->left = $1;
 						$$->right = $2;
 
-	/*
+						/*
 
-								ProcSectionRight
-					  Statements                \------StopRun
-			Statements          Statement		   STOP       RUN
-		 ...          Statement					 
+													ProcSectionRight
+										  Statements                \------StopRun
+								Statements          Statement		   STOP       RUN
+							 ...          Statement					 
 
-	*/
+						*/
 
 };
 
@@ -314,14 +320,14 @@ ProcDivAndID:	ProcDiv ProcID {
 					$$->left = $1;
 					$$->right = $2;
 
-	/*
+					/*
 
-						ProcDivAndID
-				ProcDiv				\---ProcID
-	   PROCEDURE       DIVISION			   |
-	   									  ID
+										ProcDivAndID
+								ProcDiv				\---ProcID
+	 				  PROCEDURE       DIVISION			   |
+	 				  									  ID
 
-	*/
+					*/
 
 };	
 
@@ -496,13 +502,13 @@ Expr:   | DISPLAY STRING {
 
 			/*
 
-							Expr
-					 		 |
-			 		 		 IF
-					Condition   \------------Statement
-						|							   Expr
-		(e.g EQ-OP)  Operator						...    ...
-		 		  ID         ID
+								Expr
+						 		 |
+			 			 		 IF
+						Condition   \------------Statement
+							|							   Expr
+			(e.g EQ-OP)  Operator						...    ...
+		 			  ID         ID
 
 			*/
 			
@@ -715,13 +721,13 @@ Expr:   | DISPLAY STRING {
 
 			/*
 
-														Expr
-														 |
-														ADD
-									NumberClause-------/   \---------ID
-						NumberClause	        NUMBER
-			NumberClause            NUMBER
-		 ...
+															Expr
+															 |
+															ADD
+										NumberClause-------/   \---------ID
+							NumberClause	        NUMBER
+				NumberClause            NUMBER
+			 ...
 
 			*/
 		}
@@ -860,32 +866,31 @@ Expr:   | DISPLAY STRING {
 /* Need to figure out how to set up Condition */
 Condition:	ID Operator ID {
 		
-			// ast
-			$$ = $2;
-			$2->left = $1;
-			$2->right = $3;
+				// ast
+				$$ = $2;
+				$2->left = $1;
+				$2->right = $3;
 
-			/*
+				/*
 
-					Operator
-			 	 ID	        ID
+						Operator
+				 	 ID	        ID
 
-			*/
+				*/
 
-		} 
-		| ID Operator NUMBER {
+			} | ID Operator NUMBER {
 
-			// ast
-			$$ = $2;
-			$2->left = $1;
-			$2->right = $3;
+				// ast
+				$$ = $2;
+				$2->left = $1;
+				$2->right = $3;
 
-			/*
+				/*
 
-					Operator
-			 	 ID	        NUMBER
+						Operator
+			 		 ID	        NUMBER
 
-			*/
+				*/
 
 		}
 ;
@@ -918,8 +923,30 @@ UnsignedClause:	LETTERS Nines { printf("\n RECOGNIZED RULE: Un-signed Clause\n")
 StringPicClause:	LETTERX OPEN_PARENTHESES NUMBER CLOSE_PARENTHESES { printf("\n RECOGNIZED RULE: String Pic Clause\n");
 };
 
-NumberClause:	NUMBER COMMA NumberClause {
-				printf("\n RECOGNIZED RULE: Number Clause\n");
+NumberClause:	NUMBER COMMA NumberClause { printf("\n RECOGNIZED RULE: Number Clause\n");
+
+					// ast
+					$$->left = $3;
+					$$->right = $1;
+
+					/*
+
+														NumberClause
+											NumberClause            NUMBER
+								NumberClause            NUMBER
+					NumberClause            NUMBER
+			 	...
+
+				*/
+
+			}   | NUMBER { printf("\n RECOGNIZED RULE: Number Clause\n");
+
+					// ast
+					$$ = $1;
+
+};
+
+IDClause:	ID COMMA IDClause { printf("\n RECOGNIZED RULE: ID Clause\n");
 
 				// ast
 				$$->left = $3;
@@ -927,45 +954,19 @@ NumberClause:	NUMBER COMMA NumberClause {
 
 				/*
 
-													NumberClause
-										NumberClause            NUMBER
-							NumberClause            NUMBER
-				NumberClause            NUMBER
-			 ...
+												IDClause
+									   IDClause         ID
+						      IDClause         ID
+		     	    IDClause         ID
+			 	 ...
 
 				*/
 
-			}   | NUMBER { 
-				printf("\n RECOGNIZED RULE: Number Clause\n");
+
+		}   | ID { printf("\n RECOGNIZED RULE: ID Clause\n");
 
 				// ast
 				$$ = $1;
-
-};
-
-IDClause:	ID COMMA IDClause {
-			printf("\n RECOGNIZED RULE: ID Clause\n");
-
-			// ast
-			$$->left = $3;
-			$$->right = $1;
-
-			/*
-
-											IDClause
-								   IDClause         ID
-					      IDClause         ID
-		         IDClause         ID
-			  ...
-
-			*/
-
-
-		}   | ID { 
-			printf("\n RECOGNIZED RULE: ID Clause\n");
-
-			// ast
-			$$ = $1;
 
 };
 
@@ -974,19 +975,18 @@ IDClause:	ID COMMA IDClause {
 /* recognize an identification division declaration if line is in order: */
 /* IDENTIFICATION, DIVISION, . */
 
-IDDiv:	IDENTIFICATION DIVISION PERIOD { 
-	printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
+IDDiv:	IDENTIFICATION DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Identification Division Declaration\n\n");
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+			// ast
+			$$->left = $1;
+			$$->right = $2;
 
-	/*
+			/*
 
-				   IDDiv
- 	 IDENTIFICATION     DIVISION
+						   IDDiv
+ 	 		IDENTIFICATION     DIVISION
 
-	*/
+			*/
 
 };
 
@@ -995,19 +995,18 @@ IDDiv:	IDENTIFICATION DIVISION PERIOD {
 /* recognize an environment division declaration if line is in order: */
 /* ENVIRONMENT, DIVISION, . */
 
-EnvDiv:	ENVIRIONMENT DIVISION PERIOD { 
-	printf("\n RECOGNIZED DIVISION: Environment Division Declaration\n\n");
+EnvDiv:	ENVIRIONMENT DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Environment Division Declaration\n\n");
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+			// ast
+			$$->left = $1;
+			$$->right = $2;
 
-	/*
+			/*
 
-				   EnvDiv
- 	    ENVIRONMENT      DIVISION
+						   EnvDiv
+ 			    ENVIRONMENT      DIVISION
 
-	*/
+			*/
 
 };
 
@@ -1015,63 +1014,62 @@ EnvDiv:	ENVIRIONMENT DIVISION PERIOD {
 /* recognize an environment division declaration if line is in order: */
 /* DATA, DIVISION, . */		
 
-DataDiv:	DATA DIVISION PERIOD {
-	printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
+DataDiv:	DATA DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Data Division Declaration\n\n");
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+				// ast
+				$$->left = $1;
+				$$->right = $2;
 
-	/*
+				/*
 
-		   DataDiv
-	   DATA       DIVISION
+					   DataDiv
+				   DATA       DIVISION
 
-	*/
+				*/
 
 };	
 
 DataSection: DataDiv Sections{
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+				// ast
+				$$->left = $1;
+				$$->right = $2;
 
-	/*
+				/*
 
-				   DataSection
- 	    	DataDiv           \--------------------Sections
-		DATA       DIVISION						       |
-											    	Section
-											Sections
-										 	   |
-					 						Section
-									Sections
-										|
-			 						 Section
-		 						  ...		
-	*/
+							   DataSection
+ 				    	DataDiv           \--------------------Sections
+					DATA       DIVISION						       |
+														    	Section
+														Sections
+													 	   |
+								 						Section
+												Sections
+													|
+						 						 Section
+					 						  ...		
+				*/
 	
 };
 
 Sections: Section Sections {
 
-		// ast
-		$1->left = $2;
-		$$ = $1;
+			// ast
+			$1->left = $2;
+			$$ = $1;
 
-		/*
+			/*
 
-							Sections
-							    |
-							 Section
-					 Sections
-					 	|
-					 Section
-			 Sections
-				|
-			 Section
-		  ...
+								Sections
+								    |
+								 Section
+						 Sections
+						 	|
+						 Section
+				 Sections
+					|
+				 Section
+		 	 ...
 
 		*/
 
@@ -1094,61 +1092,61 @@ Section:	LSSec {$$ = $1;} | FileSec {$$ = $1;} | LinkageSec {$$ = $1;} | WSSec {
 
 FileSec:	FILEE SECTION PERIOD { printf("\n RECOGNIZED SECTION: File Section Declaration\n\n");
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+				// ast
+				$$->left = $1;
+				$$->right = $2;
 
-	/*
+				/*
 
-			FileSec
-	  FILEE		   SECTION
+						FileSec
+	 			  FILEE		   SECTION
 
-	*/
+				*/
 
 };
 
 LinkageSec:	LINKAGE SECTION PERIOD {printf("\n RECOGNIZED SECTION: Linkage Section Declaration\n\n");
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+				// ast
+				$$->left = $1;
+				$$->right = $2;
 
-	/*
+				/*
 
-			LinkageSec
-	 LINKAGE		  SECTION
+						LinkageSec
+				 LINKAGE		  SECTION
 
-	*/
+				*/
 
 };
 
 LSSec: LOCALSTORAGE SECTION PERIOD {printf("\n RECOGNIZED SECTION: Local-Storage Section Declaration\n\n");
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+			// ast
+			$$->left = $1;
+			$$->right = $2;
 
-	/*
+			/*
 
-				  LSSec
-	  LOCALSTORAGE     SECTION
+						  LSSec
+			  LOCALSTORAGE     SECTION
 
-	*/
+			*/
 
 };
 
 WSSec:	WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED SECTION: Working-Storage Section Declaration\n\n");
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+			// ast
+			$$->left = $1;
+			$$->right = $2;
 
-	/*
+			/*
 
-					WSSec
-	  WORKINGSTORAGE     SECTION
+							WSSec
+			  WORKINGSTORAGE     SECTION
 
-	*/
+			*/
 
 };
 
@@ -1158,16 +1156,16 @@ WSSec:	WORKINGSTORAGE SECTION PERIOD { printf("\n RECOGNIZED SECTION: Working-St
 
 ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Procedure Division Declaration\n\n");
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+				// ast
+				$$->left = $1;
+				$$->right = $2;
 
-	/*
+				/*
 
-		        ProcDiv
-	   PROCEDURE       DIVISION
+					        ProcDiv
+				   PROCEDURE       DIVISION
 
-	*/
+				*/
 
 };
 
@@ -1176,16 +1174,16 @@ ProcDiv:	PROCEDURE DIVISION PERIOD { printf("\n RECOGNIZED DIVISION: Procedure D
 
 StopRun:	STOP RUN PERIOD { printf("\n RECOGNIZED RULE: Stop Run\n\n");
 
-	// ast
-	$$->left = $1;
-	$$->right = $2;
+				// ast
+				$$->left = $1;
+				$$->right = $2;
 
-	/*
+				/*
 
-		   StopRun
-	   STOP       RUN
+					   StopRun
+				   STOP       RUN
 
-	*/
+				*/
 
 };
 
