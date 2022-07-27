@@ -266,7 +266,7 @@ ProcSection:	ProcSectionLeft ProcSectionRight {
 
 					// ast
 					$$->left = $1;
-					$->right = $2;
+					$$->right = $2;
 
 	/*
 
@@ -505,8 +505,8 @@ Expr:   | DISPLAY STRING {
 								Expr
 						 		 |
 			 			 		 IF
-						Condition   \------------Statement
-							|							   Expr
+						Condition  \------------Statement
+							|							  Expr
 			(e.g EQ-OP)  Operator						...    ...
 		 			  ID         ID
 
@@ -543,6 +543,8 @@ Expr:   | DISPLAY STRING {
 			printf("\nDollar 3 = ");
 			printf($3);
 
+
+			// H TODO
 			// ast
 			
 			/*
