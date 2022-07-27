@@ -80,7 +80,7 @@ char currentScope[50]; /* global or the name of the function */
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;
 %printer { fprintf(yyoutput, "%d", $$); } DIGIT;
 
-%type <ast> CobolProgram Modules Module Module1 Module2 Module3 Module4 IDDiv EnvDiv Sections Section DataSection DataDiv ProcDiv ProcID FileSec WSSec LinkageSec LSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
+%type <ast> CobolProgram Modules Module Module1 Module2 Module3 Module4 IDDiv EnvDiv Sections Section DataSection DataDiv ProcSection ProcSectionLeft ProcSectionRight ProcDivAndID ProcDiv ProcID FileSec WSSec LinkageSec LSSec ProgID Statements Statement Expr StopRun DoubleDigit Condition Operator Nines IntPicClause StringPicClause FloatClause UnsignedClause NumberClause IDClause Xs 
 
 %start CobolProgram
 
@@ -112,6 +112,8 @@ Modules:
 				printf($1);
 				printf("\nDollar 2 = ");
 				printf($2);
+
+				// ast
 				$1->left = $2;
 				$$ = $1;
 			}
@@ -119,16 +121,18 @@ Modules:
 				printf("\n MODULE: Module End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
+
+				// ast
 				$$ = $1;
 };
 
 Module: 
 		
-		STOP{
+		STOP {
 			$$ = $1;
 			printf("\nEOF\n");
 		}
-		|
+
 		/*
 		ID PERIOD{
 			$$ = $1;
@@ -136,34 +140,43 @@ Module:
 		|
 		*/
 		
-		Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
+		| Module1{printf("\n RECOGNIZED MODULE: Module1 End\n\n");
+
 				printf("\nDollar 1 = ");
 				printf($1);
+
+				// ast
 				$$ = $1;
 				
 				}
 		| Module2{printf("\n RECOGNIZED MODULE: Module2 End\n\n");
+
 				printf("\nDollar 1 = ");
 				printf($1);		
+
+				// ast
 				$$ = $1;
 				
 				}
 		| Module3{printf("\n RECOGNIZED MODULE: Module3 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
+
+				// ast
 				$$ = $1;
 				
 				}
 		| Module4{printf("\n RECOGNIZED MODULE: Module4 End\n\n");
 				printf("\nDollar 1 = ");
 				printf($1);
+
+				// ast
 				$$ = $1;
 				
 				}
 ;
 
 /* part of the program including the identification division and the program id declaration */
-/* lines 1 & 2 */
 
 Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identification Division\n\n"); 
 						   printf("\nDollar 1 = ");
@@ -172,25 +185,30 @@ Module1:	IDDiv ProgID { printf("\n RECOGNIZED MODULE: End Module 1: Identificati
 						   printf($2);
 						   //$1->left = $2;
 						   //$$ = $1;
+
+						   // ast
 						   $$->left = $1;
 						   $$->right = $2;
 };
 
-
-
-/* part of the program that contains the environment division */
-/* line 3 */
+/* part of the program that contains the data division */
 
 Module2:	DataSection { printf("\n RECOGNIZED MODULE: End Module 2: Data Division\n\n");
 						printf("\nDollar 1 = ");
 						printf($1);
+
+						// ast
 						$$ = $1;	
 };
 
 
+/* part of the program that contains the environment division */
+
 Module3:	EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division\n\n");
 					   printf("\nDollar 1 = ");
 					   printf($1);
+
+					   // ast
 					   $$ = $1;					   
 };
 
@@ -198,43 +216,143 @@ Module3:	EnvDiv { printf("\n RECOGNIZED MODULE: End Module 2: Env Division\n\n")
 
 
 /* part of the program that contains the procedure division and everything that is inside it, which is statements since this is where all executable code is written */
-/* lines 4-6 */
 
-Module4:	ProcDiv ProcID Statements StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n");
-							 printf("\nDollar 1 = ");
-						 	 printf($1);
-						 	 printf("\nDollar 2 = ");
-						 	 printf($2); 
-							 printf("\nDollar 3 = ");
-						 	 printf($3);
+Module4:	ProcSection { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division\n\n");
+
+				printf("\nDollar 1 = ");
+				printf($1);
+				printf("\nDollar 2 = ");
+				printf($2); 
+				printf("\nDollar 3 = ");
+				printf($3);
+
+				// ast
+				$$ = $1;
+
  }
-			| ProcDiv ProcID StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division (no statements)\n\n");
-							 printf("\nDollar 1 = ");
-						 	 printf($1);
-						 	 printf("\nDollar 2 = ");
-						 	 printf($2); 
-							 printf("\nDollar 3 = ");
-						 	 printf($3);
+			| ProcDivAndID StopRun { printf("\n RECOGNIZED MODULE: End Module 3: Procedure Division (no statements)\n\n");
+							
+				printf("\nDollar 1 = ");
+				printf($1);
+				printf("\nDollar 2 = ");
+				printf($2); 
+				printf("\nDollar 3 = ");
+				printf($3);
+
+				// ast
+				$$->left = $1;
+				$$->right = $2;
+
+				/*
+
+											             Module4
+							    ProcDivAndID------------/       \-------------------------StopRun
+						 ProcDiv            ProcID									  STOP       RUN
+				PROCEDURE       DIVISON		  |
+											  ID
+
+				*/
+
+
 };
 
+ProcSection:	ProcSectionLeft ProcSectionRight {
 
-/* the program id syntax, this is the part of line 2 that defines the program name */
-/* line 2 */
-/* this needs to be fixed, we cannot recognize PROGRAM-ID currently */
+					// ast
+					$$->left = $1;
+					$->right = $2;
 
-ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID Declaration\n\n");
-							 printf("\nDollar 1 = ");
-						 	 printf($1);
-						 	 printf("\nDollar 3 = ");
-						 	 printf($3);
-							 $$->left = $3;
-							 $$->right = $1;
+	/*
+
+											   ProcSection
+					 ProcSectionLeft----------/           \-----------ProcSectionRight
+			  ProcDiv               ProcID				     Statements				  \------StopRun
+	 PROCEDURE		 DIVISION		  |			   Statements          Statement		 STOP       RUN
+									  ID		...			Statement
+
+	*/
+
 };
+
+ProcSectionLeft:	ProcDiv ProcID {
+
+						// ast
+						$$->left = $1;
+						$$->right = $2;
+
+	/*
+
+						ProcSectionLeft
+				 ProcDiv               ProcID
+		PROCEDURE		DIVISION		 |
+										 ID
+
+	*/
+
+};
+
+ProcSectionRight:	Statements StopRun {
+
+						// ast
+						$$->left = $1;
+						$$->right = $2;
+
+	/*
+
+								ProcSectionRight
+					  Statements                \------StopRun
+			Statements          Statement		   STOP       RUN
+		 ...          Statement					 
+
+	*/
+
+};
+
+ProcDivAndID:	ProcDiv ProcID {
+
+					// ast
+					$$->left = $1;
+					$$->right = $2;
+
+	/*
+
+						ProcDivAndID
+				ProcDiv				\---ProcID
+	   PROCEDURE       DIVISION			   |
+	   									  ID
+
+	*/
+
+};	
 
 ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
-							 printf("\nDollar 1 = ");
-						 	 printf($1);
-							 $$ = $1;
+
+			printf("\nDollar 1 = ");
+			printf($1);
+		
+			// ast
+			$$ = $1;
+
+};
+
+ProgID:		PROGRAMID PERIOD ID PERIOD { printf("\n RECOGNIZED RULE: Program ID Declaration\n\n");
+		
+				printf("\nDollar 1 = ");
+				printf($1);
+				printf("\nDollar 3 = ");
+				printf($3);
+				
+				// ast
+				$$->left = $3;
+				$$->right = $1;
+
+				/*
+
+					 ProgID
+				  ID	   PROGRAMID
+
+				*/
+
 
 };
 
@@ -244,18 +362,35 @@ ProcID:	ID PERIOD { printf("\n RECOGNIZED RULE: Procedure ID Declaration\n\n");
 Statements:	
 		
 		Statement Statements { 
-							 printf("\nDollar 1 = ");
-						 	 printf($1);
-							 printf("\nDollar 2 = ");
-						 	 printf($2);
-							 $1->left = $2;
-							 $$ = $1;
+
+			printf("\nDollar 1 = ");
+			printf($1);
+			printf("\nDollar 2 = ");
+			printf($2);
+
+			// ast
+			$$->left = $3;
+			$$->right = $1;
+
+			/*
+
+													Statements
+										Statements           Statement
+							Statements            Statement		 |
+				Statements            Statement		  |         Expr
+			 ...						  |          Expr
+			 							Expr
+
+			*/
 		}
 
 		| Statement {	
-							 printf("\nDollar 1 = ");
-						 	 printf($1);
-							 $$ = $1;
+
+			printf("\nDollar 1 = ");
+			printf($1);
+
+			// ast
+			$$ = $1;
 
 };
 
@@ -268,16 +403,19 @@ Statements:
 
 /* A statement can be a period or an expression with a period. *Note in cobol expressions technically dont need periods sometimes so maybe worth looking into */
 Statement:	Expr PERIOD {
-							 printf("\nDollar 1 = ");
-						 	 printf($1);
-							 $$->right = $1;
 
-}
+			printf("\nDollar 1 = ");
+			printf($1);
+
+			// ast
+			$$ = $1;
+
+};
 							
-				/* this needs to be redone, as we need to check for a period inside each
-				expression, not up here. if we don't check in each expression, we will not
-				get the print statements when the function does not include a period */
-;
+			/* this needs to be redone, as we need to check for a period inside each
+			expression, not up here. if we don't check in each expression, we will not
+			get the print statements when the function does not include a period */
+
 
 
 Expr:   | DISPLAY STRING { 
